@@ -237,7 +237,7 @@ function AddEdit({ history, match }) {
             }
 
             // _pictures.push(imgObj);
-
+            console.log(data);
             let _arr = bulkPictures;
             _arr.push(imgObj);
             setBulkPictures(_arr);

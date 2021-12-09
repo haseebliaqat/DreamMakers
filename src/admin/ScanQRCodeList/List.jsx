@@ -43,15 +43,16 @@ function List({ history, match }) {
 	const handleChange = (e) => {
 		const { checked, name } = e.target;
 		if (checked) {
-			setChekcedState((oldState) => [...oldState, name]);
+			setChekcedState((oldState) => [...oldState, parseInt(name)]);
 		} else {
-			setChekcedState((oldState) => oldState.filter((item) => item !== name));
+			setChekcedState((oldState) => oldState.filter((item) => item !== parseInt(name)));
 		}
 	};
 
     const GoLive=()=>{
         if(checkedState!=""){
-            localStorage.setItem("Selected_go_live_campaigns",checkedState)
+            localStorage.setItem("Selected_go_live_campaigns",null)
+            localStorage.setItem("Selected_go_live_campaigns",JSON.stringify(checkedState))
             history.push('/InvitationCode');
         }else{
             alert("Please select at least one campaign")
@@ -88,8 +89,8 @@ function List({ history, match }) {
                             <td>
                             <Checkbox
 								onChange={handleChange}
-								checked={checkedState.includes((item.id).toString())}
-								name={(item.id).toString()}
+								checked={checkedState.includes((item.id))}
+								name={(item.id)}
 							/>
                             </td>
 							

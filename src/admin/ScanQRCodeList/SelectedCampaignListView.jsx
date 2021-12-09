@@ -32,7 +32,7 @@ const divStyle2 = {
         let obj = {
             "offset": 0,
             "order": [["id", "ASC"], ["name", "DESC"]],
-            "where": {"id": 7 }
+            "where": {"id": {'$in' : localStorage.getItem('Selected_go_live_campaigns')} }
         }
         campaignsService.getAll(obj).then((x) => {
             console.log(x);
