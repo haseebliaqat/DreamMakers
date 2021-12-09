@@ -1,0 +1,224 @@
+.country-input__container {
+   display: flex;
+   align-items: flex-start;
+}
+
+.country-input__code {
+   flex: 0 1 28%;
+}
+
+.country-input__number {
+   flex: 1;
+}
+
+.country-input-content {
+   position: relative;
+   margin-bottom: 30px;
+   display: flex;
+   align-items: center;
+}
+
+.country-input {
+   color: #707070;
+   font-size: 15px;
+   font-weight: normal;
+   position: absolute;
+   pointer-events: none;
+   left: 25px;
+   top: 11px;
+   padding: 0 5px;
+   background: #fff;
+   transition: 0.2s ease all;
+   -moz-transition: 0.2s ease all;
+   -webkit-transition: 0.2s ease all;
+
+   @media only screen and (max-width: 767px) {
+      left: 10px;
+      font-size: 10px;
+   }
+}
+
+.country-select {
+   font-size: 20px;
+   display: block;
+   width: 100%;
+   padding: 1.2rem 1.8rem 0.6rem 3rem;
+   background: #fff;
+   color: #707070;
+   border-radius: 7px;
+   border: 1px solid #707070;
+   box-sizing: border-box;
+
+   @media only screen and (max-width: 1366px) {
+      font-size: 16px;
+      padding: 1.4rem 0.8rem 0.3rem 1.5rem;
+   }
+
+   @media only screen and (max-width: 1024px) {
+      font-size: 16px;
+      padding: 0.9rem 1.2rem 0.3rem 1rem;
+   }
+
+   @media only screen and (max-width: 767px) {
+      font-size: 16px;
+      padding: 0.9rem 1.2rem 0.3rem 2.2rem;
+   }
+
+   @media only screen and (max-width: 475px) {
+      font-size: 14px;
+      padding: 1.1rem 1.2rem 0.3rem 0.9rem;
+   }
+}
+
+.country-select:focus {
+   outline: none;
+}
+
+select.country-select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}
+select.country-select::-ms-expand {
+   display: none;
+}
+
+.country-select:not([value='']):valid ~ .country-input {
+   top: 4px;
+   font-size: 11px;
+
+   @media only screen and (max-width: 992px) {
+      left: 1px;
+      font-size: 10px;
+   }
+
+   @media only screen and (max-width: 767px) {
+      left: 27px;
+      font-size: 12px;
+   }
+
+   @media only screen and (max-width: 475px) {
+      left: 8px;
+      font-size: 9px;
+   }
+}
+
+.country-select[value='']:focus ~ .country-input {
+   top: 4px;
+   font-size: 11px;
+
+   @media only screen and (max-width: 992px) {
+      left: 1px;
+      font-size: 10px;
+   }
+
+   @media only screen and (max-width: 767px) {
+      left: 27px;
+      font-size: 12px;
+   }
+
+   @media only screen and (max-width: 475px) {
+      left: 8px;
+      font-size: 9px;
+   }
+}
+
+.country-select:not([multiple]):not([size]) {
+   background-image: url('../../_assets/icons/country-code-icon.svg');
+   background-position: right 30px top 72%;
+   background-repeat: no-repeat;
+
+   @media only screen and (max-width: 1024px) {
+      background-position: right 15px top 72%;
+   }
+
+   @media only screen and (max-width: 767px) {
+      background-position: right 25px top 90%;
+   }
+
+   @media only screen and (max-width: 475px) {
+      background-position: right 5px top 90%;
+   }
+}
+
+.number-label-content {
+   position: relative;
+   margin-bottom: 30px;
+   display: flex;
+   align-items: center;
+}
+
+.number-label {
+   color: #707070;
+   font-size: 15px;
+   font-weight: normal;
+   position: absolute;
+   pointer-events: none;
+   left: 25px;
+   top: 11px;
+   padding: 0 5px;
+   background: #fff;
+   transition: 0.2s ease all;
+   -moz-transition: 0.2s ease all;
+   -webkit-transition: 0.2s ease all;
+}
+
+.number-input {
+   font-size: 1rem;
+   display: block;
+   width: 100%;
+   height: 36px;
+   padding: 1.8rem 1.2rem;
+   background: #fff;
+   color: #707070;
+   border-radius: 0px 7px 7px 7px;
+   border: 1px solid #707070;
+   border-left: none;
+   box-sizing: border-box;
+
+   @media only screen and (max-width: 1366px) {
+      padding: 1.6rem 1.2rem;
+   }
+
+   @media only screen and (max-width: 992px) {
+      padding: 1.4rem 1.2rem;
+   }
+
+   @media only screen and (max-width: 767px) {
+      border-radius: 12px;
+      padding: 1.4rem 1rem;
+      border: 1px solid #707070;
+   }
+}
+
+.number-input:focus,
+.number-select:focus {
+   outline: none;
+}
+.number-input:focus ~ .number-label {
+   top: -10px;
+   left: 0;
+   font-size: 15px;
+   padding: 0 0.8rem;
+}
+
+.number-input:not(:placeholder-shown) ~ .number-label {
+   top: -10px;
+   font-size: 15px;
+   left: 0;
+   padding: 0 0.8rem;
+
+   @media only screen and (max-width: 767px) {
+      font-size: 11px;
+   }
+}
+
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}
+
+input[type='number'] {
+   -moz-appearance: textfield;
+}

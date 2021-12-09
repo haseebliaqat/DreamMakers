@@ -1,0 +1,238 @@
+.Winner-Profile{
+    object-fit: cover;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: -85px;
+}
+
+.heading{
+    font-size: 17px;
+    font-weight: 400;
+    color: #0e1a46;
+}
+
+.Winner-title{
+        /* border-radius: 50%; */
+    /* width: 100px; */
+    height: 100px;
+    margin-top: 0px;
+}
+
+.coupons-card2 {
+    position: relative;
+    display: inline-block;
+}
+
+.header2 {
+    position: absolute;
+    top: 5%;
+    left: 3%;
+}
+
+.EL-number2 {
+    position: absolute;
+    right: 33%;
+    top: 7%;
+    background-color: #fff;
+    padding: 0.1rem 0.5rem;
+    color: #104a8e;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border-radius: 0.3rem;
+}
+
+@media (max-width: 400px) {
+    .EL-number2 {
+        font-size: 1rem;
+    }
+    .EL-coupon2 {
+        left: 15.5% !important;
+    }
+}
+
+.EL-coupon2 {
+    position: absolute;
+    right: 0;
+    top: 14.5%;
+    left: 41%;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.625rem;
+    font-weight: 100;
+}
+
+@media (max-width: 435px) {
+    .EL-coupon2 {
+        top: 19.5%;
+        left: 10%;
+    }
+}
+
+@media (max-width: 410px) {
+    .EL-coupon2 {
+        top: 19.5%;
+        left: 6.5%;
+    }
+}
+
+.price2 {
+    position: absolute;
+    top: 42%;
+    left: 7%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.Trip-country2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 7%;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.Qr2 {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-weight: 700;
+}
+
+@media (max-width: 415px) {
+    .Qr2 {
+        left: 56%;
+        top: 46%;
+    }
+}
+
+.purchase-date2 {
+    position: absolute;
+    left: 0;
+    top: 73%;
+    left: 6%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.date2 {
+    position: absolute;
+    top: 80%;
+    left: 6%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+@media (max-width: 400px) {
+    .date2 {
+        font-size: 0.69rem;
+    }
+}
+
+.coupon-name2 {
+    position: absolute;
+    right: 0;
+    top: 71%;
+    left: 56%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.name2 {
+    position: absolute;
+    top: 80%;
+    right: 0;
+    left: 56%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+@media (max-width: 400px) {
+    .name2 {
+        font-size: 0.69rem;
+    }
+}
+
+.dottedLine2 {
+    position: absolute;
+    height: 1px;
+    top: 65%;
+    max-width: 61%;
+    left: 10%;
+    width: 100%;
+    border-bottom: 1px dashed #fff;
+}
+.Winner-Card{
+    background-color: rgba(245, 245, 245, 0.4);
+    width: 43%;
+    border-radius: 26px;
+    margin-left: 27%;
+    margin-top: 42px;
+}
+
+.dottedLineName1 {
+    position: absolute;
+    height: 1px;
+    top: 54%;
+    max-width: 59%;
+    /* left: 10%; */
+    width: 41%;
+    border-bottom: 1px solid #e2d2d2;
+}
+.dottedLineName2 {
+    position: absolute;
+    height: 1px;
+    top: 59%;
+    max-width: 59%;
+    /* left: 10%; */
+    width: 41%;
+    border-bottom: 1px solid #e2d2d2;
+}
+
+.dottedLineName3 {
+    position: absolute;
+    height: 1px;
+    top: 65%;
+    max-width: 59%;
+    /* left: 10%; */
+    width: 41%;
+    border-bottom: 1px solid #e2d2d2;
+}
+
+.next-Draw{
+    background-color: #fefefe;
+    border: none;
+    color: #585454;
+    padding: 5px 29px;
+    /* text-align: center; */
+    /* display: inline-block; */
+    font-size: 12px;
+    /* margin: 4px 2px; */
+    /* transition-duration: 0.4s; */
+    /* cursor: pointer; */
+    border-radius: 12px;
+    letter-spacing: 2px;
+    /* text-decoration: none; */
+    font-weight: 500;
+}

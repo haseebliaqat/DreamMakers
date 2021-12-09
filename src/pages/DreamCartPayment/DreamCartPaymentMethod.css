@@ -1,0 +1,266 @@
+.radioButtonCustom {
+    height: 20px;
+    width: 20px;
+ }
+ 
+ .radioButttonFont {
+    font-size: 20px;
+ }
+ .textColor {
+    color: #104a8e;
+ }
+ 
+ .dream-cart__social {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+ }
+ 
+ .dream-cart__social-container {
+    margin-top: 28px;
+ }
+ 
+ .dream-cart__social-container > h6 {
+    font-weight: 300;
+    font-size: 10px;
+    text-align: left;
+    color: #c4c4c4;
+ }
+ * {
+   box-sizing: border-box;
+ }
+ 
+ input,
+ button {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   outline: none;
+   border-style: none;
+   color:"black";
+ }
+ 
+ html {
+
+   font-size: 16px;
+   font-family: Roboto, Open Sans, Segoe UI, sans-serif;
+   font-weight: 500;
+   font-style: normal;
+   text-rendering: optimizeLegibility;
+   height: 100%;
+ }
+ 
+ body {
+   height: 100%;
+   margin: 0;
+ }
+ 
+ #root {
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+ 
+ .AppWrapper {
+   width: 500px;
+   height: 400px;
+   position: relative;
+ }
+ 
+ @keyframes fade {
+   from {
+     opacity: 0;
+     transform: scale3D(0.95, 0.95, 0.95);
+   }
+   to {
+     opacity: 1;
+     transform: scale3D(1, 1, 1);
+   }
+ }
+ 
+ .Form {
+   animation: fade 200ms ease-out;
+ }
+ 
+ .FormGroup {
+   margin-left: 13px;
+   margin-top: 9px;
+ }
+ 
+ .FormRow {
+   display: -ms-flexbox;
+   display: flex;
+   -ms-flex-align: center;
+   align-items: center;
+   margin-left: 15px;
+   border-top: 1px solid #819efc;
+ }
+ 
+ .FormRow:first-child {
+   border-top: none;
+ }
+ 
+ .FormRowLabel {
+   width: 15%;
+   min-width: 70px;
+   padding: 11px 0;
+   color: #000000;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+
+ form {
+  width: 30vw;
+  /* min-width: 500px; */
+  align-self: center;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  border-radius: 7px;
+  padding: 40px;
+}
+
+
+#payment-message {
+  color: rgb(105, 115, 134);
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 12px;
+  text-align: center;
+}
+
+#payment-element {
+  margin-bottom: 24px;
+}
+
+/* Buttons and links */
+.Paynow {
+  background: #5469d4;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  border-radius: 4px;
+  border: 0;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  width: 100%;
+}
+
+.Paynow:hover {
+  filter: contrast(115%);
+}
+
+.Paynow:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* spinner/processing state, errors */
+.spinner,
+.spinner:before,
+.spinner:after {
+  border-radius: 50%;
+}
+
+.spinner {
+  color: #ffffff;
+  font-size: 22px;
+  text-indent: -99999px;
+  margin: 0px auto;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 0 2px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.spinner:before,
+.spinner:after {
+  position: absolute;
+  content: '';
+}
+
+.spinner:before {
+  width: 10.4px;
+  height: 20.4px;
+  background: #5469d4;
+  border-radius: 20.4px 0 0 20.4px;
+  top: -0.2px;
+  left: -0.2px;
+  -webkit-transform-origin: 10.4px 10.2px;
+  transform-origin: 10.4px 10.2px;
+  -webkit-animation: loading 2s infinite ease 1.5s;
+  animation: loading 2s infinite ease 1.5s;
+}
+
+.spinner:after {
+  width: 10.4px;
+  height: 10.2px;
+  background: #5469d4;
+  border-radius: 0 10.2px 10.2px 0;
+  top: -0.1px;
+  left: 10.2px;
+  -webkit-transform-origin: 0px 10.2px;
+  transform-origin: 0px 10.2px;
+  -webkit-animation: loading 2s infinite ease;
+  animation: loading 2s infinite ease;
+}
+
+@keyframes loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  form {
+    width: 80vw;
+    min-width: initial;
+  }
+}
+@media screen and (max-width: 992px) {
+  .responsive {
+    width: 80vw;
+    min-width: initial;
+  }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .responsive {
+    width: 80vw;
+    min-width: initial;
+  }
+}
+@media only screen and (max-width: 786px) {
+  .responsive {
+    width: 80vw;
+    min-width: initial;
+  }
+}
+
+
+
+ 
+
+ 
+ 
+ 
+
+
+ 
+
+ 

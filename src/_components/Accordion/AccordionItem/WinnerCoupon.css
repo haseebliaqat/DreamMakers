@@ -1,0 +1,164 @@
+.coupons-card {
+    position: relative;
+    display: inline-block;
+}
+
+.header {
+    position: absolute;
+    top: 5%;
+    left: 3%;
+}
+
+.EL-number {
+    position: absolute;
+    right: 13%;
+    top: 7%;
+    background-color: #fff;
+    padding: 0.1rem 0.5rem;
+    color: #104a8e;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border-radius: 0.3rem;
+}
+
+@media (max-width: 400px) {
+    .EL-number {
+        font-size: 1rem;
+    }
+    .EL-coupon {
+        left: 15.5% !important;
+    }
+}
+
+.EL-coupon {
+    position: absolute;
+    right: 0;
+    top: 19.5%;
+    left: 47%;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.625rem;
+    font-weight: 100;
+}
+
+@media (max-width: 435px) {
+    .EL-coupon {
+        top: 19.5%;
+        left: 10%;
+    }
+}
+
+@media (max-width: 410px) {
+    .EL-coupon {
+        top: 19.5%;
+        left: 6.5%;
+    }
+}
+
+.price {
+    position: absolute;
+    top: 42%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.Trip-country {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.Qr {
+    position: absolute;
+    left: 58%;
+    top: 47%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-weight: 700;
+}
+
+@media (max-width: 415px) {
+    .Qr {
+        left: 56%;
+        top: 46%;
+    }
+}
+
+.purchase-date {
+    position: absolute;
+    left: 0;
+    top: 73%;
+    left: 6%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.date {
+    position: absolute;
+    top: 80%;
+    left: 6%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+@media (max-width: 400px) {
+    .date {
+        font-size: 0.69rem;
+    }
+}
+
+.coupon-name {
+    position: absolute;
+    right: 0;
+    top: 73%;
+    left: 60%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.name {
+    position: absolute;
+    top: 80%;
+    right: 0;
+    left: 60%;
+    transform: translateY(-50%);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+@media (max-width: 400px) {
+    .name {
+        font-size: 0.69rem;
+    }
+}
+
+.dottedLine {
+    position: absolute;
+    height: 1px;
+    top: 65%;
+    max-width: 80%;
+    left: 10%;
+    width: 100%;
+    border-bottom: 1px dashed #fff;
+}

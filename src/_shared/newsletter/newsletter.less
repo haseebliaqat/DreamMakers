@@ -1,0 +1,101 @@
+.news-letter {
+   background-color: white;
+   padding: 10px 0;
+
+   .news-letter__left {
+      position: relative;
+      border-right: 2px solid #d3ddea;
+      text-align: center;
+      flex: 1;
+
+      @media only screen and (max-width: 767px) {
+         border-right: none;
+      }
+   }
+
+   .news-letter__left-heading {
+      font-weight: 500;
+      font-size: 1.2rem;
+      text-align: center;
+      color: rgba(57, 57, 57, 0.86);
+
+      @media only screen and (max-width: 767px) {
+         font-size: 1rem;
+      }
+   }
+
+   .input-container {
+      width: 60%;
+      margin: auto;
+      position: relative;
+
+      @media only screen and (max-width: 767px) {
+         width: 90%;
+      }
+   }
+
+   .news-letter__input-label {
+      background-color: white;
+      position: absolute;
+      left: 15px;
+      top: 9px;
+      font-size: 10px;
+      padding: 0px 6px;
+   }
+
+   .news-letter__input {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 15px;
+      height: 48px;
+      border-radius: 5px;
+      border: 1px solid #707070;
+      outline: none;
+      padding-right: 15px;
+
+      @media only screen and (max-width: 767px) {
+         height: 42px;
+         border-radius: 9px;
+         border: 2px solid #707070;
+      }
+   }
+
+   .news-letter__input-button {
+      position: absolute;
+      color: white;
+      padding: 4px 15px;
+      right: 10px;
+      top: 20px;
+      border-radius: 25px;
+      background: #1663be;
+      box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.16);
+      border: none;
+   }
+
+   .news-letter__right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      @media only screen and (max-width: 767px) {
+         margin-top: 1rem;
+         margin-left: 1rem;
+      }
+   }
+
+   .news-letter__right-paragraph {
+      text-align: center;
+      font-weight: 500;
+      font-size: 22px;
+      text-align: center;
+      color: rgba(57, 57, 57, 0.86);
+      padding-right: 66px;
+
+      @media only screen and (max-width: 767px) {
+         font-size: 16px;
+         margin-top: 1.1rem;
+         margin-left: 1.1rem;
+      }
+   }
+}

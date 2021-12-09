@@ -1,0 +1,472 @@
+.backArrowButton {
+   background-color: #fff;
+   position: absolute;
+   left: 1.5%;
+   top: 15%;
+   border-radius: 1rem;
+}
+.dreamCartTitle {
+   color: #104a8e;
+   font-size: 45px;
+   font-weight: 700;
+   padding: 1rem 0;
+}
+.dreamCart-tags {
+   color: #104a8e;
+}
+.dreamCartProcess {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding-bottom: 1rem;
+}
+
+.dreamCartProcess__circle {
+   height: 20px;
+   width: 20px;
+   border: 2px solid #104a8e;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   @media screen and (max-width: 768px) {
+      height: 16px;
+      width: 16px;
+   }
+}
+
+.dreamCartProcess__circle__dot {
+   height: 12px;
+   width: 12px;
+   background-color: #104a8e;
+   border-radius: 50%;
+
+   @media screen and (max-width: 768px) {
+      height: 8px;
+      width: 8px;
+   }
+}
+
+.dreamCartHeading {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   background-color: #cbd5e1;
+}
+.DreamCart-Y-line {
+   margin-top: 0.5rem;
+   background-color: #edb200;
+   width: 70px;
+   height: 4px;
+   border-radius: 10px;
+}
+/* =========================== Card DreamCart =========================== */
+.boxShadow {
+   box-shadow: 0px 8px 10px rgba(112, 112, 112, 0.3);
+   border-radius: 20px;
+}
+.cardBox {
+   padding: 0.8rem 0;
+}
+
+.count-DreamCart {
+   font-size: 35px;
+   color: #104a8e;
+   font-weight: 700;
+}
+.Product-deatils-DreamCart {
+   color: #104a8e;
+}
+.maldivs-trip {
+   color: #104a8e;
+   font-size: 30px;
+   font-weight: 700;
+}
+
+.productCount-dreamCart {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.decrementBtn {
+   background-color: #dfdfdf;
+   border: none;
+   border-radius: 27px 0 0 27px;
+   padding: 0.6rem 1.5rem;
+}
+.incrementBtn {
+   background-color: #dfdfdf;
+   border: none;
+   border-radius: 0 27px 27px 0;
+   padding: 0.6rem 1.5rem;
+}
+.dreamXCart-counter {
+   padding: 0.6rem 1.5rem;
+   color: #707070;
+   font-weight: 600;
+}
+.horizonatl-line {
+   border-top: 1px solid #094486a1;
+}
+.font400 {
+   font-weight: 400;
+}
+.AlignRight {
+   float: right;
+}
+
+/* ====================== Input Container =================== */
+.radioBtnSize {
+   height: 20px;
+   width: 20px;
+}
+.radioButttonFontSize {
+   color: #104a8e;
+   font-size: 20px;
+}
+.inputContainer {
+   position: relative;
+}
+.inputContainer > button {
+   position: absolute;
+   top: 0;
+   right: 4%;
+}
+.inputContainer > input {
+   padding-left: 1rem;
+   padding-right: 4rem;
+   border: 1px solid #707070;
+}
+.inputContainer > input:focus {
+   outline: none !important;
+   box-shadow: none !important;
+   border: 1px solid #707070;
+}
+.termsAcceptFont {
+   font-size: 20px;
+}
+/* ========================= Buttons For Chechout =========================*/
+.absoluteClass {
+   position: absolute;
+   left: 3rem;
+}
+
+/* ============================ Banners =========================== */
+.dreamBanner {
+   border: 1px solid #707070;
+   border-radius: 0.5rem;
+}
+.bannerLogo {
+   width: 15rem;
+}
+.bannerCart-text {
+   text-transform: uppercase;
+   color: #104a8e;
+   font-size: 0.95rem;
+}
+
+/* ============================ Order Summery =============== */
+.OrderSummer-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #104a8e;
+   opacity: 0.75;
+   padding: 1.2rem;
+   margin-bottom: 3rem;
+}
+.card-display-on-hover {
+   // display: none;
+   background-color: #fff;
+   max-height: 0;
+   transition: max-height 0.15s ease-out;
+   overflow: hidden;
+   position: absolute;
+   top: 100%;
+   left: 0;
+   z-index: 99;
+   border: 1px solid rgb(228, 228, 228);
+}
+.show-card-hover {
+   position: relative;
+   &:hover {
+      .card-display-on-hover {
+         max-height: 700px;
+         transition: max-height 0.25s ease-in;
+         // display: block;
+      }
+
+      .dropErrow {
+         transform: rotate(180deg);
+      }
+   }
+}
+
+.OrderSummery {
+   display: flex;
+   align-items: center;
+   color: #fff;
+}
+.OrderSummery > span {
+   padding-left: 1rem;
+}
+
+.buttonRound {
+   padding-bottom: 2.5rem;
+   padding-top: 1rem;
+}
+
+/* ============================= ResponsiveNess ============================= */
+
+/* --------------------- Less Then 576 Px --------------------- */
+@media (max-width: 575px) {
+   .cardBox {
+      display: flex !important;
+   }
+
+   .dreamCart-tags {
+      font-size: 12px;
+   }
+
+   .cart-btn {
+      width: 18px;
+      height: auto;
+   }
+
+   .bottle-img {
+      width: 42px;
+      height: 94px;
+   }
+
+   .fontSizeNote {
+      font-size: 9px;
+   }
+
+   .DreamCart-Y-line {
+      width: 40px;
+   }
+
+   .count-DreamCart {
+      font-size: 12px;
+   }
+
+   .maldivs-trip {
+      font-size: 14px !important;
+   }
+
+   .Product-deatils-DreamCart > p {
+      font-size: 10px;
+   }
+
+   .detamCartLeft {
+      display: flex !important;
+      justify-content: flex-start !important;
+   }
+   .PurchaseEntries {
+      font-size: 10px !important;
+   }
+
+   .decrementBtn {
+      padding: 0.2rem !important;
+   }
+
+   .incrementBtn {
+      padding: 0.2rem !important;
+   }
+
+   .dreamXCart-counter {
+      padding: 0.3rem 0.7rem !important;
+   }
+
+   .order1 {
+      order: -1 !important;
+   }
+
+   .order2 {
+      order: 0 !important;
+   }
+
+   .order3 {
+      order: 1 !important;
+      // margin: 10px auto !important;
+      margin: 1rem 0rem !important;
+   }
+
+   .order3 > input {
+      border-radius: 10px;
+   }
+
+   .alignLeft {
+      justify-content: flex-start !important;
+   }
+
+   .bannerCart-text {
+      font-size: 14px !important;
+   }
+
+   .buttonRound {
+      border-radius: 50px;
+      color: #000 !important;
+      background-color: #fff !important;
+      padding: 0.5rem 0;
+   }
+
+   .marginTop-Sm {
+      margin-top: 30px;
+   }
+
+   .U-marginX-25 {
+      margin: 0 75px !important;
+   }
+
+   .totalFee {
+      padding-left: 0rem;
+   }
+   .buttonApply {
+      border-left: 1px solid #104a8e;
+      text-transform: uppercase;
+      color: #104a8e;
+      padding: 0 0.5rem !important;
+      top: 18% !important;
+   }
+   .U-paddingLeftText {
+      font-size: 14px;
+   }
+
+   .radioBtnSize {
+      height: 15px;
+      width: 15px;
+   }
+   .dreamCartTitle {
+      font-size: 16px;
+   }
+   .paddingleft-sm {
+      padding-left: 2.3rem;
+   }
+}
+
+/* ------------------------------- Less Then 425 Px -------------------- */
+@media (max-width: 425px) {
+   .U-marginX-25 {
+      margin: 0 45px !important;
+   }
+}
+
+/* ========------------ Less then 1200Px and Grater Then 992Px --------=========== */
+@media (max-width: 1200px) and (min-width: 992px) {
+   .absoluteClass {
+      left: 2rem;
+   }
+   .fontSizeNote {
+      font-size: 15px;
+   }
+}
+/* ------------------------- Less Then 992 and Grater Then 768 ---------------- */
+@media (max-width: 991px) and (min-width: 768px) {
+   .containerMedium {
+      max-width: 930px;
+   }
+   .absoluteClass {
+      left: 2rem;
+   }
+   .buttonRound > img {
+      padding-right: 5rem !important;
+   }
+   .FloarRight-Responsive {
+      font-size: 14px !important;
+   }
+}
+@media (max-width: 820px) and (min-width: 768px) {
+   .U-paddingLeftText {
+      font-size: 12px !important;
+   }
+}
+
+/* ------------------------------ Less Then 768Px ------------------------ */
+
+@media (max-width: 767px) {
+   .boxShadow {
+      max-width: 100% !important;
+      box-shadow: none !important;
+   }
+
+   .maldivs-trip {
+      font-size: 14px;
+   }
+
+   .decrementBtn,
+   .incrementBtn {
+      padding: 0.4rem 1rem;
+   }
+   .reverseOrder {
+      display: flex !important;
+      flex-direction: column-reverse !important;
+   }
+   .fontSizeNote {
+      font-size: 9px;
+   }
+   .cardNoShowLess768 {
+      display: none;
+   }
+   .radioButttonFontSize {
+      font-size: 16px;
+   }
+   .termsAcceptFont {
+      font-size: 16px;
+   }
+   .font-16 {
+      font-size: 12px !important;
+   }
+}
+
+/* =================== Less Then 500px =============== */
+@media (max-width: 500px) {
+   .FloarRight-Responsive {
+      font-size: 11px;
+   }
+   .U-marginX-25 {
+      margin: 0 15px !important;
+   }
+   .U-paddingLeftText {
+      padding-right: 3rem !important;
+   }
+}
+
+@media (min-width: 768px) {
+   .backArrowButton {
+      display: none;
+   }
+   .OrderSummer-container {
+      display: none;
+   }
+}
+
+// ======================= Hover Effect==============//
+#child0 {
+   height: 0;
+   overflow: hidden;
+   background-color: #dedede;
+   -moz-transition: height 1s ease;
+   -webkit-transition: height 1s ease;
+   -o-transition: height 1s ease;
+   transition: height 1s ease;
+}
+#parent0:hover #child0 {
+   height: auto;
+}
+#child40 {
+   height: 40px;
+   overflow: hidden;
+   background-color: #dedede;
+   -moz-transition: height 1s ease;
+   -webkit-transition: height 1s ease;
+   -o-transition: height 1s ease;
+   transition: height 1s ease;
+}
+#parent40:hover #child40 {
+   height: auto;
+}

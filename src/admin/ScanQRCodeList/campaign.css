@@ -1,0 +1,43 @@
+input[type=file].form-control{
+    padding: 0 !important;
+    height: calc(1.5em + .5rem) !important
+}
+
+.header{
+    font-size: 21px;
+    margin-top: 29px;
+    font-weight: 700;
+    color: #3d5fdd;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 12px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color :#656464;
+  }
+  .pin{
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+    /* bottom: 50%; */
+    margin: auto;
+    left: 37%;
+  }

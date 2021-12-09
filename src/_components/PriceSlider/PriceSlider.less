@@ -1,0 +1,49 @@
+.SliderPrice {
+    .sliderSwipeBox {
+        position: relative;
+    }
+
+    .slick-dots {
+        bottom: 0;
+        display: flex !important;
+        position: inherit;
+        flex-wrap: wrap;
+        display: flex;
+        justify-content: center !important;
+
+
+        li {
+            // width: 80px;
+            // height: 40px;
+            width: 20%;
+            position: initial;
+            height: initial;
+            margin: 0px 0px 10px;
+            margin: 7px !important;
+
+            a {
+                display: inline-block;
+            }
+
+            img {
+                height: 40px;
+                width: 80px;
+                // height: 45px;
+                // width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .SliderPrice {
+        .slick-dots {
+            width: 93%;
+            margin: 0 auto;
+
+            li {
+                width: 19%;
+            }
+        }
+    }
+}

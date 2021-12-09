@@ -1,0 +1,776 @@
+.header-bar {
+    background: linear-gradient(0deg, #142d4d, #0f4687 100%);
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 7px 0 #000;
+}
+.appbar-logo{
+    display: inline-flex !important;
+    height: auto;
+    width: auto;
+    max-height: 48px;
+    max-width: 250px;
+    margin-top: -13px;  
+}
+
+.SignupForm {
+    margin: 16px 0;
+
+    .forgotBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            &:first-child {
+                input {
+                    margin-right: 10px;
+                }
+
+                label {
+                    margin-bottom: 0;
+                    font-size: 18px;
+                    color: #393939;
+                }
+            }
+
+            &:nth-child(2) {
+                a {
+                    color: #393939;
+                    font-size: 18px;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .SignUpBox {
+        box-shadow: 0px 2px 8px 0px #d9d9d970;
+        padding: 50px 40px 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .terms {
+        display: flex;
+        align-items: center;
+
+        label {
+            font-size: 18px;
+        }
+
+        input {
+            margin-right: 10px;
+        }
+    }
+
+    .signupBtn {
+        background-color: #1663BE;
+        font-size: 18px;
+        color: #fff;
+        border-radius: 5px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        height: 50px;
+
+        &:focus {
+            box-shadow: initial;
+            outline: initial;
+        }
+    }
+
+    .subscription-form {
+        .react-tel-input {
+            .special-label {
+                display: none;
+            }
+        }
+
+        input {
+            // border: 1px solid #707070;
+            border-radius: 10px;
+
+            &:focus {
+                box-shadow: inherit;
+                outline: none;
+            }
+        }
+
+        .eyeImg {
+            position: absolute;
+            top: 9px;
+            right: 12px;
+            cursor: pointer;
+            width: 25px;
+            height: 33px;
+        }
+    }
+
+    .forminput {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .form-control {
+            height: 50px;
+            font-size: 11px;
+            // border: 1px solid #707070;
+            border-radius: 10px;
+
+            &:focus {
+                box-shadow: inherit;
+                outline: none;
+            }
+        }
+
+        .subscription-form:first-child {
+            margin-bottom: 0 !important;
+        }
+
+        .subscription-form {
+            width: 47% !important;
+            margin: 0;
+        }
+    }
+
+    .formSelect {
+        margin: 15px 0;
+        display: flex;
+
+        div {
+            width: 40%;
+
+            input {
+                margin-right: 10px;
+            }
+
+            label {
+                color: #393939;
+                font-size: 18px;
+            }
+        }
+    }
+
+    .nav-pills {
+        justify-content: space-between;
+
+        .nav-item {
+            width: 50%;
+            text-align: center;
+
+            &:first-child {
+                .nav-link {
+                    border-top-right-radius: 0px;
+                    border-top-left-radius: 8px;
+                    border-bottom-right-radius: 0px;
+                    border-bottom-left-radius: 0px;
+                }
+            }
+
+            &:nth-child(2) {
+                .nav-link {
+                    border-top-right-radius: 8px;
+                    border-top-left-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                    border-bottom-left-radius: 0px;
+                }
+            }
+
+            .nav-link {
+                opacity: 0.3;
+                background-color: #1663BE;
+                color: #fff;
+                padding: 1rem 1rem;
+                font-size: 17px;
+            }
+
+            .nav-link.active {
+                font-size: 17px;
+                opacity: 1;
+            }
+
+            a {
+                font-weight: 500;
+                font-size: 22px;
+            }
+        }
+    }
+
+    .LoginCont {
+        .subscription-form {
+            &:first-child {
+                margin-bottom: 30px !important;
+            }
+        }
+
+        .LoginBtn {
+            margin-top: 70px;
+        }
+    }
+
+    .formCont {
+        .subscription-form {
+            &:not(:last-child) {
+                margin-bottom: 15px;
+            }
+
+            width: 100%;
+
+            input {
+                height: 45px;
+            }
+
+            span {
+                background-color: white;
+                position: absolute;
+                left: 20px;
+                top: -6px;
+                font-size: 10px;
+                padding: 0px 6px;
+                color: rgb(57 57 57 / 67%);
+
+            }
+        }
+    }
+
+}
+
+.signUpSlider {
+    width: 80%;
+    padding: 65px 0px;
+
+    h1 {
+        color: #104A8E;
+        text-align: center;
+        font-size: 30px;
+        font-weight: 900;
+        margin-bottom: 50px;
+    }
+
+    .slick-slider {
+        .slick-slide {
+            div {
+                &:focus-visible {
+                    outline: none;
+                }
+
+                img {
+                    height: 22rem;
+                    width: 100%;
+                }
+            }
+        }
+
+        .slide__caption {
+            margin-top: 70px;
+            text-align: center;
+
+            h3 {
+                color: #104A8E;
+            }
+
+            p {
+                font-size: 12px;
+                color: #EDB200;
+            }
+        }
+
+        .slick-center .slide__caption {
+            opacity: 1 !important;
+        }
+    }
+
+    .slick-slider {
+        width: 100%;
+    }
+
+    .slick-list {
+        padding: 0;
+    }
+
+    .slick-arrow {
+        display: none !important;
+    }
+
+    .slick-slide {
+        opacity: 0.5;
+
+        .slide__caption {
+            opacity: 0;
+        }
+
+        &:nth-child(odd) {
+            margin-top: 30px;
+        }
+    }
+
+    .slick-center {
+        opacity: 1;
+    }
+
+    .slick-active .slick-center {
+        opacity: 1;
+    }
+}
+
+.LoginWith {
+    div {
+        background-color: #1663BE;
+        height: 44px;
+        border-radius: 25px;
+        text-align: center;
+        width: 65%;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 0px 10px;
+        justify-content: center;
+        position: relative;
+        margin: 0px auto;
+        cursor: pointer;
+
+        span {
+            position: absolute;
+            left: 15px;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 100px;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &:first-child {
+            margin: 50px auto 20px;
+        }
+    }
+}
+
+.mbl-wrapper-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 25px;
+    width: 100%;
+    height: 100vh;
+
+    .top-header {
+        height: 25vh;
+
+        .logo-box {
+            width: 150px;
+            height: 150px;
+            background-color: #104A8E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+
+            img {
+                width: 137px;
+                height: 53px;
+            }
+        }
+    }
+
+    .title-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 25vh;
+
+        h3 {
+            font-size: 35px;
+            font-weight: 600;
+            color: #0E0E0E;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        p {
+            font-size: 16px;
+            color: #393939;
+            font-weight: 300;
+            line-height: 1.2;
+            margin: 0;
+        }
+    }
+
+    .login-options {
+        height: 25vh;
+
+        .custom-signup {
+            width: 100%;
+            height: 44px;
+            border-radius: 35px;
+            background-color: #fff;
+            border: 1px solid #707070;
+            font-size: 16px;
+            color: #393939;
+            font-weight: 400;
+            line-height: 1.2;
+            text-align: center;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                border-radius: 10rem !important;
+                z-index: -2;
+            }
+
+            &:before {
+                content: '';
+                position: absolute;
+                border-radius: 50%;
+                bottom: 0px;
+                left: 0px;
+                width: 11%;
+                height: 100%;
+                background-color: #1663BE;
+                transition: all .3s;
+                z-index: -1;
+                box-shadow: 3px 3px 6px #00000029;
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: #fff;
+
+                &:before {
+                    width: 100%;
+                    border-radius: 10rem;
+                }
+            }
+        }
+    }
+
+    .login-text {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 21vh;
+
+        p {
+            font-size: 16px;
+            color: #393939;
+            font-weight: 400;
+            line-height: 1.2;
+            margin: 0;
+
+            span {
+                color: #1B7CED;
+            }
+        }
+    }
+
+    .SignupForm {
+        margin: 0;
+
+        .mockup {
+            background: url('../../_assets/images/login-mockup.svg');
+            height: 245px;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 40px;
+
+            .top-box {
+                display: flex;
+                justify-content: space-between;
+
+                h3 {
+                    font-size: 35px;
+                    font-weight: 200;
+                    color: #ffffffd1;
+                    line-height: 1.3;
+                    margin: 0;
+                    // padding: 20px 40px;
+
+                    span {
+                        font-size: 32px;
+                        font-weight: 500;
+                    }
+                }
+
+                img {
+                    width: 26px;
+                    height: 33px;
+                }
+            }
+
+            .logo-box {
+                width: 104px;
+                height: 104px;
+                background-color: #104A8E;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: flex-end;
+
+                img {
+                    width: 98px;
+                    height: 38px;
+                }
+            }
+        }
+
+        .SignUpBox {
+            box-shadow: none;
+            border-radius: 0;
+            padding: 10px 40px 20px;
+
+            .terms {
+
+                label {
+                    font-size: 15px;
+                    font-weight: 400;
+                    line-height: 1.2;
+                    margin: 0;
+                }
+            }
+
+            .signupBtn {
+                border-radius: 25px;
+                width: 132px;
+                height: 44px;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 1.2;
+                box-shadow: 3px 6px 6px #00000029;
+                margin: 15px auto;
+            }
+
+            .login-text {
+                height: unset;
+            }
+        }
+    }
+
+    .SignupForm.login,
+    .SignupForm.verifyNumber,
+    .SignupForm.verifyOTP {
+
+        .mockup {
+            padding: 20px 30px;
+
+            .top-box {
+
+                h3 {
+                    font-size: 25px;
+                }
+            }
+        }
+
+        .key-icon {
+            display: flex;
+            margin: 20px auto;
+        }
+
+        .verify-icon {
+            width: 145px;
+            height: 103px;
+            display: flex;
+            margin: 20px auto;
+        }
+
+        .formCont {
+            .form-control {
+                font-size: 14px;
+                line-height: 1;
+            }
+
+            .eyeImg {
+                width: 24px;
+                height: 24px;
+                top: 30% !important;
+                right: 4% !important;
+            }
+
+            .subscription-form:not(:last-child) {
+                margin-bottom: 15px !important;
+            }
+
+            .forgotBox {
+                .remember-me {
+                    display: flex;
+                    align-items: center;
+
+                    label {
+                        font-size: 12px;
+                        font-weight: 400;
+                        line-height: 1;
+                        margin: 0;
+                        color: #393939;
+                    }
+                }
+
+                a {
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 1;
+                    margin: 0;
+                    color: #393939;
+                }
+            }
+        }
+
+        .SignUpBox {
+
+            .signupBtn,
+            .google-btn,
+            .facebook-btn {
+                width: 100%;
+
+                span {
+                    left: 10px;
+                }
+            }
+
+            .login-text {
+                height: 6vh;
+            }
+        }
+
+
+    }
+
+    .SignupForm.verifyNumber {
+
+        .SignUpBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 70vh;
+            width: 100%;
+
+            .para-1 {
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 1.2;
+                text-align: center;
+                color: #000;
+            }
+
+            .para-2,
+            .para-3 {
+                color: #B9B9B9;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 1.2;
+                text-align: center;
+            }
+
+            .formCont {
+                width: 100%;
+            }
+
+        }
+    }
+
+    .SignupForm.verifyOTP {
+
+        .SignUpBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 70vh;
+            width: 100%;
+
+            .para-1 {
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 1.2;
+                text-align: center;
+                color: #000;
+            }
+
+            .para-2,
+            .para-3 {
+                color: #B9B9B9;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 1.2;
+                text-align: center;
+
+                span {
+                    color: #1663BE;
+                }
+            }
+
+            .para-2 {
+                margin-top: 20px;
+            }
+
+            .formCont {
+                width: 100%;
+            }
+
+            .code-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 15px;
+
+                input.pincode-input-text {
+                    background: transparent !important;
+                    width: 45px !important;
+                    height: 45px !important;
+                    border-radius: 0;
+                    font-size: 25px;
+                    font-weight: 400;
+                    line-height: 33px;
+                    margin-top: 0 !important;
+                    margin-right: 5px !important;
+                    color: #000;
+                    outline: 0;
+                    text-align: center !important;
+                    border-top: 0 !important;
+                    border-right: 0 !important;
+                    border-left: 0 !important;
+                    border-bottom: 1px solid #FFCF00 !important;
+                }
+            }
+
+            .signupBtn {
+                width: 132px;
+            }
+
+        }
+    }
+}
+
+// .m-block {
+//     display: block !important;
+// }
+
+@media screen and (min-width: 992px) {
+    .m-block {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .m-none {
+        display: none !important;
+    }
+}
