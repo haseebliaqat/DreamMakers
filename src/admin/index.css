@@ -59,5 +59,20 @@ live-draw, live-draw:hover, live-draw:focus, live-draw:active {
     letter-spacing: 2px;
     text-decoration: none;
 }
+.let-go-expired{
+    background-color: #8a98cc;
+    border: none;
+    color: white;
+    padding: 2px 28px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
   
   

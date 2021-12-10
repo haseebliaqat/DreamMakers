@@ -19,10 +19,10 @@ function List({ history, match }) {
 	const [checkedState, setChekcedState] = useState([]);
     useEffect(() => {
         let obj = {
-            "limit": 5,
+            "limit": 100,
             "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
-            "where": {"id": { "$gt": 0 } }
+            "order": [["name", "ASC"]],
+            "where": {"status": 'sold-out' }
         }
         campaignsService.getAll(obj).then((x) => {
             console.log(x);
