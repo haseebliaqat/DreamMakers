@@ -24,6 +24,7 @@ import countries from '@/_assets/js/countries.json';
 import cities from '@/_assets/js/cities.json';
 import { Typeahead } from 'react-bootstrap-typeahead'; 
 const DreamCartInformation = () => {
+   const [count, setCount] = useState(1);
    const [imageShow, setImageShow] = useState(false);
    const history = useHistory();
    const [TermAndCondition, setTermsandcondition] = useState(false);
@@ -336,9 +337,9 @@ const responseFacebook = (res) => {
          <DreamCartSteper value={stepNo} />
          <div className="container-fluid">
             <div className="row">
-               <div className="col-12 p-0">
+               {/* <div className="col-12 p-0">
                   <OrderSummery />
-               </div>
+               </div> */}
 
                <div className="col-md-12 col-lg-5 py-md-5 py-3 px-md-3 px-1">
                   <div className="container px-md-5 px-4">
@@ -590,7 +591,7 @@ const responseFacebook = (res) => {
                </div>
                
                <div className="col-md-12 col-lg-7 cardNoShowLess768">
-                  <Card />
+                  <Card count={count} setCount={setCount} />
                </div>
                <div className="col-12">
                   <NewsLetter />

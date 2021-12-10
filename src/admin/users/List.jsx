@@ -8,7 +8,13 @@ function List({ match }) {
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
-        accountService.getAll().then(x => setUsers(x));
+        let obj = {
+            "limit": 100,
+            "offset": 0,
+            "order": [["id", "ASC"]],
+            "where": { "id": { "$gt": 0 } }
+        }
+        accountService.getAll(obj).then(x => setUsers(x.rows));
     }, []);
 
     function deleteUser(id) {

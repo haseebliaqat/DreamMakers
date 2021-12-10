@@ -31,7 +31,7 @@ import { accountService, alertService } from '@/_services';
 const baseUrl = `${config.apiUrl}`;
 import { fetchWrapper, history } from '@/_helpers';
  
-const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
+const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo,count}) => {
    const [HideCheckout, setHideCheckout] = useState(true);
    const [imageShow, setImageShow] = useState(false);
    const [user, setUser] = useState(null);
@@ -42,7 +42,7 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
    const [campain_cash_paid, setCampainCashPaid] = useState(localStorage.getItem("selected_campaign_cash_paid"));
    const [campain_discount, setCampainDiscount] = useState(localStorage.getItem("discount_code"));
    const [discount_amount, setDiscountAmount] = useState(localStorage.getItem("selected_campaign_discount_amount"));
-  
+   var item_count=0;
  
 
 
@@ -61,7 +61,7 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
         console.log(localStorage.getItem("selected_campaign_id"))
         console.log(localStorage.selected_campaign_id.toString())
         console.log(localStorage.userDetails)
-        console.log("haseeb")
+        console.log("haseeb1")
       }, 1000);
       if (!!localStorage.userDetails) {            
         setUser(JSON.parse(localStorage.userDetails));
@@ -73,7 +73,9 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
       });
       return window.removeEventListener('resize', () => {});
 
-   }, []);
+   }, [
+      item_count=localStorage.getItem("item_count_value"),
+   ]);
 
    const showButtons = () => {
       setHideCheckout(!HideCheckout);
@@ -95,12 +97,13 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
     };
 
     
-
+    
     async function processPayment(paymentData) {
-      console.log("Aqon")
-      console.log(paymentData)
+      console.log("item_count")
+      console.log(item_count)
+      
       const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-        fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(localStorage.getItem("item_count_value")),enabled:false }).then((resp) => {
+        fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(count),enabled:false }).then((resp) => {
          
             const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
             fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,
@@ -256,7 +259,7 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
                            }}
                            onLoadPaymentData={paymentRequest => {
                              console.log('load payment data', paymentRequest);
-                            processPayment();
+                             processPayment();
                            }}
              />:null
             }

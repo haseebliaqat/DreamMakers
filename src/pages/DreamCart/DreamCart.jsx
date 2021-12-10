@@ -13,6 +13,7 @@ const DreamCart = (history, location,props) => {
    const [checkoutAsGuest, setCheckoutAsGuest] = useState('guest');
    const [itemID, setitemID] = useState('id');
    
+   const [count, setCount] = useState(1);
    const [stepNo, setstepNo] = useState(1);
    useEffect(() => {
       window.scrollTo(0, 0)
@@ -20,7 +21,7 @@ const DreamCart = (history, location,props) => {
    return (
       <div>
          <DreamCartSteper value={stepNo}  />
-         <Card />
+         <Card count={count} setCount={setCount}/>
          <div className="container containerMedium">
             <div className="row">
                <div className="col-md-8 reverseOrder">
@@ -34,7 +35,7 @@ const DreamCart = (history, location,props) => {
                   <DreamCartBanners />
                </div>
                <div className="col-md-4 U-marginX-25">
-                  <CardBottom  setstepNo={setstepNo}
+                  <CardBottom  count={count} setstepNo={setstepNo}
                      checkoutAsGuest={checkoutAsGuest === 'notGuest' }
                   />
                </div>

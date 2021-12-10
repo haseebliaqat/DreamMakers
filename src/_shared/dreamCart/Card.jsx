@@ -8,15 +8,13 @@ import Minus from '../../_assets/dreamCart/minus.png';
 import Plus from '../../_assets/dreamCart/plus.png';
 import * as moment from "moment";
 import { accountService, alertService } from '@/_services';
-const Card = () => {
+const Card = ({count,setCount}) => {
    const [campaign, setCampaignData] = useState(null);
    const [endAmount, SetEndAmount] = useState(localStorage.getItem("selected_campaign_cash_paid"));
    const [campaignPrice, setCampaignprice ]= useState(null);
-   const [count, setCount] = useState(1);
    const [user, setUser] = useState(null);
    const [Discount, setDiscount] = useState(localStorage.getItem("discount_code")!=""?localStorage.getItem("discount_code"):null);
-   const [Redeem, setRedeem] = useState(localStorage.getItem("avalaible_dreamcoin")!=""?localStorage.getItem("avalaible_dreamcoin"):null);
-   const [Redeem2, setRedeem2] = useState(localStorage.getItem("avalaible_balance")!=""?localStorage.getItem("avalaible_balances"):null);
+   const [Redeem, setRedeem] = useState(0);
    const [is_apply_redeem, setIsApplyRedeem] = useState(false);
    const [is_apply_discount, setIsApplyDiscount] = useState(false);
    const [apply_discount, setAppyDiscount] = useState(0);
@@ -28,6 +26,10 @@ const Card = () => {
    const [TotalTransactionFees, setTotalTransactionFees] = useState(1);
    
    useEffect(() => {
+      if (!!localStorage.userDetails) {            
+         setUser(JSON.parse(localStorage.userDetails));
+         
+      }
       if (!!localStorage.SeletedCampaign) {
      setCampaignData(JSON.parse(localStorage.SeletedCampaign));
                console.log("haseeb");
@@ -43,13 +45,12 @@ const Card = () => {
               localStorage.setItem("SeletedCampaign",JSON.stringify(SelectedCampaignJSON));
         }
         const timer = setTimeout(() => {
-         GetAllWinners();
+         // GetAllWinners();
+         setRedeem(!!user?user.dreamCoins:0),[
+            console.log("heloo==>>>>>>>>>>>>>>"),
+            console.log(Redeem)
+         ]
        }, 1000);
-
-        if (!!localStorage.userDetails) {            
-            setUser(JSON.parse(localStorage.userDetails));
-            
-         }
    }, [       
    localStorage.setItem("selected_campaign_actual_price",!!campaign?campaign.couponPrice:""),//
    localStorage.setItem("selected_campaign_id",!!campaign?campaign.id:""),//
@@ -60,28 +61,28 @@ const Card = () => {
 
 
 ]);
-const GetAllWinners =()=> {
-   console.log("-=============>"+!!user?user.id:"")
-   let obj1 = {
-      "limit": 5,
-      "offset": 0,
-      "order": [["id", "DESC"]],
-      "where":{"id":{"$gt":0},"accountId":!!user?user.id:"" }
-  }
-   alertService.clear();
-   accountService.AvailabelBalance(obj1).then((resp) => {
-      console.log("resp.rows")
-      console.log(resp.rows)
-      var myJson= resp.rows;
-      console.log("myJson")
-      console.log(myJson)
-      localStorage.setItem("avalaible_balance",myJson[0].balance)
-      localStorage.setItem("avalaible_dreamcoin",myJson[0].currencyValue)
+// const GetAllWinners =()=> {
+//    console.log("-=============>"+!!user?user.id:"")
+//    let obj1 = {
+//       "limit": 5,
+//       "offset": 0,
+//       "order": [["id", "DESC"]],
+//       "where":{"id":{"$gt":0},"accountId":!!user?user.id:"" }
+//   }
+//    alertService.clear();
+//    accountService.AvailabelBalance(obj1).then((resp) => {
+//       console.log("resp.rows")
+//       console.log(resp.rows)
+//       var myJson= resp.rows;
+//       console.log("myJson")
+//       console.log(myJson)
+//       localStorage.setItem("avalaible_balance",myJson[0].balance)
+//       localStorage.setItem("avalaible_dreamcoin",myJson[0].currencyValue)
 
-   }).catch(error => {
-       alertService.error("Internal Server Error");
-   });
- }
+//    }).catch(error => {
+//        alertService.error("Internal Server Error");
+//    });
+//  }
 
    const incrementHandler = () => {
       setCount(count + 1), 
@@ -211,6 +212,8 @@ const GetAllWinners =()=> {
       // setAppyDiscount(apply_discount)
       
     }
+
+ 
     
    return (
          <div className="container boxShadow mb-3 mt-1 containerMedium">
@@ -338,7 +341,7 @@ const GetAllWinners =()=> {
                   className="form-control"
                   placeholder="Redeem Coins"
                   onChange={RedeemField}
-                  value={Redeem2+" Dream Coins Redeemed Successfully"}
+                  value={Redeem+" Dream Coins Redeemed Successfully"}
                   disabled = {true}
                />
                   :<TextField
@@ -346,10 +349,11 @@ const GetAllWinners =()=> {
                   className="form-control"
                   placeholder="Redeem Coins"
                   onChange={RedeemField}
-                  value={!!Redeem2?Redeem2+" Dream Coins available":""}
+                  value={Redeem+" Dream Coins available"}
                   disabled = {true}
                />} 
-                  {is_apply_redeem?null:<button className="btn buttonApply1" onClick={ApplyRedeem} style={{top:"69px", color: "#1663be"}}>Redeem</button>} 
+                  {Redeem!=0?is_apply_redeem?null:<button className="btn buttonApply1" onClick={ApplyRedeem} style={{top:"69px", color: "#1663be"}}>Redeem</button>:null}
+                  {} 
                   <p>*10 Dream Coind are equal to 10 fills</p>
                </div>
                <div className="col-4 col-sm-3 col-md-3 ml-auto order2">

@@ -4,7 +4,7 @@ import config from 'config';
 import { fetchWrapper, history } from '@/_helpers';
 
 const userSubject = new BehaviorSubject(null);
-const baseUrl = `${config.apiUrl}`;
+const baseUrl = `${config.apiUrl}/accounts`;
 
 export const accountService = {
     login,
@@ -32,12 +32,13 @@ export const accountService = {
     Testiminals,
     CharityFunds,
     loginAsGuest,
+    ActiveCoupons,
     user: userSubject.asObservable(),
     get userValue() { return userSubject.value }
 };
 
 function login(email, password) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate`, { email, password })
+    return fetchWrapper.post(`${baseUrl}/authenticate`, { email, password })
         .then(user => {
             userSubject.next(user);
             localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
@@ -49,7 +50,7 @@ function login(email, password) {
 }
 
 function loginUsingGoogle(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -59,7 +60,7 @@ function loginUsingGoogle(email, firstName, lastName, imageUrl) {
 }
 
 function loginUsingFacebook(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -69,7 +70,7 @@ function loginUsingFacebook(email, firstName, lastName, imageUrl) {
 }
 
 function loginUsingApple(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -79,13 +80,15 @@ function loginUsingApple(email, firstName, lastName, imageUrl) {
 }
 function loginAsGuest(params) {
     console.log(params)
-    return fetchWrapper.post(`${baseUrl}/accounts/register-as-guest`,params)
+    return fetchWrapper.post(`${baseUrl}/register-as-guest`,params)
     .then(message => {
         // publish user to subscribers and start timer to refresh token
         userSubject.next(message);
         return message;
     });
 }
+
+// ---------------------------------------------------------------------------------------------------
 
 function logout() {
     // revoke token, stop refresh timer, publish null to user subscribers and redirect to login page
@@ -127,9 +130,10 @@ function validateResetToken(token) {
 function resetPassword({ token, password, confirmPassword }) {
     return fetchWrapper.post(`${baseUrl}/reset-password`, { token, password, confirmPassword });
 }
+// --------------------------------------------------------
 function updatePassword({ token, password, confirmPassword,accountID }) {
     
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, { token, password, confirmPassword })
+    return fetchWrapper.put(`${baseUrl}/${accountID}`, { token, password, confirmPassword })
     .then(resp => {
         userSubject.next(resp);
         return resp;
@@ -139,7 +143,7 @@ function updatePassword({ token, password, confirmPassword,accountID }) {
 
 function updatePersonalDetail({ firstName, lastName, email,mobileNumber,nationality,countryResidence,city,accountID }) {
     
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, { firstName, lastName, email,mobileNumber,nationality,countryResidence,city })
+    return fetchWrapper.put(`${baseUrl}/${accountID}`, { firstName, lastName, email,mobileNumber,nationality,countryResidence,city })
     .then(resp => {
         userSubject.next(resp);
         return resp;
@@ -148,7 +152,7 @@ function updatePersonalDetail({ firstName, lastName, email,mobileNumber,national
 }
 
 function updateProfilePicture({picUrl},accountID) {
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`,{picUrl})
+    return fetchWrapper.put(`${baseUrl}/${accountID}`,{picUrl})
     .then(resp => {
         userSubject.next(resp);
         
@@ -220,6 +224,10 @@ function stopRefreshTokenTimer() {
 }
 
 // =======================================================================================
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
 const tempBaseUrl = `${config.apiUrl}`;
 function WinnerList(obj) {
     return fetchWrapper.post(`${tempBaseUrl}/Winners/get-by-dates`,obj)
@@ -253,6 +261,14 @@ function AvailabelBalance(obj) {
 }
 function CharityFunds(obj) {
     return fetchWrapper.post(`${tempBaseUrl}/charitypartners`)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function ActiveCoupons(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/coupons`)
         .then(res => {
             console.log(res);
             return res;
