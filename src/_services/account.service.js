@@ -40,6 +40,8 @@ function login(email, password) {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
             localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
+            localStorage.setItem("jwtToken", user.jwtToken);
+            localStorage.setItem("userDetails",JSON.stringify(user));
             startRefreshTokenTimer();
             return user;
         });
@@ -89,6 +91,8 @@ function refreshToken() {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
             localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
+            localStorage.setItem("jwtToken", user.jwtToken);
+            localStorage.setItem("userDetails",JSON.stringify(user));
             startRefreshTokenTimer();
             return user;
         });
@@ -144,8 +148,8 @@ function updateProfilePicture({ picUrl,accountID }) {
     
 }
 
-function getAll() {
-    return fetchWrapper.get(baseUrl);
+function getAll(obj) {
+    return fetchWrapper.post(baseUrl,obj).then(users => users);
 }
 
 function getById(id) {
