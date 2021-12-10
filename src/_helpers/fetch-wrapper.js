@@ -20,10 +20,10 @@ function post(url, body) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeader(url) },
-       // credentials: 'include',
+        //credentials: 'include',
         body: JSON.stringify(body)
     };
-    return fetch(url, requestOptions).then(handleResponse).catch(console.log("post catch"));
+    return fetch(url, requestOptions).then(handleResponse);
 }
 
 function put(url, body) {

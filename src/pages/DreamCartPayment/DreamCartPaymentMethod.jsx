@@ -124,7 +124,7 @@ async function processPayment(paymentData) {
   console.log("Aqon")
   console.log(paymentData)
   const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-    fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(campain_count),enabled:false }).then((resp) => {
+  fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(localStorage.getItem("item_count_value")),enabled:false }).then((resp) => {
      
         const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
         fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,
@@ -167,8 +167,8 @@ const onStripToken = (token) => {
     const { from } = { from: { pathname: "/confirmation" } };
     history.push(from);
 
- }).catch(error => {
-     alertService.error("Internal Server Error");
+ }).catch(message => {
+     alert(message);
  });
 };
 
@@ -204,7 +204,7 @@ return (
                         <div className="col-md-12">
                         <GooglePayButton
                          buttonSizeMode="fill"
-                         className={`btn1 buttonRound`} 
+                         className={`btn2 buttonRound`} 
                          environment="TEST"
                          paymentRequest={{
                            apiVersion: 2,
@@ -248,7 +248,7 @@ return (
                             processPayment();
                            }}
              />
-                            <button className={`btn form-control my-1 buttonRound`} style={{border:"1px solid",width:"465px"}}>
+                            <button                       className={`btn2 buttonRound`}  style={{border:"1px solid",width:"410px",marginTop:"5px",backgroundColor:"white"}}>
                                 <img
                                         src={AppleStore}
                                         alt=""

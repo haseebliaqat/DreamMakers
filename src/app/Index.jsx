@@ -169,7 +169,6 @@ function App() {
                     <Header />
                     <AboutUs />
                 </Route>
-
                 <Route exact path="/how-it-works">
                     <Header />
                     <HowItWorks />

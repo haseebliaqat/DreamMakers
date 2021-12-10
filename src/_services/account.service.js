@@ -30,6 +30,8 @@ export const accountService = {
     updatePersonalDetail,
     updateProfilePicture,
     Testiminals,
+    CharityFunds,
+    loginAsGuest,
     user: userSubject.asObservable(),
     get userValue() { return userSubject.value }
 };
@@ -37,8 +39,10 @@ export const accountService = {
 function login(email, password) {
     return fetchWrapper.post(`${baseUrl}/accounts/authenticate`, { email, password })
         .then(user => {
-            // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
+            localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
+            localStorage.setItem("jwtToken", user.jwtToken);
+            localStorage.setItem("userDetails",JSON.stringify(user));
             startRefreshTokenTimer();
             return user;
         });
@@ -73,51 +77,15 @@ function loginUsingApple(email, firstName, lastName, imageUrl) {
             return user;
         });
 }
-
-function WinnerList(obj) {
-    return fetchWrapper.post(`${baseUrl}/Winners/get-by-dates`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
+function loginAsGuest(params) {
+    console.log(params)
+    return fetchWrapper.post(`${baseUrl}/accounts/register-as-guest`,params)
+    .then(message => {
+        // publish user to subscribers and start timer to refresh token
+        userSubject.next(message);
+        return message;
+    });
 }
-
-function Testiminals(obj) {
-    return fetchWrapper.post(`${baseUrl}/testimonials`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-
-function DiscountList(obj) {
-    return fetchWrapper.post(`${baseUrl}/discounts`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-function AvailabelBalance(obj) {
-    return fetchWrapper.post(`${baseUrl}/dreamcoins`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-
-function PurchaseCoupons(discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token) {
-    return fetchWrapper.post(`${baseUrl}/coupons/buy-coupons`,{discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token})
-        .then(res => {
-            console.log("res");
-            console.log("set =>");
-            console.log(res);
-            return res;
-        });
-}
-
-
-
-
 
 function logout() {
     // revoke token, stop refresh timer, publish null to user subscribers and redirect to login page
@@ -128,16 +96,17 @@ function logout() {
 }
 
 function refreshToken() {
-    return fetchWrapper.post(`${baseUrl}/refresh-token`, {})
+    return fetchWrapper.post(`${baseUrl}/refresh-token`, {tempRefreshToken : localStorage.getItem('tempRefreshToken')})
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
+            localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
+            localStorage.setItem("jwtToken", user.jwtToken);
+            localStorage.setItem("userDetails",JSON.stringify(user));
             startRefreshTokenTimer();
             return user;
         });
 }
-
-
 
 function register(params) {
     return fetchWrapper.post(`${baseUrl}/register`, params);
@@ -178,19 +147,18 @@ function updatePersonalDetail({ firstName, lastName, email,mobileNumber,national
     
 }
 
-function updateProfilePicture({ picUrl,accountID }) {
-    console.log("picUrl")
-    console.log(picUrl)
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, {picUrl })
+function updateProfilePicture({picUrl},accountID) {
+    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`,{picUrl})
     .then(resp => {
         userSubject.next(resp);
+        
         return resp;
     });
     
 }
 
-function getAll() {
-    return fetchWrapper.get(baseUrl);
+function getAll(obj) {
+    return fetchWrapper.post(baseUrl,obj).then(users => users);
 }
 
 function getById(id) {
@@ -198,11 +166,8 @@ function getById(id) {
 }
 
 function create(params) {
-    return fetchWrapper.post(`${baseUrl}/accounts/register`, params)
+    return fetchWrapper.post(`${baseUrl}/register`, params)
     .then(message => {
-
-        console.log("message")
-        console.log(message)
         // publish user to subscribers and start timer to refresh token
         userSubject.next(message);
         // startRefreshTokenTimer();
@@ -223,7 +188,6 @@ function update(id, params) {
         });
 }
 
-// prefixed with underscore because 'delete' is a reserved word in javascript
 function _delete(id) {
     return fetchWrapper.delete(`${baseUrl}/${id}`)
         .then(x => {
@@ -253,4 +217,57 @@ function startRefreshTokenTimer() {
 
 function stopRefreshTokenTimer() {
     clearTimeout(refreshTokenTimeout);
+}
+
+// =======================================================================================
+const tempBaseUrl = `${config.apiUrl}`;
+function WinnerList(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/Winners/get-by-dates`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function Testiminals(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/testimonials`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function DiscountList(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/discounts`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+function AvailabelBalance(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/dreamcoins`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+function CharityFunds(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/charitypartners`)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+
+
+
+function PurchaseCoupons(discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token) {
+    return fetchWrapper.post(`${tempBaseUrl}/coupons/buy-coupons`,{discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token})
+        .then(res => {
+            console.log("res");
+            console.log("set =>");
+            console.log(res);
+            return res;
+        });
 }

@@ -19,7 +19,7 @@ const DreamCartSteper = (props) => {
                <button className="btn backArrowButton">
                   <img src={BackArrow} alt="backarrow" />
                </button>
-               <div className="dreamCartTitle">Dream Cart{props.value}</div>
+               <div className="dreamCartTitle">Dream Cart</div>
             </div>
             <div className="d-flex">
                <DreamCartHeaderBilling name="Billing"path="/dream-cart" value={props.value}  />

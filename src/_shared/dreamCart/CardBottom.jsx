@@ -100,7 +100,7 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo}) => {
       console.log("Aqon")
       console.log(paymentData)
       const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-        fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(campain_count),enabled:false }).then((resp) => {
+        fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(localStorage.getItem("item_count_value")),enabled:false }).then((resp) => {
          
             const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
             fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,

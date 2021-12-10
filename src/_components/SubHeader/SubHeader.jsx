@@ -20,7 +20,7 @@ const Heading = styled.h1`
 export const SubHeader = ({ title }) => {
    return (
       <Container>
-         <Heading style={{fontSize:"12px",marginTop:"10px"}}>{title}</Heading>
+         <Heading style={{fontSize:"24px",marginTop:"10px"}}>{title}</Heading>
       </Container>
    );
 };

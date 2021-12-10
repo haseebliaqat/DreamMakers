@@ -27,6 +27,12 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
         const { from } = { from: { pathname: "/dream-cart" } };
         history.push(from);
     }
+    function saveDataToLocalStorageByPrizeDetail(Campaign){
+        console.log(JSON.stringify(Campaign));
+        localStorage.setItem("SeletedCampaign",JSON.stringify(Campaign));
+        const { from } = { from: { pathname: "/prize-details" } };
+        history.push(from);
+    }
     useEffect(() => {
         console.log("item==>", item);
         console.log("item=============================================>");
@@ -117,7 +123,8 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                 <p class="CardHeadingWin1" >win</p>
 
-                <CounterMobile soldCount={item.soldCoupons} totalCount={item.totalCoupons} keyValue={item.soldCoupons} />
+                <CounterMobile soldCount={!!item?item.soldCoupons:0} totalCount={!!item?item.totalCoupons:0} keyValue={!!item?item.soldCoupons:0} />
+                
 
             </div>
 
@@ -155,7 +162,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                             <p>{item?.description}</p>
 
-                            <div className="btnStyle3">
+                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item)}>
                             {/* to={{ pathname: `/prize-details` }} */}
                                 <Link >
                                     Prize Details

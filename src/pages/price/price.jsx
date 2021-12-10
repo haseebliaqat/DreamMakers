@@ -154,13 +154,13 @@ function Price() {
                     </div>
                     </div>
                     {/* Description */}
-                    <div className="priceSlide">
+                    {/* <div className="priceSlide">
                         <h1 className="headingStyle1">You may be interested in</h1>
                         <SilderComponent />
                         <div className="load-btn">
                             <a href="#"><strong>+</strong> Load more</a>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* ADS Section */}
 

@@ -18,6 +18,7 @@ import ReactPlayer from 'react-player/youtube'
         if(data && data.text && Result== ''){
             console.log("data");
             console.log(data);
+            localStorage.setItem("currentWinnerCode",data.text);
             history.push('/WinnerResult');
             // setResult(data.text),[
             //     console.log(Result) 

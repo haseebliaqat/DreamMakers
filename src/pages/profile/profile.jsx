@@ -17,12 +17,13 @@ import { DonationCard } from '../../_shared/DonationCard/DonationCard';
 
 export const Profile = () => {
    const [avalaibel_dream_coin, setAvalaibleDreamCoins] = useState(null);
-
-   let helpedRaised=2000;
-   helpedRaised=helpedRaised+avalaibel_dream_coin;
-   helpedRaised= (helpedRaised).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
-   console.log("avalaibel_dream_coin",avalaibel_dream_coin);
    const [avalaibel_balance, setAvalaibleBalance] = useState(null);
+   const [funds, setFunds] = useState(null);
+   // let helpedRaised=2000;
+   // helpedRaised=helpedRaised+avalaibel_dream_coin;
+   // helpedRaised= (helpedRaised).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+   // console.log("avalaibel_dream_coin",avalaibel_dream_coin);
+
    const GetAllWinners =()=> {
       let obj1 = {
          "limit": 5,
@@ -35,6 +36,14 @@ export const Profile = () => {
          var myJson= resp.rows;
          setAvalaibleBalance(myJson[0].balance);
          setAvalaibleDreamCoins(myJson[0].currencyValue);
+
+      }).catch(error => {
+          alertService.error("Internal Server Error");
+      });
+
+      accountService.CharityFunds().then((resp) => {
+         var myJson= resp.rows;
+         setFunds(myJson[0].fundRaised);
 
       }).catch(error => {
           alertService.error("Internal Server Error");
@@ -90,7 +99,7 @@ export const Profile = () => {
                                     color="#edb200"
                                     textAlign="center"
                                  >
-                                    {helpedRaised}
+                                    {funds}
                                  </H2Heading>
                               </div>
                               <H2Heading
@@ -130,7 +139,7 @@ export const Profile = () => {
                                     fontWeight="500"
                                     color="#edb200"
                                  >
-                                    {helpedRaised}
+                                    {funds}
                                  </H1Heading>
                               </div>
                            </Card>

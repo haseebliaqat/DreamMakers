@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { campaignsService } from '@/_services/campaigns.service';
+import { winnersService } from '@/_services/winners.service';
 import LiveDraw from '../../_assets/images/Winner_bg.jpeg';
 import Logo from '../../_assets/images/Logo.png';
 import OtpInput from 'react-otp-input';
@@ -35,16 +36,26 @@ const divStyle2 = {
     const [totalCount, setTotalCount] = useState(0);
     const [campaigns, setCampaigns] = useState([]);
     useEffect(() => {
+        // let obj = {
+        //     "offset": 0,
+        //     "order": [["id", "ASC"], ["name", "DESC"]],
+        //     "where": {"id": 7 }
+        // }
+        // campaignsService.getAll(obj).then((x) => {
+        //     console.log(x);
+        //     setTotalCount(x.count)
+        //     setCampaigns(x.rows)
+        // });
+        let code = localStorage.getItem("currentWinnerCode");
+        console.log(code);
         let obj = {
-            "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
-            "where": {"id": 7 }
+            "code": code
         }
-        campaignsService.getAll(obj).then((x) => {
-            console.log(x);
-            setTotalCount(x.count)
-            setCampaigns(x.rows)
+        winnersService.scanWinner(obj).then((winner) => {
+            console.log(winner);
         });
+
+
     }, []);
     const LetsGo=()=>{
         history.push('/SeletedCampaignListView');

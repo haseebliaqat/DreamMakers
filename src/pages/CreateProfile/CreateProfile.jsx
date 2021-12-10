@@ -129,7 +129,7 @@ export const CreateProfile = () => {
    nationalityVar= nationality[0].nationality;
   
   }
-  if(!!countryResidenceVar){
+  if(!!city_residence){
    countryResidenceVar = city_residence[0].nationality;
   }
 

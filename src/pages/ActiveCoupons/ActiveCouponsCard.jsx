@@ -56,23 +56,23 @@ export const ActiveCouponsCard = ({ isWinners }) => {
 
                                 })
                             } */}
-                            <div className="coupons-card">
+                            <div className="coupons-card5">
             <img src={CouponsCardBg} alt="" width="100%" />
-            <div className="header">
+            <div className="header5">
                <img src={Logo} alt="" />
             </div>
-            <div className="EL-number">EL65656-5454545</div>
-            <div className="EL-coupon">coupons No. 12232323232</div>
-            <div className="price">Prize</div>
-            <div className="Trip-country">Maldives</div>
-            <div className="Qr">
+            <div className="EL-number5">EL65656-5454545</div>
+            <div className="EL-coupon5">coupons No. 12232323232</div>
+            <div className="price5">Prize</div>
+            <div className="Trip-country5">Maldives</div>
+            <div className="Qr5">
                   <img src={qrCode} alt="QR" style={{ width: '100%' }} />
                </div>
-            <div className="dottedLine"></div>
-            <div className="purchase-date">Purchase On:</div>
-            <div className="date">12 September 2021</div>
-            <div className="coupon-name">Name:</div>
-            <div className="name" style={{textTransform:"capitalize"}}>Aqib Ali</div>
+            <div className="dottedLine5"></div>
+            <div className="purchase-date5">Purchase On:</div>
+            <div className="date5">12 September 2021</div>
+            <div className="coupon-name5">Name:</div>
+            <div className="name5" style={{textTransform:"capitalize"}}>Aqib Ali</div>
          </div>
          
       </>

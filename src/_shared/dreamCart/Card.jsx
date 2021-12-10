@@ -42,11 +42,14 @@ const Card = () => {
               console.log(SelectedCampaignJSON.count);
               localStorage.setItem("SeletedCampaign",JSON.stringify(SelectedCampaignJSON));
         }
+        const timer = setTimeout(() => {
+         GetAllWinners();
+       }, 1000);
 
         if (!!localStorage.userDetails) {            
             setUser(JSON.parse(localStorage.userDetails));
+            
          }
-         GetAllWinners();
    }, [       
    localStorage.setItem("selected_campaign_actual_price",!!campaign?campaign.couponPrice:""),//
    localStorage.setItem("selected_campaign_id",!!campaign?campaign.id:""),//
@@ -58,28 +61,28 @@ const Card = () => {
 
 ]);
 const GetAllWinners =()=> {
+   console.log("-=============>"+!!user?user.id:"")
    let obj1 = {
       "limit": 5,
       "offset": 0,
       "order": [["id", "DESC"]],
-      "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id")}
+      "where":{"id":{"$gt":0},"accountId":!!user?user.id:"" }
   }
    alertService.clear();
    accountService.AvailabelBalance(obj1).then((resp) => {
-       console.log("resp.rows")
-       console.log(resp.rows)
-       var myJson= resp.rows;
-       console.log("myJson")
-       console.log(myJson)
-       localStorage.setItem("avalaible_balance",myJson[0].balance)
-       localStorage.setItem("avalaible_dreamcoin",myJson[0].currencyValue)
-      
-      
+      console.log("resp.rows")
+      console.log(resp.rows)
+      var myJson= resp.rows;
+      console.log("myJson")
+      console.log(myJson)
+      localStorage.setItem("avalaible_balance",myJson[0].balance)
+      localStorage.setItem("avalaible_dreamcoin",myJson[0].currencyValue)
 
    }).catch(error => {
        alertService.error("Internal Server Error");
    });
  }
+
    const incrementHandler = () => {
       setCount(count + 1), 
 
@@ -335,7 +338,7 @@ const GetAllWinners =()=> {
                   className="form-control"
                   placeholder="Redeem Coins"
                   onChange={RedeemField}
-                  value={Redeem+" Dream Coins Redeemed Successfully"}
+                  value={Redeem2+" Dream Coins Redeemed Successfully"}
                   disabled = {true}
                />
                   :<TextField
@@ -343,7 +346,7 @@ const GetAllWinners =()=> {
                   className="form-control"
                   placeholder="Redeem Coins"
                   onChange={RedeemField}
-                  value={!!Redeem?Redeem+" Dream Coins available":""}
+                  value={!!Redeem2?Redeem2+" Dream Coins available":""}
                   disabled = {true}
                />} 
                   {is_apply_redeem?null:<button className="btn buttonApply1" onClick={ApplyRedeem} style={{top:"69px", color: "#1663be"}}>Redeem</button>} 

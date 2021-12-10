@@ -161,7 +161,7 @@ export function Home() {
                     trip.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='sold out' && myson[i].status=="sold out") {
+                if (myson[i].type=='sold-out' && myson[i].status=="sold-out") {
                     soldout.push(myson[i]);
                     SetLoader(false)
                 }  
@@ -703,7 +703,7 @@ export function Home() {
 
                                     let settings = {
                                     infinite: false,
-                                    slidesToShow: 1,
+                                    slidesToShow: 3,
                                     slidesToScroll: 1,
                                     autoplay: true,
                                     // arrows: false,
