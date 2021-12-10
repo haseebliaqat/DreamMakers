@@ -161,7 +161,7 @@ export function Home() {
                     trip.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='sold out' && myson[i].status=="sold out") {
+                if (myson[i].type=='sold-out' && myson[i].status=="sold-out") {
                     soldout.push(myson[i]);
                     SetLoader(false)
                 }  
