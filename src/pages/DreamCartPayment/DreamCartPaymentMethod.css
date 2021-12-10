@@ -253,6 +253,34 @@
 }
 
 
+.btn2{
+  width: 409px;
+  height: 43px;
+  display: block;
+  margin-top: -13px;
+  margin-bottom: 6px;
+}
+@media screen and (max-width: 992px) {
+  .btn2{
+      max-width: 309px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .btn2{
+      max-width: 309px;
+      margin-top: 0px;
+  }
+} 
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .btn2{
+      max-width: 306px;
+      margin-bottom: 15px;
+  }
+}
+
+
+
 
  
 

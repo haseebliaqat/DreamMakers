@@ -127,6 +127,8 @@ export function Home() {
         localStorage.setItem("selected_campaign_cash_paid","");
         localStorage.setItem("discount_percentage","");
         localStorage.setItem("discount_percentage_dream_coin","");
+        localStorage.setItem("discount_code","");
+        
 
 
         let obj1 = {
@@ -703,7 +705,7 @@ export function Home() {
 
                                     let settings = {
                                     infinite: false,
-                                    slidesToShow: 1,
+                                    slidesToShow: 3,
                                     slidesToScroll: 1,
                                     autoplay: true,
                                     // arrows: false,

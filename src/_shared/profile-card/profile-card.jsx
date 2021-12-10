@@ -12,7 +12,7 @@ import { history } from '@/_helpers/history';
 import { useDropzone } from "react-dropzone";
  import profilePicdefualt from '@/_assets/images/blocked-profile.jpg';
  import { accountService, alertService } from '@/_services';
- import S3 from 'react-aws-s3';
+ import S3 from 'react-aws-s3'
  import { picturesService } from '@/_services/pictures.service';
 export const PROFILE_BUTTONS = [
    { id: 1, image: DetailsIcon, label: 'Personal Details', path: 'create-profile' },
@@ -22,8 +22,6 @@ export const PROFILE_BUTTONS = [
    { id: 5, image: DreamIcon, label: 'Dream Coins', path: 'earncoins' },
    { id: 6, image: LogoutIcon, label: 'Log out' , path: 'account/login'},
 ];
-
-
 export const ProfileCard = () => {
    const [user, setUser] = useState(null);
 
@@ -38,22 +36,44 @@ export const ProfileCard = () => {
       }
 
   }, []);
-  const configObj = {
+  const config = {
    bucketName: 'dreammakersbucket',
-   dirName: 'pictures',
-   region: process.env.REACT_APP_AWS_REGION,
-   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-   secretAccessKey: process.env.REACT_APP_AWS_BUCKET_KEY
-   }
+  dirName:'pictures',
+   region: 'ap-southeast-1',
+   accessKeyId: 'AKIARVPMJKFUWHUZ2KA5',
+   secretAccessKey: '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'
+}
 
   const handlePictureSelected=(event)=> {
     setAvailabel(true)
-   var picture = event.target.files[0];
-   var src= URL.createObjectURL(picture);
-   const url = src.replace(/[blob:]{5}/gi,'')
-   console.log(url)
-   seturl(url)
-   setSrc(src);
+   const reactS3Client = new S3(config);
+   reactS3Client.uploadFile(event.target.files[0], event.target.files[0].name)
+    .then((data) => {
+            console.log(data);
+            // seturl(data.location);
+            const params={picUrl:data.location}
+            const  Userid=localStorage.getItem("user_id")
+            console.log("Userid");
+            console.log(Userid);
+            accountService.updateProfilePicture(params,Userid).then((resp) => {
+               console.log("resp==========>")
+               console.log("resp==========>")
+               console.log(resp)
+               setAvailabel(false);
+                  localStorage.setItem("user",resp.role);
+                  localStorage.setItem("userDetails",JSON.stringify(resp));
+                  window.location.reload();
+            }).catch(error => {
+               // setSubmitting(false);
+                alertService.error("Email or password is incorrect.");
+            });
+         })
+         .catch(error => {
+            console.log(error);
+         });
+         var picture = event.target.files[0];
+         var src= URL.createObjectURL(picture);
+         setSrc(src);
  }
  const renderPreview=()=> {
    if(usersrc) {
@@ -76,56 +96,8 @@ export const ProfileCard = () => {
  }
  
  const SaveProfilePicture=()=> {
-   //    console.log("event uplaod==>", url);
-   //    console.log("event uplaod Name==>", imgName);
-   //       const reactS3Client = new S3(configObj);
-   //       reactS3Client.uploadFile(url,imgName).then((data) => {
-   //       var SelectedProfile=JSON.parse(localStorage.userDetails);
-   //       SelectedProfile.picUrl=data.location;
-   //       console.log(SelectedProfile.picUrl);
-   //       localStorage.setItem("userDetails",JSON.stringify(SelectedProfile));
-   //       setAvailabel(false)
-   // }).catch(error => {
-   //    console.log("error");
-   //     console.log(error);
-   // });
-   const params={picUrl:url}
-   var id=!!user?user.id:"";
-   picturesService.update(id,params)
-   .then(() => {
-       alertService.success('Update successful', { keepAfterRouteChange: true });
-       history.push('..');
-   })
-   .catch(error => {
-       alertService.error(error);
-   });
-   // accountService.updateProfilePicture(params).then((resp) => {
-   //    setResSuccessShow(true);
-   //    setResSuccessMessage("Password Updated.");
-   //      if (resp.role == 'User') {
-   //       localStorage.setItem("user",resp.role);
-   //       localStorage.setItem("userDetails",JSON.stringify(resp));
-   //       window.location.reload();
-   //     }
-   // }).catch(error => {
-   //    // setSubmitting(false);
-   //     alertService.error("Email or password is incorrect.");
-   // });
+
  }
-
- let uploadPicture = (e) => {
-   const reactS3Client = new S3(configObj);
-   console.log("event uplaod==>", e);
-   // reactS3Client.uploadFile(e.target.files[0], e.target.files[0].name).then((data) => {
-   //     setIsSubmit(false);
-   //     setImageURL(data.location);
-   //     console.log(data);
-
-   // }).catch(error => {
-   //     setIsSubmit(false);
-   //     console.log(error);
-   // });
-}
    return (
       // console.log(user.firstName),
       <div className="profile-card">
@@ -147,13 +119,12 @@ export const ProfileCard = () => {
                </span>
                {/* <span>Upload Picture</span> */}
             </button>
-            {isAvailabel?
+            {/* {isAvailabel?
                   <button className="btn btn-primary upload-btn" style={{marginLeft:"13px",fontSize:"13px"}} onClick={SaveProfilePicture}  >
                   <span className="mx-2">Save
                   </span>
-                  {/* <span>Upload Picture</span> */}
                </button>:null
-               }
+               } */}
             
          </div>
 

@@ -10,17 +10,17 @@ const TermsCondition = ({ checkoutAsGuest, onRadioChange }) => {
    return (
       <div>
       {LoginUser!="User"?<form action="#" style={{boxShadow:'none'}}>
-            <div>
+            <div style={{marginTop:"-35px"}}>
             {checkoutAsGuest == 'guest' && (
                <div className="d-flex align-items-center paddingleft-sm">
                   <div className="pt-2">
                      {/* <input type="checkbox"  value="0" checked className="radioBtnSize" /> */}
                      <input type="checkbox" 
-                     className="radioBtnSize"
-          defaultChecked={TermAndCondition}
-          onChange={toggleChange}
-          style={{WebkitAppearance:"checkbox"}}
-         />
+                                 className="radioBtnSize"
+                     defaultChecked={TermAndCondition}
+                     onChange={toggleChange}
+                     style={{WebkitAppearance:"checkbox"}}
+                     />
                   </div>
                   <div className="ml-2 termsAcceptFont">
                      I accept the Policy and Terms{' '}
@@ -63,7 +63,7 @@ const TermsCondition = ({ checkoutAsGuest, onRadioChange }) => {
                   />
                </div>
                <div className="ml-2 radioButttonFontSize">
-                  checkout out with Dream Makers account
+                  Checkout out with Dream Makers account
                   <p style={{ fontSize: '15px' }}>
                      Save time, Track Donations and score Rewards!
                   </p>

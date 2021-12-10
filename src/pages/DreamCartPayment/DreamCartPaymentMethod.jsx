@@ -38,6 +38,7 @@ import config from 'config';
 const baseUrl = `${config.apiUrl}`;
 import { fetchWrapper, history } from '@/_helpers';
 const DreamCartPaymentMethod = () => {
+  const [count, setCount] = useState(1);
     const history = useHistory();
    const [imageShow, setImageShow] = useState(false);
    const [TermAndCondition, setTermsandcondition] = useState(!!localStorage.getItem("user_id")?true:false);
@@ -63,6 +64,7 @@ const DreamCartPaymentMethod = () => {
    const [cvc_number, setCVCNumber] = useState([null]);
    const now = new Date;
   const until = new Date(now.getFullYear() + 10, now.getMonth());
+  var item_count=0;
   const [clientSecret, setClientSecret] = useState("");
    useEffect(() => {
     const timer = setTimeout(() => {
@@ -100,7 +102,9 @@ const DreamCartPaymentMethod = () => {
          else setImageShow(false);
       });
       return window.removeEventListener('resize', () => {});
-   }, []);
+   }, [
+      item_count=localStorage.getItem("item_count_value"),
+   ]);
 
    function GetClientScreat(email, password) {
     return fetchWrapper.post(`${baseUrl}/coupons/create-payment-intent`, { email, password })
@@ -121,10 +125,10 @@ const ContinuesForCheckout = () => {
 
 
 async function processPayment(paymentData) {
-  console.log("Aqon")
-  console.log(paymentData)
+  console.log("item_count")
+  console.log(item_count)
   const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-    fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(campain_count),enabled:false }).then((resp) => {
+  fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(item_count),enabled:false }).then((resp) => {
      
         const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
         fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,
@@ -167,8 +171,8 @@ const onStripToken = (token) => {
     const { from } = { from: { pathname: "/confirmation" } };
     history.push(from);
 
- }).catch(error => {
-     alertService.error("Internal Server Error");
+ }).catch(message => {
+     alert(message);
  });
 };
 
@@ -204,7 +208,7 @@ return (
                         <div className="col-md-12">
                         <GooglePayButton
                          buttonSizeMode="fill"
-                         className={`btn1 buttonRound`} 
+                         className={`btn2 buttonRound`} 
                          environment="TEST"
                          paymentRequest={{
                            apiVersion: 2,
@@ -248,7 +252,7 @@ return (
                             processPayment();
                            }}
              />
-                            <button className={`btn form-control my-1 buttonRound`} style={{border:"1px solid",width:"465px"}}>
+                            <button                       className={`btn2 buttonRound`}  style={{border:"1px solid",width:"410px",marginTop:"5px",backgroundColor:"white"}}>
                                 <img
                                         src={AppleStore}
                                         alt=""
@@ -263,7 +267,7 @@ return (
                   </div>
                </div>
                <div className="col-md-12 col-lg-7 cardNoShowLess768">
-                  <Card />
+                  <Card count={count} setCount={setCount}/>
                </div>
                <div className="col-12">
                   <NewsLetter />

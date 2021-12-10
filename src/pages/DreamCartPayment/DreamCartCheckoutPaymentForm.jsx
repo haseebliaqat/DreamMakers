@@ -349,9 +349,9 @@ export default function CheckoutForm() {
        const { from } = { from: { pathname: "/confirmation" } };
        history.push(from);
  
-    }).catch(error => {
-        alertService.error("Internal Server Error");
-    });
+    }).catch(message => {
+      alert(message);
+  });
   };
 
   return (
