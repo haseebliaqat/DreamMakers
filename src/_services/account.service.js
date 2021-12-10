@@ -4,7 +4,7 @@ import config from 'config';
 import { fetchWrapper, history } from '@/_helpers';
 
 const userSubject = new BehaviorSubject(null);
-const baseUrl = `${config.apiUrl}`;
+const baseUrl = `${config.apiUrl}/accounts`;
 
 export const accountService = {
     login,
@@ -35,17 +35,18 @@ export const accountService = {
 };
 
 function login(email, password) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate`, { email, password })
+    return fetchWrapper.post(`${baseUrl}/authenticate`, { email, password })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
+            localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
             startRefreshTokenTimer();
             return user;
         });
 }
 
 function loginUsingGoogle(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -55,7 +56,7 @@ function loginUsingGoogle(email, firstName, lastName, imageUrl) {
 }
 
 function loginUsingFacebook(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -65,7 +66,7 @@ function loginUsingFacebook(email, firstName, lastName, imageUrl) {
 }
 
 function loginUsingApple(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/accounts/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -73,51 +74,6 @@ function loginUsingApple(email, firstName, lastName, imageUrl) {
             return user;
         });
 }
-
-function WinnerList(obj) {
-    return fetchWrapper.post(`${baseUrl}/Winners/get-by-dates`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-
-function Testiminals(obj) {
-    return fetchWrapper.post(`${baseUrl}/testimonials`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-
-function DiscountList(obj) {
-    return fetchWrapper.post(`${baseUrl}/discounts`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-function AvailabelBalance(obj) {
-    return fetchWrapper.post(`${baseUrl}/dreamcoins`,obj)
-        .then(res => {
-            console.log(res);
-            return res;
-        });
-}
-
-function PurchaseCoupons(discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token) {
-    return fetchWrapper.post(`${baseUrl}/coupons/buy-coupons`,{discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token})
-        .then(res => {
-            console.log("res");
-            console.log("set =>");
-            console.log(res);
-            return res;
-        });
-}
-
-
-
-
 
 function logout() {
     // revoke token, stop refresh timer, publish null to user subscribers and redirect to login page
@@ -128,16 +84,15 @@ function logout() {
 }
 
 function refreshToken() {
-    return fetchWrapper.post(`${baseUrl}/refresh-token`, {})
+    return fetchWrapper.post(`${baseUrl}/refresh-token`, {tempRefreshToken : localStorage.getItem('tempRefreshToken')})
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
+            localStorage.setItem("tempRefreshToken", user.tempRefreshToken);
             startRefreshTokenTimer();
             return user;
         });
 }
-
-
 
 function register(params) {
     return fetchWrapper.post(`${baseUrl}/register`, params);
@@ -160,7 +115,7 @@ function resetPassword({ token, password, confirmPassword }) {
 }
 function updatePassword({ token, password, confirmPassword,accountID }) {
     
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, { token, password, confirmPassword })
+    return fetchWrapper.put(`${baseUrl}/${accountID}`, { token, password, confirmPassword })
     .then(resp => {
         userSubject.next(resp);
         return resp;
@@ -170,7 +125,7 @@ function updatePassword({ token, password, confirmPassword,accountID }) {
 
 function updatePersonalDetail({ firstName, lastName, email,mobileNumber,nationality,countryResidence,city,accountID }) {
     
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, { firstName, lastName, email,mobileNumber,nationality,countryResidence,city })
+    return fetchWrapper.put(`${baseUrl}/${accountID}`, { firstName, lastName, email,mobileNumber,nationality,countryResidence,city })
     .then(resp => {
         userSubject.next(resp);
         return resp;
@@ -181,7 +136,7 @@ function updatePersonalDetail({ firstName, lastName, email,mobileNumber,national
 function updateProfilePicture({ picUrl,accountID }) {
     console.log("picUrl")
     console.log(picUrl)
-    return fetchWrapper.put(`${baseUrl}/accounts/${accountID}`, {picUrl })
+    return fetchWrapper.put(`${baseUrl}/${accountID}`, {picUrl })
     .then(resp => {
         userSubject.next(resp);
         return resp;
@@ -198,7 +153,7 @@ function getById(id) {
 }
 
 function create(params) {
-    return fetchWrapper.post(`${baseUrl}/accounts/register`, params)
+    return fetchWrapper.post(`${baseUrl}/register`, params)
     .then(message => {
 
         console.log("message")
@@ -253,4 +208,53 @@ function startRefreshTokenTimer() {
 
 function stopRefreshTokenTimer() {
     clearTimeout(refreshTokenTimeout);
+}
+
+
+
+
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+//---------------------------------------Non Accounts Section-----------------------------------------------//
+const tempBaseUrl = `${config.apiUrl}`;
+function WinnerList(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/Winners/get-by-dates`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function Testiminals(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/testimonials`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function DiscountList(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/discounts`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+function AvailabelBalance(obj) {
+    return fetchWrapper.post(`${tempBaseUrl}/dreamcoins`,obj)
+        .then(res => {
+            console.log(res);
+            return res;
+        });
+}
+
+function PurchaseCoupons(discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token) {
+    return fetchWrapper.post(`${tempBaseUrl}/coupons/buy-coupons`,{discountCode,campaignId,actualPrice,discountAmount,dreamCoinsUsed,cashPaid,totalPurchasedCoupons,payment_token_id,type_of_payment,payemnt_instrument,payemnt_instrument_type,user_token})
+        .then(res => {
+            console.log("res");
+            console.log("set =>");
+            console.log(res);
+            return res;
+        });
 }
