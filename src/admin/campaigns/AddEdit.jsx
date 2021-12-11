@@ -41,6 +41,7 @@ function AddEdit({ history, match }) {
         }
     ]);
     const [campaignId, setCampaignId] = useState(0);
+    const [campaignObj, setCampaignObj] = useState(null);
     const [bulkPictures, setBulkPictures] = useState([])
 
     useEffect(() => {
@@ -242,6 +243,7 @@ function AddEdit({ history, match }) {
     let uploadPicture = (e, type) => {
         // setIsSubmit(true);
         console.log(type);
+        e.persist();
         const reactS3Client = new S3(configObj);
         console.log("event uplaod==>", e);
         reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
@@ -262,22 +264,34 @@ function AddEdit({ history, match }) {
             }
 
             // _pictures.push(imgObj);
+            console.log("-------------------------");
             console.log(data);
             let _arr = bulkPictures;
             _arr.push(imgObj);
             setBulkPictures(_arr);
             // console.log("_pictures", _pictures);
             console.log("bulk pictures push=>", bulkPictures);
+            console.log("-------------------------");
+
 
         }).catch(error => {
             // setIsSubmit(false);
+            console.log("------------err-------------");
             console.error(error);
         });
     }
 
     return (
+        
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-            {({ errors, touched, isSubmitting, setFieldValue }) => {
+            {
+               
+            ({ errors, touched, isSubmitting, setFieldValue }) => {
+                if(campaignObj!=null){
+                    console.log(campaignObj);
+                }
+
+                                            
                 useEffect(() => {
                     if (!isAddMode) {
                         // get user and set form fields
@@ -287,15 +301,17 @@ function AddEdit({ history, match }) {
                             "order": [["id", "ASC"], ["name", "DESC"]],
                             "where": { "id": id }
                         }
-                        campaignsService.getById(obj).then(campaign => {
+                        campaignsService.getById(id).then(campaign => {
+                            console.log(campaign);
+                            setCampaignObj(campaign);
                             const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','perEntryCoupons','couponPrice','startDate','drawDate'];
                             fields.forEach(field =>{
                                 if(field == 'drawDate' || field == 'startDate'){
-                                    let tempValue = moment(campaign.rows[0][field]).format("YYYY-MM-DD[T]HH:mm:ss");
+                                    let tempValue = moment(campaign[field]).format("YYYY-MM-DD[T]HH:mm:ss");
                                     setFieldValue(field, tempValue, false)
                                 } 
                                 else{
-                                    setFieldValue(field, campaign.rows[0][field], false)
+                                    setFieldValue(field, campaign[field], false)
                                 }
                             });
                             console.log("fields")
@@ -505,7 +521,10 @@ function AddEdit({ history, match }) {
                                 <label>Desktop Image</label>
                                 <Field name="prizeDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeDesktop')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
                                 <ErrorMessage name="prizeDesktopImage" component="div" className="invalid-feedback" />
-                                <img src="prizeDesktopImage"></img>
+                                {
+                                    campaignObj!=null && campaignObj.pictures !=null && campaignObj.pictures.length > 0 ? <img src={campaignObj.pictures[0].url} alt="icon" style={{height:"19px",marginTop:"2px"}}/>: 'No'
+                                }
+                                
                             </div>
                             <div className="form-group col-5">
                                 <label>Mobile Image</label>

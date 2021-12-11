@@ -20,8 +20,8 @@ function getAll(obj) {
     return fetchWrapper.post(baseUrl, obj);
 }
 
-function getById(obj) {
-    return fetchWrapper.post(baseUrl, obj);
+function getById(id) {
+    return fetchWrapper.get(`${baseUrl}/${id}}`);
 }
 
 function create(params) {
