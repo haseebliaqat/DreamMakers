@@ -54,7 +54,7 @@ export const ActiveCouponsCard = ({ isWinners }) => {
                                           <div className="EL-number5">{c.qrCodes[0].code}</div>
                                           <div className="EL-coupon5">coupons No.</div>
                                           <div className="price5">Prize</div>
-                                          <div className="Trip-country5">{c.campaign}</div>
+                                          <div className="Trip-country5">{c.campaign.prizeTitle}</div>
                                           {!isWinners ?
                                              <div className="Qr5">
                                                 <img src={c.qrCodes[0].url} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
@@ -65,9 +65,9 @@ export const ActiveCouponsCard = ({ isWinners }) => {
                               
                                           <div className="dottedLine5"></div>
                                           <div className="purchase-date5">Purchase On:</div>
-                                          <div className="date5">{c.purchaseDate}</div>
+                                          <div className="date5">{c.created}</div>
                                           <div className="coupon-name5">Name:</div>
-                                          <div className="name5">{c.firstName+" "+c.lastName}</div>
+                                          <div className="name5">{c.account.firstName+" "+c.account.lastName}</div>
                                        </div>
                                         )
 
