@@ -10,12 +10,36 @@ import { charityPartnersService } from '@/_services/charity-partners.service';
 import _ from 'lodash';
 import { picturesService } from '@/_services/pictures.service';
 import S3 from 'react-aws-s3';
+import config from 'config';
+import { v4 as randomString } from 'uuid';
 
 function AddEdit({ history, match }) {
     const { id } = match.params;
     const isAddMode = !id;
     // const [imageURL, setImageURL] = useState('')
     const [charityPartners, setCharityPartners] = useState([]);
+    const [Category, setCategory] = useState([
+        {
+            "name": "Featured",
+            "value": "featured",
+        },
+        {
+            "name": "Explore",
+            "value": "explore",
+        },
+        {
+            "name": "Lifestyle",
+            "value": "lifestyle",
+        },
+        {
+            "name": "Trip",
+            "value": "trip",
+        },
+        {
+            "name": "Other",
+            "value": "other",
+        }
+    ]);
     const [campaignId, setCampaignId] = useState(0);
     const [bulkPictures, setBulkPictures] = useState([])
 
@@ -160,11 +184,11 @@ function AddEdit({ history, match }) {
     // For Images
 
     const configObj = {
-        bucketName: 'dreammakersbucket',
-        dirName: 'pictures',
-        region: process.env.REACT_APP_AWS_REGION,
-        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.REACT_APP_AWS_BUCKET_KEY
+        bucketName: config.bucketName,
+        dirName: config.dirName,
+        region: config.region,
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
     }
 
     function createBulkPictures(fields) {
@@ -217,14 +241,15 @@ function AddEdit({ history, match }) {
 
     let uploadPicture = (e, type) => {
         // setIsSubmit(true);
+        console.log(type);
         const reactS3Client = new S3(configObj);
         console.log("event uplaod==>", e);
-        reactS3Client.uploadFile(e.target.files[0], e.target.files[0].name).then((data) => {
+        reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
             // setIsSubmit(false);
             // setImageURL(data.location);
             // let _pictures = [];
             let imgObj = {
-                name: '',
+                name: e.target.files[0].name,
                 title: '',
                 description: '',
                 alt: '',
@@ -246,7 +271,7 @@ function AddEdit({ history, match }) {
 
         }).catch(error => {
             // setIsSubmit(false);
-            console.log(error);
+            console.error(error);
         });
     }
 
@@ -264,14 +289,16 @@ function AddEdit({ history, match }) {
                         }
                         campaignsService.getById(obj).then(campaign => {
                             console.log("campaign", campaign);
-                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons', 'perEntryCoupons', 'couponPrice', 'startDate', 'drawDate'];
+                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','perEntryCoupons','couponPrice','startDate','drawDate'];
                             fields.forEach(field => setFieldValue(field, campaign.rows[0][field], false));
+                            console.log("fields")
+                            console.log(fields)
                         });
                     }
                 }, []);
 
                 return (
-                    <Form>
+                    <Form className='admin-form'>
                         <h1>{isAddMode ? 'Add Campaign' : 'Edit Campaign'}</h1>
                         <div className="form-row">
                             <div className="form-group col-5">
@@ -422,7 +449,14 @@ function AddEdit({ history, match }) {
                         <div className="form-row">
                             <div className="form-group col-6">
                                 <label>Category</label>
-                                <Field name="whereToShow" component="select" multiple={true} className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
+                                <Field name="whereToShow"  component="select" multiple={true} className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
+                                    {/* {
+                                            Category.map((c) => {
+                                                return (
+                                                    <option value={c.name} key={c.name} selected="selected">{c.name}</option>
+                                                )
+                                            })
+                                        } */}
                                     <option value="featured">Featured</option>
                                     <option value="explore">Explore</option>
                                     <option value="lifestyle">Lifestyle</option>

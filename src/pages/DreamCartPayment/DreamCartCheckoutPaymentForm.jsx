@@ -239,6 +239,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 export default function CheckoutForm() {
+  const [count, setCount] = useState(1);
     const history = useHistory();
   const [error, setError] = useState(null);
   const [cardComplete, setCardComplete] = useState(false);
