@@ -30,10 +30,10 @@ export const ActiveCouponsCard = ({ isWinners }) => {
 
          const GetCoupons =()=> {
             let obj1 = {
-               "limit": 2,
+               "limit": 20,
                "offset": 0,
                "order": [["id", "DESC"]],
-               "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id") }
+               "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id"), 'status':'active' }
          }
             alertService.clear();
             accountService.ActiveCoupons(obj1).then((resp) => {
