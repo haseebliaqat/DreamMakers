@@ -27,13 +27,13 @@ export const ActiveCouponsCardAdmin = ({ isWinners }) => {
       GetCoupons();
       //alert("uer");
   }, []);
-
+  ;
          const GetCoupons =()=> {
             let obj1 = {
                "limit": 20,
                "offset": 0,
                "order": [["id", "DESC"]],
-               "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id"), 'status':'active' }
+               "where":{"id":{"$gt":0},"campaignId":localStorage.getItem('Selected_go_live_campaigns_current_campaignId'), 'status':'active' }
          }
             alertService.clear();
             accountService.ActiveCoupons(obj1).then((resp) => {
