@@ -102,7 +102,7 @@ function AddEdit({ history, match }) {
             .required('This field is required'),
         prizeTitleMobile: Yup.string()
             .required('This field is required'),
-        whereToShow: Yup.array()
+        whereToShow: Yup.string()
             .required('This field is required'),
         sort: Yup.string()
             .required('This field is required'),
@@ -147,7 +147,7 @@ function AddEdit({ history, match }) {
     function createCampaign(fields, setSubmitting) {
         console.log("fields", fields);
         console.log("setSubmitting", setSubmitting);
-        fields.whereToShow = (fields.whereToShow).toString();
+        //fields.whereToShow = (fields.whereToShow).toString();
 
         campaignsService.create(fields).then((resp) => {
             console.log("adding campaign", resp);
@@ -164,7 +164,7 @@ function AddEdit({ history, match }) {
     }
 
     function updateCampaign(id, fields, setSubmitting) {
-        fields.whereToShow = (fields.whereToShow).toString();
+        //fields.whereToShow = (fields.whereToShow).toString();
 
         campaignsService.update(id, fields)
             .then(() => {
@@ -173,7 +173,7 @@ function AddEdit({ history, match }) {
                 fields.id = id;
                 createBulkPictures(fields);
 
-                history.push('..');
+                history.push('.');
             })
             .catch(error => {
                 setSubmitting(false);
@@ -288,9 +288,16 @@ function AddEdit({ history, match }) {
                             "where": { "id": id }
                         }
                         campaignsService.getById(obj).then(campaign => {
-                            console.log("campaign", campaign);
                             const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','perEntryCoupons','couponPrice','startDate','drawDate'];
-                            fields.forEach(field => setFieldValue(field, campaign.rows[0][field], false));
+                            fields.forEach(field =>{
+                                if(field == 'drawDate' || field == 'startDate'){
+                                    let tempValue = moment(campaign.rows[0][field]).format("YYYY-MM-DD[T]HH:mm:ss");
+                                    setFieldValue(field, tempValue, false)
+                                } 
+                                else{
+                                    setFieldValue(field, campaign.rows[0][field], false)
+                                }
+                            });
                             console.log("fields")
                             console.log(fields)
                         });
@@ -449,7 +456,7 @@ function AddEdit({ history, match }) {
                         <div className="form-row">
                             <div className="form-group col-6">
                                 <label>Category</label>
-                                <Field name="whereToShow"  component="select" multiple={true} className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
+                                <Field name="whereToShow"  component="select" className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
                                     {/* {
                                             Category.map((c) => {
                                                 return (
@@ -498,6 +505,7 @@ function AddEdit({ history, match }) {
                                 <label>Desktop Image</label>
                                 <Field name="prizeDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeDesktop')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
                                 <ErrorMessage name="prizeDesktopImage" component="div" className="invalid-feedback" />
+                                <img src="prizeDesktopImage"></img>
                             </div>
                             <div className="form-group col-5">
                                 <label>Mobile Image</label>
@@ -581,7 +589,7 @@ function AddEdit({ history, match }) {
                             </div>
                             <div className="form-group col-5">
                                 <label>Draw Date</label>
-                                <Field name="drawDate" type="datetime-local" className={'form-control' + (errors.drawDate && touched.drawDate ? ' is-invalid' : '')} />
+                                <Field name="drawDate" type="datetime-local" className={'form-control' + (errors.drawDate && touched.drawDate ? ' is-invalid' : '')}  />
                                 <ErrorMessage name="drawDate" component="div" className="invalid-feedback" />
                             </div>
                         </div>
