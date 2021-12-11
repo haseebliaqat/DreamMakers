@@ -60,7 +60,7 @@ const divStyle2 = {
         
     }, []);
 
-    function LetsGo(campId) {
+    const LetsGo = (campId) => {
         localStorage.setItem('Selected_go_live_campaigns_current_campaignId',campId);
         history.push('/LiveVideo');
     }
