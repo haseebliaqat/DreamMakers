@@ -10,30 +10,22 @@ export const ActiveCouponsCard = ({ isWinners }) => {
    const [user, setUser] = useState(null);
    const [coupon_detail, setCouponsDetail] = useState([]);
    useEffect(() => {
-      // let token =  getCookie("token");
-      // setToken(token);
-      //  const subscription = accountService.user.subscribe(x => setUser(x));
-      //  console.log("user", user);
-      //  return subscription.unsubscribe;
-      //alert(localStorage.userDetails);
       if (!!localStorage.userDetails) {            
          setUser(JSON.parse(localStorage.userDetails));
-         //console.log(user);
       }
       if (!!localStorage.purchase_detail) {            
          setCouponsDetail(JSON.parse(localStorage.purchase_detail));
-         //console.log(user);
       }
       GetCoupons();
-      //alert("uer");
   }, []);
 
+  
          const GetCoupons =()=> {
             let obj1 = {
                "limit": 20,
                "offset": 0,
                "order": [["id", "DESC"]],
-               "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id"), 'status':'active' }
+               "where":{"id":{"$gt":0},"campaignId":localStorage.getItem('Selected_go_live_campaigns_current_campaignId'), 'status':'active' }
          }
             alertService.clear();
             accountService.ActiveCoupons(obj1).then((resp) => {
@@ -46,18 +38,19 @@ export const ActiveCouponsCard = ({ isWinners }) => {
       <>
                      {coupon_detail.map((c) => {
                                         return (
-                                          <div className="coupons-card5">
+                                           (c.qrCodes!=""?
+                                           <div className="coupons-card5">
                                           <img src={CouponsCardBg} alt="" width="100%" />
                                           <div className="header5">
                                              <img src={Logo} alt="" />
                                           </div>
-                                          <div className="EL-number5">{c.qrCodes[0].code}</div>
+                                          <div className="EL-number5">{c.qrCodes!=""?c.qrCodes[0].code:""}</div>
                                           <div className="EL-coupon5">coupons No.</div>
                                           <div className="price5">Prize</div>
                                           <div className="Trip-country5">{c.campaign.prizeTitle}</div>
                                           {!isWinners ?
                                              <div className="Qr5">
-                                                <img src={c.qrCodes[0].url} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
+                                                <img src={c.qrCodes!=""?c.qrCodes[0].url:""} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
                                              </div>
                                              :
                                              null
@@ -68,7 +61,8 @@ export const ActiveCouponsCard = ({ isWinners }) => {
                                           <div className="date5">{c.created}</div>
                                           <div className="coupon-name5">Name:</div>
                                           <div className="name5">{c.account.firstName+" "+c.account.lastName}</div>
-                                       </div>
+                                       </div>:null
+                                           )
                                         )
 
                                 })

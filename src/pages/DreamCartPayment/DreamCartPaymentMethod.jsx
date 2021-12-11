@@ -199,7 +199,7 @@ return (
                            <div className="col-md-12 order-md-1">
                            {clientSecret && (
                                 <Elements options={options} stripe={stripePromise}>
-                                  <CheckoutForm />
+                                  <CheckoutForm  />
                                 </Elements>
                             )}
                            </div>

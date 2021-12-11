@@ -18,6 +18,28 @@ function AddEdit({ history, match }) {
     const isAddMode = !id;
     // const [imageURL, setImageURL] = useState('')
     const [charityPartners, setCharityPartners] = useState([]);
+    const [Category, setCategory] = useState([
+        {
+            "name": "Featured",
+            "value": "featured",
+        },
+        {
+            "name": "Explore",
+            "value": "explore",
+        },
+        {
+            "name": "Lifestyle",
+            "value": "lifestyle",
+        },
+        {
+            "name": "Trip",
+            "value": "trip",
+        },
+        {
+            "name": "Other",
+            "value": "other",
+        }
+    ]);
     const [campaignId, setCampaignId] = useState(0);
     const [bulkPictures, setBulkPictures] = useState([])
 
@@ -267,8 +289,10 @@ function AddEdit({ history, match }) {
                         }
                         campaignsService.getById(obj).then(campaign => {
                             console.log("campaign", campaign);
-                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons', 'perEntryCoupons', 'couponPrice', 'startDate', 'drawDate'];
+                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','perEntryCoupons','couponPrice','startDate','drawDate'];
                             fields.forEach(field => setFieldValue(field, campaign.rows[0][field], false));
+                            console.log("fields")
+                            console.log(fields)
                         });
                     }
                 }, []);
@@ -425,7 +449,14 @@ function AddEdit({ history, match }) {
                         <div className="form-row">
                             <div className="form-group col-6">
                                 <label>Category</label>
-                                <Field name="whereToShow" component="select" multiple={true} className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
+                                <Field name="whereToShow"  component="select" multiple={true} className={'form-control' + (errors.whereToShow && touched.whereToShow ? ' is-invalid' : '')} >
+                                    {/* {
+                                            Category.map((c) => {
+                                                return (
+                                                    <option value={c.name} key={c.name} selected="selected">{c.name}</option>
+                                                )
+                                            })
+                                        } */}
                                     <option value="featured">Featured</option>
                                     <option value="explore">Explore</option>
                                     <option value="lifestyle">Lifestyle</option>

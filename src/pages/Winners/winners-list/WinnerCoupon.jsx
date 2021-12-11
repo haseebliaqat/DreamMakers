@@ -23,7 +23,7 @@ export const WinnerCoupon = ({ firstName,WinningPrize,CouponNumber,CouponQRcode,
                                           <div className="Trip-country7" style={{fontSize:"14px",marginTop:"3px"}}>{WinningPrize}</div>
                                           {!CouponQRcode ?
                                              <div className="Qr7">
-                                                <img src={c.qrCode} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
+                                                <img src={CouponQRcode} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
                                              </div>
                                              :
                                              null
