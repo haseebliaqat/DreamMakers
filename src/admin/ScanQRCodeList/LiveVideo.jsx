@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import QrReader from 'react-qr-scanner'
 import { Link } from 'react-router-dom';
 import { campaignsService } from '@/_services/campaigns.service';
+import { ActiveCouponsCardAdmin } from '@/pages/ActiveCoupons/ActiveCouponsCardAdmin';
 import OtpInput from 'react-otp-input';
 import { useHistory } from "react-router-dom";
 import ReactPlayer from 'react-player/youtube'
@@ -60,6 +61,7 @@ const divStyle1 = {
                         </div>
                         </div>
                 </div>
+                <ActiveCouponsCardAdmin></ActiveCouponsCardAdmin>
         </div>
     );
 }

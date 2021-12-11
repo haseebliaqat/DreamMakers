@@ -63,6 +63,7 @@ const divStyle2 = {
         localStorage.setItem('Selected_go_live_campaigns_current_campaignId',campId);
         history.push('/LiveVideo');
     }
+    
     return (
         <div className="Component" style={divStyle} >
             <div style={{display:"flex", justifyContent:"center", width:"100%", padding:"0"}}>
@@ -81,6 +82,7 @@ const divStyle2 = {
                                     <div style={{display:"flex"}}>
                                     <p style={{padding:"px",fontSize:"20px",color:"#0e1a46",marginTop:"-20px",paddingLeft:"8px",fontWeight:"900",textTransform:"capitalize"}}>{item.title} ({item.soldCoupons} Entries)</p>
                                     <div style={{display:"block",marginLeft:"auto",marginRight:"14px",marginTop:"-26px"}}>   <button  className={`${item.status == 'expired' ? "let-go-expired" : "let-go"}`} onClick={LetsGo(item.id)} disabled={item.status == 'expired'}>Let's Go!</button></div>
+
                                     </div>
                                     </div> 
                                 </div>
@@ -95,6 +97,7 @@ const divStyle2 = {
                                     <div style={{display:"block",marginLeft:"auto",marginRight:"14px",marginTop:"-26px"}}>   <button style={{backgroundColor:"f3c10c"}}>* Winner *</button></div>
                                 </div>
                                 </div> 
+
                             </div>
                     ))
             }
