@@ -66,6 +66,11 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
+			bucketName:'dreammakersbucket',
+			dirName:'pictures',
+			region:'ap-southeast-1',
+			accessKeyId:'AKIARVPMJKFUWHUZ2KA5',
+			secretAccessKey:'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',
 
             // //---------------Local----------------------//,
             // apiUrl: 'http://localhost:4080',

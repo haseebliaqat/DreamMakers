@@ -10,6 +10,7 @@ import { charityPartnersService } from '@/_services/charity-partners.service';
 import _ from 'lodash';
 import { picturesService } from '@/_services/pictures.service';
 import S3 from 'react-aws-s3';
+import config from 'config';
 
 function AddEdit({ history, match }) {
     const { id } = match.params;
@@ -160,11 +161,11 @@ function AddEdit({ history, match }) {
     // For Images
 
     const configObj = {
-        bucketName: 'dreammakersbucket',
-        dirName: 'pictures',
-        region: process.env.REACT_APP_AWS_REGION,
-        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.REACT_APP_AWS_BUCKET_KEY
+        bucketName: config.bucketName,
+        dirName: config.dirName,
+        region: config.region,
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
     }
 
     function createBulkPictures(fields) {
@@ -217,6 +218,7 @@ function AddEdit({ history, match }) {
 
     let uploadPicture = (e, type) => {
         // setIsSubmit(true);
+        console.log(configObj);
         const reactS3Client = new S3(configObj);
         console.log("event uplaod==>", e);
         reactS3Client.uploadFile(e.target.files[0], e.target.files[0].name).then((data) => {
@@ -246,7 +248,7 @@ function AddEdit({ history, match }) {
 
         }).catch(error => {
             // setIsSubmit(false);
-            console.log(error);
+            console.error(error);
         });
     }
 
