@@ -646,7 +646,7 @@ export function Home() {
                     </div>
 
                 </section>
-
+                {campaigns?.length < 1 ? '' :                 
                 <section className="explore">
 
                     <div className="container-fluid">
@@ -691,7 +691,10 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+
+                {othercampaigns?.length < 1 ? '' : 
                 <section className="other sliderStyle1">
 
                     <div className="container-fluid">
@@ -830,7 +833,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+                {lifestylecampaigns?.length < 1 ? '' : 
                 <section className="lifestyle sliderStyle1">
 
                     <div className="container-fluid">
@@ -980,7 +985,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+                {tripcampaigns?.length < 1 ? '' : 
                 <section className="trip sliderStyle1">
                     <div className="container-fluid">
                         <h1 className="headingStyle1" style={{marginLeft:"16px"}}>Trip Campaigns</h1>
@@ -1115,6 +1122,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
+                
+                {soldoutcampaigns?.length < 1 ? '' : 
 
                 <section className="sold-out sliderStyle1">
 
@@ -1214,11 +1224,11 @@ export function Home() {
                     </div>
 
                 </section>
-
+                }
 
 
                 {/* <!-- Winner Testimonails --> */}
-
+                {TestTimonial?.length < 1 ? '' : 
                 <section className="testimonials-winners">
                     <div className="container-fluid">
                         <h1 className="headingStyle1 m-none" style={{marginLeft:"16px"}}>Testimonials & Winners</h1>
@@ -1411,6 +1421,7 @@ export function Home() {
                         </div>
 
                 </section>
+                }
 
                 {/* Charity Partners */}
 
