@@ -44,3 +44,6 @@ dist
 .env
 yarn.lock
 package-lock.json
+*.suo
+.vs/
+*.sqlite
