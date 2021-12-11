@@ -42,3 +42,5 @@ dist
 
 # env file
 .env
+yarn.lock
+package-lock.json

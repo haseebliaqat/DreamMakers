@@ -11,6 +11,7 @@ import _ from 'lodash';
 import { picturesService } from '@/_services/pictures.service';
 import S3 from 'react-aws-s3';
 import config from 'config';
+import { v4 as randomString } from 'uuid';
 
 function AddEdit({ history, match }) {
     const { id } = match.params;
@@ -218,15 +219,15 @@ function AddEdit({ history, match }) {
 
     let uploadPicture = (e, type) => {
         // setIsSubmit(true);
-        console.log(configObj);
+        console.log(type);
         const reactS3Client = new S3(configObj);
         console.log("event uplaod==>", e);
-        reactS3Client.uploadFile(e.target.files[0], e.target.files[0].name).then((data) => {
+        reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
             // setIsSubmit(false);
             // setImageURL(data.location);
             // let _pictures = [];
             let imgObj = {
-                name: '',
+                name: e.target.files[0].name,
                 title: '',
                 description: '',
                 alt: '',
@@ -273,7 +274,7 @@ function AddEdit({ history, match }) {
                 }, []);
 
                 return (
-                    <Form>
+                    <Form className='admin-form'>
                         <h1>{isAddMode ? 'Add Campaign' : 'Edit Campaign'}</h1>
                         <div className="form-row">
                             <div className="form-group col-5">
