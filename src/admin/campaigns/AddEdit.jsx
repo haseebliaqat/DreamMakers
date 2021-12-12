@@ -16,6 +16,7 @@ import { v4 as randomString } from 'uuid';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState, convertFromHTML,convertFromRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {stateToHTML} from 'draft-js-export-html'; 
 //import { convertFromHTML  } from 'draft-convert';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
@@ -49,6 +50,16 @@ function AddEdit({ history, match }) {
     const createMarkup = (html) => {
         return  {
           __html: DOMPurify.sanitize(html)
+        }
+    }
+
+    const createMarkup2 = (json) => {
+        //let tempHtml = stateToHTML(convertFromRaw(json));
+        console.log(json);
+        console.log(stateToHTML(convertFromRaw(json)));
+        let body = draftToHtml(json)
+        return  {
+          __html: body
         }
     }
     // Editor section end ///
@@ -318,7 +329,7 @@ function AddEdit({ history, match }) {
                     console.log(campaignObj);
                 }
 
-                                            
+                
                 useEffect(() => {
                     if (!isAddMode) {
                         // get user and set form fields
@@ -335,8 +346,8 @@ function AddEdit({ history, match }) {
                             }
 
                             console.log(campaign);
-                            setCampaignObj(campaign);
-
+                            
+                            
 
                             let tempObj = {
                                 "blocks": [
@@ -358,13 +369,15 @@ function AddEdit({ history, match }) {
                                 ],
                                 "entityMap": {}
                             };
-                            
+                            campaign.highlights = JSON.stringify(tempObj);
+                            setCampaignObj(campaign);
+                            console.log(campaign);
                             //setEditorState(EditorState.createWithContent(convertFromHTML(DOMPurify.sanitize(campaign.highlights))))
                             //setEditorState(ContentState.createFromBlockArray(convertFromHTML(campaign.highlights)));
                             // setEditorState(EditorState.createWithContent(
                             //     ContentState.createFromBlockArray(
                             //       convertFromHTML(campaign.highlights))));
-                            setEditorState(EditorState.createWithContent(convertFromRaw(tempObj)));
+                            setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.highlights))));
 
 
                             const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
@@ -759,7 +772,10 @@ function AddEdit({ history, match }) {
                                     onEditorStateChange= {onEditorStateChange}
                                     />
                                 {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
-                                <div className="preview" dangerouslySetInnerHTML={createMarkup(campaignObj?.highlights)}></div>
+                                {
+                                    campaignObj ? <div className="preview" dangerouslySetInnerHTML={createMarkup2(JSON.parse(campaignObj?.highlights))}></div> : null
+                                }
+                                
                         </div>
                     </Form>
                     
