@@ -25,19 +25,14 @@ import draftToHtml from "draftjs-to-html";
 
 function AddEdit({ history, match }) {
 
-    // Editor section start ///
-    //best line
-    ///EditorState.createWithContent(convertFromHTML(currentPost.body));
-
-    const [convertedContent, setConvertedContent] = useState('');
+    // Editor section start ///       
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onEditorStateChange = (editorState) => {
-        setEditorState(editorState)
+        setEditorState(editorState); 
         convertContentToHTML();
     }
     const convertContentToHTML = () => {
         let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        setConvertedContent(body);
         campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         setCampaignObj(campaignObj);
     }
@@ -46,7 +41,6 @@ function AddEdit({ history, match }) {
           __html: DOMPurify.sanitize(html)
         }
     }
-
     const jsonToHtml = (json) => {
         //let tempHtml = stateToHTML(convertFromRaw(json));
         let body = draftToHtml(json)
@@ -54,6 +48,18 @@ function AddEdit({ history, match }) {
           __html: body
         }
     }
+
+    const [editorStateDescription, setEditorStateDescription] = useState(EditorState.createEmpty());
+    const onEditorDescriptionStateChange = (editorStateDescription) => {
+        setEditorStateDescription(editorStateDescription); 
+        convertDescriptionContentToHTML();
+    }
+    const convertDescriptionContentToHTML = () => {
+        let body = draftToHtml(convertToRaw(editorStateDescription.getCurrentContent()))
+        campaignObj.description = JSON.stringify(convertToRaw(editorStateDescription.getCurrentContent()));
+        setCampaignObj(campaignObj);
+    }
+
     // Editor section end ///
 
     const { id } = match.params;
@@ -132,8 +138,8 @@ function AddEdit({ history, match }) {
             .required('Name is required'),
         title: Yup.string()
             .required('Title is required'),
-        description: Yup.string()
-            .required('Description is required'),
+        // description: Yup.string()
+        //     .required('Description is required'),
         shortTitleDescriptionDesktop: Yup.string()
             .required('This field is required'),
             winningPrizeTitle: Yup.string()
@@ -346,8 +352,11 @@ function AddEdit({ history, match }) {
                             if(campaign?.highlights)
                             setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.highlights))));
 
+                            if(campaign?.description)
+                            setEditorStateDescription(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.description))));
 
-                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
+
+                            const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
                              'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
                              'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube'];
@@ -382,18 +391,7 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="title" component="div" className="invalid-feedback" />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-12">
-                                <label>Description</label>
-                                <Field name="description" type="text" className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
-                                <ErrorMessage name="description" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group col-12">
-                                <label>Highlights</label>
-                                {/* <Field name="highlights" type="text" className={'form-control' + (errors.highlights && touched.highlights ? ' is-invalid' : '')} /> */}
-                                <ErrorMessage name="highlights" component="div" className="invalid-feedback" />
-                            </div>
-                        </div>
+                        
                         <div className="form-row">
                             <div className="form-group col-5 m-0">
                                 <label>Short Title Description</label>
@@ -743,11 +741,11 @@ function AddEdit({ history, match }) {
                             <div className="form-group col-12">
                             <label>Description</label>
                                 <Editor
-                                            editorState={editorState}
+                                            editorState={editorStateDescription}
                                             toolbarClassName="editorToolbar"
                                             wrapperClassName="editorWrapper"
                                             editorClassName="editor"
-                                            onEditorStateChange= {onEditorStateChange}
+                                            onEditorStateChange= {onEditorDescriptionStateChange}
                                             />
                                         {/* {
                                             campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null

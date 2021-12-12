@@ -43,7 +43,6 @@ function List({ match }) {
                         <th>#</th>
                         <th>Name</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Code</th>
                         <th>Status</th>
                         <th>Type</th>
@@ -64,7 +63,6 @@ function List({ match }) {
                             <td>{campaign.id}</td>
                             <td>{campaign.name}</td>
                             <td>{campaign.title}</td>
-                            <td>{campaign.description}</td>
                             <td>{campaign.code}</td>
                             <td>{campaign.status}</td>
                             <td>{campaign.type}</td>
