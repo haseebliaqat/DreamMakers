@@ -128,8 +128,9 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
             </div>
 
-            <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}>
-
+            {/* <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+            {/* </div><div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+            <div className="card-img" style={{ backgroundImage: `url(${item.prizeDesktopImage})`}}>
                 {isVideo ?
                     <div className="feature-video">
 

@@ -147,6 +147,14 @@ export function Home() {
             var trip = [];
             var soldout = [];
             for(var i=0;i<myson.length;i++){
+                let campaign = myson[i];
+                if(campaign.pictures!=null)
+                    for(let i=0; i<campaign.pictures.length; i++){
+                        campaign[campaign.pictures[i].type] = campaign.pictures[i].url;
+                    }
+            }
+            console.log(myson);
+            for(var i=0;i<myson.length;i++){
                 if ((myson[i].type=='explore' || myson[i]=='Featured') && myson[i].status=="active") {
                     explore.push(myson[i]);
                     SetLoader(false)
