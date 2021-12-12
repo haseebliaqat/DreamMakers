@@ -177,7 +177,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                         <div className="btl-img">
 
-                            <img src={item ? renderMedia(constantSrv.EMediaCategory.productDesktop, 'img') : bottle} alt="" />
+                            <img src={item ? item.productImage : bottle} alt="" />
 
                         </div>
 
