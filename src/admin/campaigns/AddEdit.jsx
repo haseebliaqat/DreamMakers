@@ -12,8 +12,43 @@ import { picturesService } from '@/_services/pictures.service';
 import S3 from 'react-aws-s3';
 import config from 'config';
 import { v4 as randomString } from 'uuid';
+// Editor section start ///
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw  } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertToHTML } from 'draft-convert';
+import DOMPurify from 'dompurify';
+import draftToHtml from "draftjs-to-html";
+// Editor section end ///
+
 
 function AddEdit({ history, match }) {
+
+    // Editor section start ///
+    const [convertedContent, setConvertedContent] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const onEditorStateChange = (editorState) => {
+        console.log(editorState.getCurrentContent().getPlainText());
+        console.log(JSON.stringify(editorState).length);
+        editorState
+        setEditorState(editorState)
+        convertContentToHTML();
+    }
+    const convertContentToHTML = () => {
+        let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+        const body = 
+       draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        //setConvertedContent(currentContentAsHTML);
+        setConvertedContent(body);
+        console.log(convertedContent);
+    }
+    const createMarkup = (html) => {
+        return  {
+          __html: DOMPurify.sanitize(html)
+        }
+    }
+    // Editor section end ///
+
     const { id } = match.params;
     const isAddMode = !id;
     // const [imageURL, setImageURL] = useState('')
@@ -698,10 +733,25 @@ function AddEdit({ history, match }) {
                             </button>
                             <Link to={isAddMode ? '.' : '..'} className="btn btn-link">Cancel</Link>
                         </div>
+                        <div>
+                        <Editor
+                                    editorState={editorState}
+                                    toolbarClassName="toolbarClassName"
+                                    wrapperClassName="wrapperClassName"
+                                    editorClassName="editorClassName"
+                                    onEditorStateChange= {onEditorStateChange}
+                                    />
+                                {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
+                        </div>
                     </Form>
+                    
                 );
-            }}
+                
+                
+                }
+            }
         </Formik>
+        
     );
 }
 
