@@ -19,39 +19,51 @@ import { PriceSlider } from '../../_components/PriceSlider/PriceSlider';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useHistory } from "react-router-dom";
+// Editor section start ///
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw  } from 'draft-js';
+import { EditorState, convertToRaw,convertFromRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { convertToHTML } from 'draft-convert';
+import {stateToHTML} from 'draft-js-export-html'; 
+//import { convertFromHTML  } from 'draft-convert';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
+// Editor section end ///
 
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
     const [showModal, setShowModal] = useState(false);
     const [PrizeDetail, setPrizeDetail] = useState(null);
 
+    // Editor section start ///
+    //best line
+    ///EditorState.createWithContent(convertFromHTML(currentPost.body));
+
     const [convertedContent, setConvertedContent] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onEditorStateChange = (editorState) => {
-        console.log(editorState.getCurrentContent().getPlainText());
-        console.log(JSON.stringify(editorState).length);
-        editorState
         setEditorState(editorState)
         convertContentToHTML();
     }
     const convertContentToHTML = () => {
-        let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-        const body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        //setConvertedContent(currentContentAsHTML);
+        let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         setConvertedContent(body);
-        console.log(convertedContent);
+        campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+        setCampaignObj(campaignObj);
     }
     const createMarkup = (html) => {
         return  {
           __html: DOMPurify.sanitize(html)
         }
     }
+
+    const jsonToHtml = (json) => {
+        //let tempHtml = stateToHTML(convertFromRaw(json));
+        let body = draftToHtml(json)
+        return  {
+          __html: body
+        }
+    }
+    // Editor section end ///
 
 
     const history = useHistory();
@@ -178,16 +190,11 @@ function Price() {
                         <div className="priceDescription">
                         <div className="row">
                             <div className="col-md-12">
-                                <h1>Description</h1>
-                                <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p>
-                                <Editor
-                                    editorState={editorState}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
-                                    onEditorStateChange= {onEditorStateChange}
-                                    />;
-                                <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div>
+                                <h1>Highlights</h1>
+                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                                {
+                                    PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
+                                }
 
                             </div>
                         </div>

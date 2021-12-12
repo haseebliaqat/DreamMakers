@@ -32,19 +32,13 @@ function AddEdit({ history, match }) {
     const [convertedContent, setConvertedContent] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onEditorStateChange = (editorState) => {
-        console.log(editorState.getCurrentContent().getPlainText());
-        console.log(JSON.stringify(editorState).length);
-        editorState
         setEditorState(editorState)
         convertContentToHTML();
     }
     const convertContentToHTML = () => {
         let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        console.log('ddd');
-        console.log(convertToRaw(editorState.getCurrentContent()));
         setConvertedContent(body);
         campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-        console.log(campaignObj);
         setCampaignObj(campaignObj);
     }
     const createMarkup = (html) => {
