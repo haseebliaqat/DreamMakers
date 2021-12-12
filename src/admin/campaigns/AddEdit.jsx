@@ -53,7 +53,7 @@ function AddEdit({ history, match }) {
         }
     }
 
-    const createMarkup2 = (json) => {
+    const jsonToHtml = (json) => {
         //let tempHtml = stateToHTML(convertFromRaw(json));
         let body = draftToHtml(json)
         return  {
@@ -772,7 +772,7 @@ function AddEdit({ history, match }) {
                                     />
                                 {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
                                 {
-                                    campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={createMarkup2(JSON.parse(campaignObj?.highlights))}></div> : null
+                                    campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
                                 }
                                 
                         </div>
