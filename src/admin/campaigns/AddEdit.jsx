@@ -43,7 +43,7 @@ function AddEdit({ history, match }) {
         console.log('ddd');
         console.log(convertToRaw(editorState.getCurrentContent()));
         setConvertedContent(body);
-        campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));//body;
+        campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         console.log(campaignObj);
         setCampaignObj(campaignObj);
     }
@@ -367,7 +367,7 @@ function AddEdit({ history, match }) {
                                 ],
                                 "entityMap": {}
                             };
-                            campaign.highlights = JSON.stringify(tempObj);
+                            //campaign.highlights = JSON.stringify(tempObj);
                             setCampaignObj(campaign);
                             console.log(campaign);
                             //setEditorState(EditorState.createWithContent(convertFromHTML(DOMPurify.sanitize(campaign.highlights))))
@@ -375,6 +375,7 @@ function AddEdit({ history, match }) {
                             // setEditorState(EditorState.createWithContent(
                             //     ContentState.createFromBlockArray(
                             //       convertFromHTML(campaign.highlights))));
+                            if(campaign?.highlights)
                             setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.highlights))));
 
 
@@ -771,7 +772,7 @@ function AddEdit({ history, match }) {
                                     />
                                 {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
                                 {
-                                    campaignObj ? <div className="preview" dangerouslySetInnerHTML={createMarkup2(JSON.parse(campaignObj?.highlights))}></div> : null
+                                    campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={createMarkup2(JSON.parse(campaignObj?.highlights))}></div> : null
                                 }
                                 
                         </div>
