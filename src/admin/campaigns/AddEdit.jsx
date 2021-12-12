@@ -43,7 +43,7 @@ function AddEdit({ history, match }) {
         console.log('ddd');
         console.log(convertToRaw(editorState.getCurrentContent()));
         setConvertedContent(body);
-        campaignObj.highlights = body;
+        campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));//body;
         console.log(campaignObj);
         setCampaignObj(campaignObj);
     }
@@ -55,8 +55,6 @@ function AddEdit({ history, match }) {
 
     const createMarkup2 = (json) => {
         //let tempHtml = stateToHTML(convertFromRaw(json));
-        console.log(json);
-        console.log(stateToHTML(convertFromRaw(json)));
         let body = draftToHtml(json)
         return  {
           __html: body
