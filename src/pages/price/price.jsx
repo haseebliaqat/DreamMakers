@@ -30,7 +30,9 @@ function Price() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const onEditorStateChange = (editorState) => {
-      console.log(editorState);
+    console.log(editorState.getCurrentContent().getPlainText());
+    console.log(JSON.stringify(editorState).length);
+    editorState
     setEditorState(editorState)
   }
     const history = useHistory();
