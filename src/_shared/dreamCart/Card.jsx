@@ -222,7 +222,8 @@ const Card = ({count,setCount}) => {
                   <div className="d-flex justify-content-between detamCartLeft">
                      <div className="count-DreamCart">1.</div>
                      <div className="Product-DreamCart ">
-                        <img src={Bottle} alt="bottle" className="bottle-img" />
+                        {/* <img src={Bottle}  alt="bottle" className="bottle-img" style={{width:'85px', height:'205px', borderRadius:'50%', marginRight:'10px', margin:'10px'}} /> */}
+                        <img  src={campaign?.prizeImage} alt="bottle" className="bottle-img" style={{width:'85px', height:'205px', borderRadius:'50%', marginRight:'10px', margin:'10px'}} />
                      </div>
                      <div className="Product-deatils-DreamCart">
                         <div className="maldivs-trip">{!!campaign?campaign.title:""}</div>
