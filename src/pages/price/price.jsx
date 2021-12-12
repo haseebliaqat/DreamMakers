@@ -42,8 +42,7 @@ function Price() {
     }
     const convertContentToHTML = () => {
         let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-        const body = 
-       draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        const body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         //setConvertedContent(currentContentAsHTML);
         setConvertedContent(body);
         console.log(convertedContent);

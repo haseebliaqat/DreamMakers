@@ -14,9 +14,9 @@ import config from 'config';
 import { v4 as randomString } from 'uuid';
 // Editor section start ///
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw  } from 'draft-js';
+import { EditorState, convertToRaw, ContentState, convertFromHTML,convertFromRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { convertToHTML } from 'draft-convert';
+//import { convertFromHTML  } from 'draft-convert';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
 // Editor section end ///
@@ -25,6 +25,9 @@ import draftToHtml from "draftjs-to-html";
 function AddEdit({ history, match }) {
 
     // Editor section start ///
+    //best line
+    ///EditorState.createWithContent(convertFromHTML(currentPost.body));
+
     const [convertedContent, setConvertedContent] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onEditorStateChange = (editorState) => {
@@ -35,12 +38,13 @@ function AddEdit({ history, match }) {
         convertContentToHTML();
     }
     const convertContentToHTML = () => {
-        let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-        const body = 
-       draftToHtml(convertToRaw(editorState.getCurrentContent()))
-        //setConvertedContent(currentContentAsHTML);
+        let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        console.log('ddd');
+        console.log(convertToRaw(editorState.getCurrentContent()));
         setConvertedContent(body);
-        console.log(convertedContent);
+        campaignObj.highlights = body;
+        console.log(campaignObj);
+        setCampaignObj(campaignObj);
     }
     const createMarkup = (html) => {
         return  {
@@ -149,8 +153,8 @@ function AddEdit({ history, match }) {
             .required('This field is required'),
         active: Yup.boolean()
             .required('This field is required'),
-        highlights: Yup.string()
-            .required('Highlights is required'),
+        // highlights: Yup.string()
+        //     .required('Highlights is required'),
         code: Yup.string()
             .required('Code is required'),
         type: Yup.string()
@@ -205,7 +209,7 @@ function AddEdit({ history, match }) {
     function updateCampaign(id, fields, setSubmitting) {
         //fields.whereToShow = (fields.whereToShow).toString();
 
-        campaignsService.update(id, fields)
+        campaignsService.update(id, campaignObj)
             .then(() => {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
                 setCampaignId(id);
@@ -262,21 +266,6 @@ function AddEdit({ history, match }) {
                 alertService.error(error);
             });
     }
-
-    // function updatePicture(id, fields, setSubmitting) {
-    //     if (imageURL) {
-    //         fields.url = imageURL;
-    //     }
-    //     picturesService.update(id, fields)
-    //         .then(() => {
-    //             alertService.success('Update successful', { keepAfterRouteChange: true });
-    //             history.push('..');
-    //         })
-    //         .catch(error => {
-    //             setSubmitting(false);
-    //             alertService.error(error);
-    //         });
-    // }
 
     let uploadPicture = (e, type) => {
         // setIsSubmit(true);
@@ -349,10 +338,38 @@ function AddEdit({ history, match }) {
                             setCampaignObj(campaign);
 
 
+                            let tempObj = {
+                                "blocks": [
+                                    {
+                                        "key": "3o0mh",
+                                        "text": "waleed is a good boy",
+                                        "type": "unstyled",
+                                        "depth": 0,
+                                        "inlineStyleRanges": [
+                                            {
+                                                "offset": 0,
+                                                "length": 5,
+                                                "style": "color-rgb(26,188,156)"
+                                            }
+                                        ],
+                                        "entityRanges": [],
+                                        "data": {}
+                                    }
+                                ],
+                                "entityMap": {}
+                            };
+                            
+                            //setEditorState(EditorState.createWithContent(convertFromHTML(DOMPurify.sanitize(campaign.highlights))))
+                            //setEditorState(ContentState.createFromBlockArray(convertFromHTML(campaign.highlights)));
+                            // setEditorState(EditorState.createWithContent(
+                            //     ContentState.createFromBlockArray(
+                            //       convertFromHTML(campaign.highlights))));
+                            setEditorState(EditorState.createWithContent(convertFromRaw(tempObj)));
+
 
                             const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
-                             'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
+                             'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
                              'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube'];
 
                             fields.forEach(field =>{
@@ -393,7 +410,7 @@ function AddEdit({ history, match }) {
                             </div>
                             <div className="form-group col-12">
                                 <label>Highlights</label>
-                                <Field name="highlights" type="text" className={'form-control' + (errors.highlights && touched.highlights ? ' is-invalid' : '')} />
+                                {/* <Field name="highlights" type="text" className={'form-control' + (errors.highlights && touched.highlights ? ' is-invalid' : '')} /> */}
                                 <ErrorMessage name="highlights" component="div" className="invalid-feedback" />
                             </div>
                         </div>
@@ -742,6 +759,7 @@ function AddEdit({ history, match }) {
                                     onEditorStateChange= {onEditorStateChange}
                                     />
                                 {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
+                                <div className="preview" dangerouslySetInnerHTML={createMarkup(campaignObj?.highlights)}></div>
                         </div>
                     </Form>
                     
