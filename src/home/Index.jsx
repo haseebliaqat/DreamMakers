@@ -147,19 +147,19 @@ export function Home() {
             var trip = [];
             var soldout = [];
             for(var i=0;i<myson.length;i++){
-                if ((myson[i].type=='Explore' || myson[i]=='Featured') && myson[i].status=="Active") {
+                if ((myson[i].type=='explore' || myson[i]=='Featured') && myson[i].status=="active") {
                     explore.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='Other' && myson[i].status=="Active") {
+                if (myson[i].type=='other' && myson[i].status=="active") {
                     other.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='lifestyle' && myson[i].status=="Active") {
+                if (myson[i].type=='lifestyle' && myson[i].status=="active") {
                     lifestyle.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='Trip' && myson[i].status=="Active") {
+                if (myson[i].type=='trip' && myson[i].status=="active") {
                     trip.push(myson[i]);
                     SetLoader(false)
                 }
