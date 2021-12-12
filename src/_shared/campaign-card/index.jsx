@@ -27,7 +27,8 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
         const { from } = { from: { pathname: "/dream-cart" } };
         history.push(from);
     }
-    function saveDataToLocalStorageByPrizeDetail(Campaign){
+    function saveDataToLocalStorageByPrizeDetail(Campaign,evt){
+        evt.preventDefault();
         console.log(JSON.stringify(Campaign));
         localStorage.setItem("SeletedCampaign",JSON.stringify(Campaign));
         const { from } = { from: { pathname: "/prize-details" } };
@@ -163,7 +164,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                             <p>{item?.description}</p>
 
-                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item)}>
+                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item,e)}>
                             {/* to={{ pathname: `/prize-details` }} */}
                                 <Link >
                                     Prize Details

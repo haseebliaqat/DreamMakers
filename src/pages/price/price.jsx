@@ -198,6 +198,17 @@ function Price() {
 
                             </div>
                         </div>
+
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h1>Description</h1>
+                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                                {
+                                    PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
+                                }
+
+                            </div>
+                        </div>
                     </div>
                     </div>
                     {/* Description */}
