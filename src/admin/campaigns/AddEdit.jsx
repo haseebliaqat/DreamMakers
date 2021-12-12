@@ -736,9 +736,9 @@ function AddEdit({ history, match }) {
                         <div>
                         <Editor
                                     editorState={editorState}
-                                    toolbarClassName="toolbarClassName"
-                                    wrapperClassName="wrapperClassName"
-                                    editorClassName="editorClassName"
+                                    toolbarClassName="editorToolbar"
+                                    wrapperClassName="editorWrapper"
+                                    editorClassName="editor"
                                     onEditorStateChange= {onEditorStateChange}
                                     />
                                 {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
