@@ -2,13 +2,14 @@ import React from 'react';
 import './index.less';
 import shareIcon from '@/_assets/images/social-share.png';
 import bottle from '@/_assets/images/bottle.png';
+import moment from 'moment';
 
-function SoldCampaign() {
+function SoldCampaign({ props, videoSrc, item, keyValue }) {
 
     return (
         <div className="card">
 
-            <div className="card-img">
+            <div className="card-img" style={{ backgroundImage: `url(${item.prizeDesktopImage})`}}>
 
                 <div className="overlay"></div>
 
@@ -18,15 +19,15 @@ function SoldCampaign() {
 
                 <div className="card-cnt">
 
-                    <h1>Maldives Trip</h1>
+                    <h1>{item.title}</h1>
 
-                    <p>WIN FREE MALDIVES HOLIDAY TRIP</p>
+                    <p>{item.prizeTitleDesktop}</p>
 
                 </div>
 
                 <div className="btl-img">
 
-                    <img src={bottle} alt="" />
+                    <img src={item.productImage} alt="" />
 
                 </div>
 
@@ -41,7 +42,7 @@ function SoldCampaign() {
                 <div>
                     <div >
                         <h6>Draw date</h6>
-                        <h5 style={{fontWeight:"800"}}>13 August 2021</h5>
+                        <h5 style={{fontWeight:"800"}}> {moment(item?.drawDate).format("MMMM DD, YYYY")}</h5>
                     </div>
 
                 </div>

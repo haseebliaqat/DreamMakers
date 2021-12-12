@@ -484,6 +484,7 @@ function AddEdit({ history, match }) {
                                     <option value="">Select</option>
                                     
                                     <option value="active">Active</option>
+                                    <option value="sold-out">Sold Out</option>
                                     <option value="expired">Expired</option>
                                 </Field>
                                 <ErrorMessage name="status" component="div" className="invalid-feedback" />
