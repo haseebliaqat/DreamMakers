@@ -21,7 +21,7 @@ function FacebookLoginButton({mblStyle}) {
           if (authResponse) {
               accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
           } else {
-              resolve();
+              resolve(); 
           }
       });
       }.bind(this);

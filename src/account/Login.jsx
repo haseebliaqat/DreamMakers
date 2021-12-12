@@ -245,7 +245,7 @@ function Login({ location}) {
 
                                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                                                 {({ errors, touched, isSubmitting }) => (
-                                                    <Form class="loginform">
+                                                    <Form className="loginform">    
                                                         <div className="formCont LoginCont">
                                                             <div className="subscription-form">
                                                                 <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />

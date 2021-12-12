@@ -325,6 +325,7 @@ function AddEdit({ history, match }) {
                 useEffect(() => {
                     if (!isAddMode) {
                         // get user and set form fields
+                          
                         let obj = {
                             "limit": 5,
                             "offset": 0,
@@ -339,36 +340,9 @@ function AddEdit({ history, match }) {
 
                             console.log(campaign);
                             
-                            
-
-                            let tempObj = {
-                                "blocks": [
-                                    {
-                                        "key": "3o0mh",
-                                        "text": "waleed is a good boy",
-                                        "type": "unstyled",
-                                        "depth": 0,
-                                        "inlineStyleRanges": [
-                                            {
-                                                "offset": 0,
-                                                "length": 5,
-                                                "style": "color-rgb(26,188,156)"
-                                            }
-                                        ],
-                                        "entityRanges": [],
-                                        "data": {}
-                                    }
-                                ],
-                                "entityMap": {}
-                            };
-                            //campaign.highlights = JSON.stringify(tempObj);
                             setCampaignObj(campaign);
                             console.log(campaign);
-                            //setEditorState(EditorState.createWithContent(convertFromHTML(DOMPurify.sanitize(campaign.highlights))))
-                            //setEditorState(ContentState.createFromBlockArray(convertFromHTML(campaign.highlights)));
-                            // setEditorState(EditorState.createWithContent(
-                            //     ContentState.createFromBlockArray(
-                            //       convertFromHTML(campaign.highlights))));
+                           
                             if(campaign?.highlights)
                             setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.highlights))));
 
@@ -749,6 +723,37 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="drawDate" component="div" className="invalid-feedback" />
                             </div>
                         </div>
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                            <label>Highlights</label>
+                                <Editor
+                                            editorState={editorState}
+                                            toolbarClassName="editorToolbar"
+                                            wrapperClassName="editorWrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange= {onEditorStateChange}
+                                            />
+                                        {/* {
+                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
+                                        } */}
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                            <label>Description</label>
+                                <Editor
+                                            editorState={editorState}
+                                            toolbarClassName="editorToolbar"
+                                            wrapperClassName="editorWrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange= {onEditorStateChange}
+                                            />
+                                        {/* {
+                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
+                                        } */}
+                            </div>
+                        </div>
                         <div className="form-group">
                             <button type="submit" disabled={isSubmitting} className="btn btn-primary">
                                 {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
@@ -756,20 +761,7 @@ function AddEdit({ history, match }) {
                             </button>
                             <Link to={isAddMode ? '.' : '..'} className="btn btn-link">Cancel</Link>
                         </div>
-                        <div>
-                        <Editor
-                                    editorState={editorState}
-                                    toolbarClassName="editorToolbar"
-                                    wrapperClassName="editorWrapper"
-                                    editorClassName="editor"
-                                    onEditorStateChange= {onEditorStateChange}
-                                    />
-                                {/* <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div> */}
-                                {
-                                    campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
-                                }
-                                
-                        </div>
+                        
                     </Form>
                     
                 );
