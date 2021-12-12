@@ -76,10 +76,11 @@ function AddEdit({ history, match }) {
         status: '',
         totalCoupons: 0,
         soldCoupons: 0,
-        perEntryCoupons: 0,
+        perEntryCoupons: 1,
         couponPrice: 0,
         startDate: '',
         drawDate: '',
+        winningPrizeTitle:'',
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -92,6 +93,8 @@ function AddEdit({ history, match }) {
         description: Yup.string()
             .required('Description is required'),
         shortTitleDescriptionDesktop: Yup.string()
+            .required('This field is required'),
+            winningPrizeTitle: Yup.string()
             .required('This field is required'),
         shortTitleDescriptionMobile: Yup.string()
             .required('This field is required'),
@@ -312,7 +315,11 @@ function AddEdit({ history, match }) {
 
 
 
-                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow', 'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','perEntryCoupons','couponPrice','startDate','drawDate'];
+                            const fields = ['name', 'title', 'description', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
+                            'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
+                             'sort', 'active', 'charityPartnerId', 'highlights', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
+                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube'];
+
                             fields.forEach(field =>{
                                 if(field == 'drawDate' || field == 'startDate'){
                                     let tempValue = moment(campaign[field]).format("YYYY-MM-DD[T]HH:mm:ss");
@@ -445,17 +452,40 @@ function AddEdit({ history, match }) {
                         <div className="form-row">
                             <div className="form-group col-4">
                                 <label>Code</label>
-                                <Field name="code" type="text" className={'form-control' + (errors.code && touched.code ? ' is-invalid' : '')} />
+                                <Field name="code" as="select" className={'form-control' + (errors.code && touched.code ? ' is-invalid' : '')} >
+                                <option value="">Select</option>
+                                    
+                                    <option value="EL">Electronic (EL)</option>
+                                    <option value="CH">Cash (CH)</option>
+                                </Field>
                                 <ErrorMessage name="code" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group col-4">
                                 <label>Type</label>
-                                <Field name="type" type="text" className={'form-control' + (errors.type && touched.type ? ' is-invalid' : '')} />
-                                <ErrorMessage name="type" component="div" className="invalid-feedback" />
+                                <Field name="type"  component="select" className={'form-control' + (errors.type && touched.type ? ' is-invalid' : '')} >
+                                    {/* {
+                                            Category.map((c) => {
+                                                return (
+                                                    <option value={c.name} key={c.name} selected="selected">{c.name}</option>
+                                                )
+                                            })
+                                        } */}
+                                    <option value="">Select</option>
+                                    <option value="featured">Featured</option>
+                                    <option value="explore">Explore</option>
+                                    <option value="lifestyle">Lifestyle</option>
+                                    <option value="trip">Trip</option>
+                                    <option value="other">Other</option>
+                                </Field><ErrorMessage name="type" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group col-4">
                                 <label>Status</label>
-                                <Field name="status" type="text" className={'form-control' + (errors.status && touched.status ? ' is-invalid' : '')} />
+                                <Field name="status" as="select" className={'form-control' + (errors.status && touched.status ? ' is-invalid' : '')} >
+                                    <option value="">Select</option>
+                                    
+                                    <option value="active">Active</option>
+                                    <option value="expired">Expired</option>
+                                </Field>
                                 <ErrorMessage name="status" component="div" className="invalid-feedback" />
                             </div>
                         </div>
@@ -463,6 +493,8 @@ function AddEdit({ history, match }) {
                             <div className="form-group col-4">
                                 <label>Active?</label>
                                 <Field name="active" as="select" className={'form-control' + (errors.active && touched.active ? ' is-invalid' : '')} >
+                                <option value="">Select</option>
+                                    
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </Field>
@@ -471,6 +503,8 @@ function AddEdit({ history, match }) {
                             <div className="form-group col-4">
                                 <label>Sort</label>
                                 <Field name="sort" component="select" className={'form-control' + (errors.sort && touched.sort ? ' is-invalid' : '')} >
+                                <option value="">Select</option>
+                                    
                                     <option value="ASC">ASC</option>
                                     <option value="DESC">DESC</option>
                                 </Field>
@@ -488,6 +522,8 @@ function AddEdit({ history, match }) {
                                                 )
                                             })
                                         } */}
+                                    <option value="">Select</option>
+                                    
                                     <option value="featured">Featured</option>
                                     <option value="explore">Explore</option>
                                     <option value="lifestyle">Lifestyle</option>
@@ -504,19 +540,19 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="totalCoupons" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group col-3">
+                                <label>Coupon Price</label>
+                                <Field name="couponPrice" type="text" className={'form-control' + (errors.couponPrice && touched.couponPrice ? ' is-invalid' : '')} />
+                                <ErrorMessage name="couponPrice" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-3">
                                 <label>Sold Coupons</label>
-                                <Field name="soldCoupons" type="text" className={'form-control' + (errors.soldCoupons && touched.soldCoupons ? ' is-invalid' : '')} />
+                                <Field disabled name="soldCoupons" type="text" className={'form-control' + (errors.soldCoupons && touched.soldCoupons ? ' is-invalid' : '')} />
                                 <ErrorMessage name="soldCoupons" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group col-3">
                                 <label>Per Entry Coupons</label>
-                                <Field name="perEntryCoupons" type="text" className={'form-control' + (errors.perEntryCoupons && touched.perEntryCoupons ? ' is-invalid' : '')} />
+                                <Field disabled name="perEntryCoupons" type="text" className={'form-control' + (errors.perEntryCoupons && touched.perEntryCoupons ? ' is-invalid' : '')} />
                                 <ErrorMessage name="perEntryCoupons" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group col-3">
-                                <label>Coupon Price</label>
-                                <Field name="couponPrice" type="text" className={'form-control' + (errors.couponPrice && touched.couponPrice ? ' is-invalid' : '')} />
-                                <ErrorMessage name="couponPrice" component="div" className="invalid-feedback" />
                             </div>
                         </div>
                         <div className="form-row">
@@ -625,6 +661,23 @@ function AddEdit({ history, match }) {
                                 <img src={campaignObj?.imageGalleryMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                             </div>
                         </div>
+                        
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                                <label>Winning Prize Title</label>
+                                <Field name="winningPrizeTitle" type="text" className={'form-control' + (errors.winningPrizeTitle && touched.winningPrizeTitle ? ' is-invalid' : '')} />
+                                <ErrorMessage name="winningPrizeTitle" component="div" className="invalid-feedback" />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                                <label>Youtube Live Video Embed URL</label>
+                                <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
+                                <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
+                            </div>
+                        </div>
+                        
                         <div className="form-row">
                             <div className="form-group col-5">
                                 <label>Start Date</label>
