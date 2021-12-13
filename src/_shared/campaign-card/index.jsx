@@ -162,7 +162,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                             <h1>{item?.title}</h1>
 
-                            <p>{item?.description}</p>
+                            <p>{item?.shortTitleDescriptionDesktop}</p>
 
                             <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item,e)}>
                             {/* to={{ pathname: `/prize-details` }} */}
