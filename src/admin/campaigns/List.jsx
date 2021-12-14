@@ -10,9 +10,10 @@ function List({ match }) {
 
     useEffect(() => {
         let obj = {
-            "limit": 5,
+            "limit": 50,
             "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
+            "order": [["id", "DESC"]],
+            //"order": [["id", "ASC"], ["name", "DESC"]],
             "where": {"id": { "$gt": 0 } }
         }
         campaignsService.getAll(obj).then((x) => {
