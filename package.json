@@ -87,6 +87,7 @@
     "scripts": {
         "start-client": "webpack-dev-server",
         "build": "webpack --mode production",
+		"upload":"webpack --mode production && winscp \/command \"open ftp:\/\/root:Pakistan.1&@test.dreammakers.ae\" \"put C:\\Users\\Admin\\Documents\\haseeb\\DreamMakers\\dist\\* \/\" \"exit\"",
         "start-server": "node server.js",
         "eject": "react-scripts eject",
         "start": "concurrently \"yarn start-client\" \"yarn start-server\""
