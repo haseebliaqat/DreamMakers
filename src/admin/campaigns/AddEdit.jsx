@@ -586,112 +586,179 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="perEntryCoupons" component="div" className="invalid-feedback" />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Prize Image</label>
-                                <Field name="prizeImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeImage')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="prizeImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.prizeImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                        
+
+
+
+                        
+                        <div id='multiCollapisblesDiv'>
+                        <div className='form-row'>
+                        <div className="form-group col-2">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#desktopImagesDiv" aria-controls="#desktopImagesDiv">Desktop Images</button>
                             </div>
-                            <div className="form-group col-6">
-                                <label>Product Image</label>
-                                <Field name="productImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productImage')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="productImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.productImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                            <div className="form-group col-2">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#mobileImagesDiv" aria-controls="#mobileImagesDiv">Mobile Images</button>
+                            </div>
+                            <div className="form-group col-2">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#galleryImagesDiv" aria-controls="#galleryImagesDiv">Gallery Images</button>
+                            </div>
+                            <div className="form-group col-2">
+                            <button type="button" class="btn btn-info"  data-toggle="collapse"  aria-expanded="false" data-target="#descriptionDiv" aria-controls="#descriptionDiv">Description</button>
+                            </div>
+                            <div className="form-group col-2">
+                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#highlightsDiv" aria-controls="#highlightsDiv">Highlights</button>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Desktop Image</label>
-                                <Field name="prizeDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeDesktopImage')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="prizeDesktopImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.prizeDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                        <div id='desktopImagesDiv' className='formSectionAdmin collapse multi-collapse' data-parent="#multiCollapisblesDiv" data-role="collapsible" data-theme="a" data-content-theme="a">
+                            <div>
+                                <label><strong>Desktop Images</strong></label>
                             </div>
-                            <div className="form-group col-6">
-                                <label>Mobile Image</label>
-                                <Field name="prizeMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeMobileImage')} className={'form-control' + (errors.prizeMobileImage && touched.prizeMobileImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="prizeMobileImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                            <div className="form-row">
+                                <div className="form-group col-5">
+                                    <label>Prize</label>
+                                    <Field name="prizeDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeDesktopImage')} className={'form-control' + (errors.prizeDesktopImage && touched.prizeDesktopImage ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="prizeDesktopImage" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.prizeDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Product</label>
+                                    <Field name="productDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productDesktopImage')} className={'form-control' + (errors.productDesktopImage && touched.productDesktopImage ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="productDesktopImage" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-3 m-0">
+                                    <label>USP (small)</label>
+                                    <Field name="uspBannerDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspBannerDesktopImage')} className={'form-control' + (errors.uspSmallBannerDesktop && touched.uspSmallBannerDesktop ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="uspBannerDesktopImage" component="div" className="invalid-feedback" />
+    
+                                    <img src={campaignObj?.uspBannerDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
                             </div>
                         </div>
                         
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Desktop Image</label>
-                                <Field name="productDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productDesktopImage')} className={'form-control' + (errors.productDesktopImage && touched.productDesktopImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="productDesktopImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                        <div id='mobileImagesDiv' className='formSectionAdmin collapse multi-collapse' data-parent="#multiCollapisblesDiv">
+                            <div>
+                                <label><strong>Mobile Images</strong></label>
                             </div>
-                            <div className="form-group col-6">
-                                <label>Mobile Image</label>
-                                <Field name="productMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productMobileImage')} className={'form-control' + (errors.productMobileImage && touched.productMobileImage ? ' is-invalid' : '')} />
-                                <ErrorMessage name="productMobileImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-6 m-0">
-                                <label>USP Small Banner</label>
-                                <Field name="uspBannerDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspBannerDesktopImage')} className={'form-control' + (errors.uspSmallBannerDesktop && touched.uspSmallBannerDesktop ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspBannerDesktopImage" component="div" className="invalid-feedback" />
- 
-                                <img src={campaignObj?.uspBannerDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
-                            </div>
-                            <div className="form-group col-6 m-0">
-                                <label>USP Banner</label>
-                                <Field name="uspBannerMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspBannerMobileImage')} className={'form-control' + (errors.uspSmallBannerDesktop && touched.uspSmallBannerDesktop ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspBannerMobileImage" component="div" className="invalid-feedback" />
- 
-                                <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                            <div className="form-row">
+                                <div className="form-group col-4">
+                                    <label>Prize</label>
+                                    <Field name="prizeMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'prizeMobileImage')} className={'form-control' + (errors.prizeMobileImage && touched.prizeMobileImage ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="prizeMobileImage" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Product</label>
+                                    <Field name="productMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productMobileImage')} className={'form-control' + (errors.productMobileImage && touched.productMobileImage ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="productMobileImage" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Popup</label>
+                                    <Field name="productImageMobilePopup" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productImageMobilePopup')} className={'form-control' + (errors.productImageMobilePopup && touched.productImageMobilePopup ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="productImageMobilePopup" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.productImageMobilePopup} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Desktop Image</label>
-                                <Field name="uspSmallBannerDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspSmallBannerDesktopImage')} className={'form-control' + (errors.uspSmallBannerDesktop && touched.uspSmallBannerDesktop ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspSmallBannerDesktopImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.uspSmallBannerDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+
+
+                        <div id='galleryImagesDiv' className='formSectionAdmin collapse multi-collapse' data-parent="#multiCollapisblesDiv">
+                            <div>
+                                <label><strong>Product Gallery</strong></label>
                             </div>
-                            <div className="form-group col-6">
-                                <label>Mobile Image</label>
-                                <Field name="uspSmallBannerMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspSmallBannerMobileImage')} className={'form-control' + (errors.uspSmallBannerMobile && touched.uspSmallBannerMobile ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspSmallBannerMobileImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.uspSmallBannerMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                            <div className="form-row">
+                                <div className="form-group col-4">
+                                    <label>Frist</label>
+                                    <Field name="imageGalleryFirst" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFirst')} className={'form-control' + (errors.imageGalleryFirst && touched.imageGalleryFirst ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryFirst" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryFirst} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Second</label>
+                                    <Field name="imageGallerySecond" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySecond')} className={'form-control' + (errors.imageGallerySecond && touched.imageGallerySecond ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGallerySecond" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGallerySecond} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Third</label>
+                                    <Field name="imageGalleryThird" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryThird')} className={'form-control' + (errors.imageGalleryThird && touched.imageGalleryThird ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryThird" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryThird} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Fourth</label>
+                                    <Field name="imageGalleryFourth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFourth')} className={'form-control' + (errors.imageGalleryFourth && touched.imageGalleryFourth ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryFourth" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryFourth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Fifth</label>
+                                    <Field name="imageGalleryFifth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFifth')} className={'form-control' + (errors.imageGalleryFifth && touched.imageGalleryFifth ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryFifth" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryFifth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>     
+                                <div className="form-group col-4">
+                                    <label>Sixth</label>
+                                    <Field name="imageGallerySixth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySixth')} className={'form-control' + (errors.imageGallerySixth && touched.imageGallerySixth ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGallerySixth" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGallerySixth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Seventh</label>
+                                    <Field name="imageGallerySeventh" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySeventh')} className={'form-control' + (errors.imageGallerySeventh && touched.imageGallerySeventh ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGallerySeventh" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGallerySeventh} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <label>Eighth</label>
+                                    <Field name="imageGalleryEighth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryEighth')} className={'form-control' + (errors.imageGalleryEighth && touched.imageGalleryEighth ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryEighth" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryEighth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div> 
+                                <div className="form-group col-4">
+                                    <label>Ninth</label>
+                                    <Field name="imageGalleryNinth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryNinth')} className={'form-control' + (errors.imageGalleryNinth && touched.imageGalleryNinth ? ' is-invalid' : '')} />
+                                    <ErrorMessage name="imageGalleryNinth" component="div" className="invalid-feedback" />
+                                    <img src={campaignObj?.imageGalleryNinth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                </div>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Desktop Image</label>
-                                <Field name="uspBannerDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspBannerDesktopImage')} className={'form-control' + (errors.uspBannerDesktop && touched.uspBannerDesktop ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspBannerDesktopImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.uspBannerDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
-                            </div>
-                            <div className="form-group col-6">
-                                <label>Mobile Image</label>
-                                <Field name="uspBannerMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'uspBannerMobileImage')} className={'form-control' + (errors.uspBannerMobile && touched.uspBannerMobile ? ' is-invalid' : '')} />
-                                <ErrorMessage name="uspBannerMobileImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.uspBannerMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-6 m-0">
-                                <label>Image Gallery</label>
+                        
+                        <div id='highlightsDiv' className="form-row collapse multi-collapse" data-parent="#multiCollapisblesDiv">
+                            <div className="form-group col-12">
+                            <label>Highlights</label>
+                                <Editor
+                                            editorState={editorState}
+                                            toolbarClassName="editorToolbar"
+                                            wrapperClassName="editorWrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange= {onEditorStateChange}
+                                            />
+                                        {/* {
+                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
+                                        } */}
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-6">
-                                <label>Desktop Image</label>
-                                <Field name="imageGalleryDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryDesktopImage')} className={'form-control' + (errors.imageGalleryDesktop && touched.imageGalleryDesktop ? ' is-invalid' : '')} />
-                                <ErrorMessage name="imageGalleryDesktopImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.imageGalleryDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
-                            </div>
-                            <div className="form-group col-6">
-                                <label>Mobile Image</label>
-                                <Field name="imageGalleryMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryMobileImage')} className={'form-control' + (errors.imageGalleryMobile && touched.imageGalleryMobile ? ' is-invalid' : '')} />
-                                <ErrorMessage name="imageGalleryMobileImage" component="div" className="invalid-feedback" />
-                                <img src={campaignObj?.imageGalleryMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+
+                        <div id='descriptionDiv' className="form-row collapse multi-collapse"  data-parent="#multiCollapisblesDiv">
+                            <div className="form-group col-12">
+                            <label>Description</label>
+                                <Editor
+                                            editorState={editorStateDescription}
+                                            toolbarClassName="editorToolbar"
+                                            wrapperClassName="editorWrapper"
+                                            editorClassName="editor"
+                                            onEditorStateChange= {onEditorDescriptionStateChange}
+                                            />
+                                        {/* {
+                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
+                                        } */}
                             </div>
                         </div>
+
+                        </div>
+                      
                         
                         <div className="form-row">
                             <div className="form-group col-12">
@@ -721,37 +788,8 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="drawDate" component="div" className="invalid-feedback" />
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-12">
-                            <label>Highlights</label>
-                                <Editor
-                                            editorState={editorState}
-                                            toolbarClassName="editorToolbar"
-                                            wrapperClassName="editorWrapper"
-                                            editorClassName="editor"
-                                            onEditorStateChange= {onEditorStateChange}
-                                            />
-                                        {/* {
-                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
-                                        } */}
-                            </div>
-                        </div>
 
-                        <div className="form-row">
-                            <div className="form-group col-12">
-                            <label>Description</label>
-                                <Editor
-                                            editorState={editorStateDescription}
-                                            toolbarClassName="editorToolbar"
-                                            wrapperClassName="editorWrapper"
-                                            editorClassName="editor"
-                                            onEditorStateChange= {onEditorDescriptionStateChange}
-                                            />
-                                        {/* {
-                                            campaignObj?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(campaignObj?.highlights))}></div> : null
-                                        } */}
-                            </div>
-                        </div>
+                        
                         <div className="form-group">
                             <button type="submit" disabled={isSubmitting} className="btn btn-primary">
                                 {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
