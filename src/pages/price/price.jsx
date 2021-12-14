@@ -166,6 +166,14 @@ function Price() {
                                 {
                                     PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
                                 }
+                                <div className="buySec">
+                                    <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
+                                    <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
+                                    {/* <Link to={{ pathname: `/dream-cart` }}>
+                                        <button className="btn btn-default buyBtn">Buy Now</button>
+                                    </Link> */}
+
+                                </div>
                             </div>
                         </div>
                         <div className="priceDescription">
@@ -176,6 +184,7 @@ function Price() {
                                 {
                                     PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
                                 }
+                                
 
                             </div>
                         </div>
