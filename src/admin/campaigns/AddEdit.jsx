@@ -312,7 +312,7 @@ function AddEdit({ history, match }) {
             console.log("-------------------------");
             var picture = e.target.files[0];
             var src= URL.createObjectURL(picture);
-            campaignObj[type] = src;
+            campaignObj[type] = data.location;
             console.log(campaignObj);
             setCampaignObj(campaignObj);
             forceUpdate();
