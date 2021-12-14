@@ -24,10 +24,14 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw,convertFromRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {stateToHTML} from 'draft-js-export-html'; 
-//import { convertFromHTML  } from 'draft-convert';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
 // Editor section end ///
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import TabContainer from 'react-bootstrap/TabContainer';
+import TabContent from 'react-bootstrap/TabContent';
+import TabPane from 'react-bootstrap/TabPane';
 
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
@@ -189,26 +193,23 @@ function Price() {
                         </div>
                         <div className="priceDescription">
                         <div className="row">
-                            <div className="col-md-12">
-                                <h1>Highlights</h1>
-                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                            <div className='col-md-12'>
+                            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+                                <Tab eventKey="home" title="Highlights">
                                 {
                                     PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
                                 }
-
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-md-12">
-                                <h1>Description</h1>
-                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                                </Tab>
+                                <Tab eventKey="profile" title="Description">
                                 {
                                     PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
                                 }
-
+                                </Tab>
+                            </Tabs>
                             </div>
+                           
                         </div>
+
                     </div>
                     </div>
                     {/* Description */}
@@ -465,7 +466,7 @@ function Price() {
 
                     </section>
 
-
+                    
 
                 </div>
                 {/*PricePage Mobile Version*/}

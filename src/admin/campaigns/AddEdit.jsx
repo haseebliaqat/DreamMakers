@@ -188,7 +188,9 @@ function AddEdit({ history, match }) {
     });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
-
+        fields.highlights= campaignObj.highlights;
+        fields.description= campaignObj.description;
+        
         setStatus();
         if (isAddMode) {
             createCampaign(fields, setSubmitting);
@@ -220,7 +222,7 @@ function AddEdit({ history, match }) {
     function updateCampaign(id, fields, setSubmitting) {
         //fields.whereToShow = (fields.whereToShow).toString();
 
-        campaignsService.update(id, campaignObj)
+        campaignsService.update(id, fields)
             .then(() => {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
                 setCampaignId(id);
@@ -330,30 +332,18 @@ function AddEdit({ history, match }) {
                
             ({ errors, touched, isSubmitting, setFieldValue }) => {
                 if(campaignObj!=null){
-                    console.log(campaignObj);
+                   // console.log(campaignObj);
+                  
                 }
-
                 
                 useEffect(() => {
                     if (!isAddMode) {
-                        // get user and set form fields
-                          
-                        let obj = {
-                            "limit": 5,
-                            "offset": 0,
-                            "order": [["id", "ASC"], ["name", "DESC"]],
-                            "where": { "id": id }
-                        }
                         campaignsService.getById(id).then(campaign => {
                             if(campaign.pictures!=null)
                             for(let i=0; i<campaign.pictures.length; i++){
                                 campaign[campaign.pictures[i].type] = campaign.pictures[i].url;
                             }
-
-                            console.log(campaign);
-                            
                             setCampaignObj(campaign);
-                            console.log(campaign);
                            
                             if(campaign?.highlights)
                             setEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.highlights))));
@@ -371,9 +361,11 @@ function AddEdit({ history, match }) {
                                 if(field == 'drawDate' || field == 'startDate'){
                                     let tempValue = moment(campaign[field]).format("YYYY-MM-DD[T]HH:mm:ss");
                                     setFieldValue(field, tempValue, false)
+                                    setCampaignObj(campaignObj);
                                 } 
                                 else{
                                     setFieldValue(field, campaign[field], false)
+                                    setCampaignObj(campaign);
                                 }
                             });
                             console.log("fields")
@@ -630,19 +622,19 @@ function AddEdit({ history, match }) {
                         <div id='multiCollapisblesDiv'>
                         <div className='form-row'>
                         <div className="form-group col-2">
-                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#desktopImagesDiv" aria-controls="#desktopImagesDiv">Desktop Images</button>
+                            <button type="button" className="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#desktopImagesDiv" aria-controls="#desktopImagesDiv">Desktop Images</button>
                             </div>
                             <div className="form-group col-2">
-                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#mobileImagesDiv" aria-controls="#mobileImagesDiv">Mobile Images</button>
+                            <button type="button" className="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#mobileImagesDiv" aria-controls="#mobileImagesDiv">Mobile Images</button>
                             </div>
                             <div className="form-group col-2">
-                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#galleryImagesDiv" aria-controls="#galleryImagesDiv">Gallery Images</button>
+                            <button type="button" className="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#galleryImagesDiv" aria-controls="#galleryImagesDiv">Gallery Images</button>
                             </div>
                             <div className="form-group col-2">
-                            <button type="button" class="btn btn-info"  data-toggle="collapse"  aria-expanded="false" data-target="#descriptionDiv" aria-controls="#descriptionDiv">Description</button>
+                            <button type="button" className="btn btn-info"  data-toggle="collapse"  aria-expanded="false" data-target="#descriptionDiv" aria-controls="#descriptionDiv">Description</button>
                             </div>
                             <div className="form-group col-2">
-                            <button type="button" class="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#highlightsDiv" aria-controls="#highlightsDiv">Highlights</button>
+                            <button type="button" className="btn btn-info" data-toggle="collapse"  aria-expanded="false" data-target="#highlightsDiv" aria-controls="#highlightsDiv">Highlights</button>
                             </div>
                         </div>
                         <div id='desktopImagesDiv' className='formSectionAdmin collapse multi-collapse' data-parent="#multiCollapisblesDiv" data-role="collapsible" data-theme="a" data-content-theme="a">
