@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './campaigns.less';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -91,6 +91,8 @@ function AddEdit({ history, match }) {
     const [campaignId, setCampaignId] = useState(0);
     const [campaignObj, setCampaignObj] = useState(null);
     const [bulkPictures, setBulkPictures] = useState([])
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
 
     useEffect(() => {
         let obj = {
@@ -308,10 +310,12 @@ function AddEdit({ history, match }) {
             // console.log("_pictures", _pictures);
             console.log("bulk pictures push=>", bulkPictures);
             console.log("-------------------------");
-            // var picture = e.target.files[0];
-            // var src= URL.createObjectURL(picture);
-            // setSrc(src);
-
+            var picture = e.target.files[0];
+            var src= URL.createObjectURL(picture);
+            campaignObj[type] = src;
+            console.log(campaignObj);
+            setCampaignObj(campaignObj);
+            forceUpdate();
         }).catch(error => {
             // setIsSubmit(false);
             console.log("------------err-------------");
