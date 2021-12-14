@@ -308,7 +308,9 @@ function AddEdit({ history, match }) {
             // console.log("_pictures", _pictures);
             console.log("bulk pictures push=>", bulkPictures);
             console.log("-------------------------");
-
+            // var picture = e.target.files[0];
+            // var src= URL.createObjectURL(picture);
+            // setSrc(src);
 
         }).catch(error => {
             // setIsSubmit(false);
@@ -586,6 +588,36 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="perEntryCoupons" component="div" className="invalid-feedback" />
                             </div>
                         </div>
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                                <label>Winning Prize Title</label>
+                                <Field name="winningPrizeTitle" type="text" className={'form-control' + (errors.winningPrizeTitle && touched.winningPrizeTitle ? ' is-invalid' : '')} />
+                                <ErrorMessage name="winningPrizeTitle" component="div" className="invalid-feedback" />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group col-12">
+                                <label>Youtube Live Video Embed URL</label>
+                                <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
+                                <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
+                            </div>
+                        </div>
+                        
+                        <div className="form-row">
+                            <div className="form-group col-5">
+                                <label>Start Date</label>
+                                <Field name="startDate" type="datetime-local" className={'form-control' + (errors.startDate && touched.startDate ? ' is-invalid' : '')} />
+                                <ErrorMessage name="startDate" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-5">
+                                <label>Draw Date</label>
+                                <Field name="drawDate" type="datetime-local" className={'form-control' + (errors.drawDate && touched.drawDate ? ' is-invalid' : '')}  />
+                                <ErrorMessage name="drawDate" component="div" className="invalid-feedback" />
+                            </div>
+                        </div>
+
+
                         
 
 
@@ -624,7 +656,7 @@ function AddEdit({ history, match }) {
                                     <label>Product</label>
                                     <Field name="productDesktopImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productDesktopImage')} className={'form-control' + (errors.productDesktopImage && touched.productDesktopImage ? ' is-invalid' : '')} />
                                     <ErrorMessage name="productDesktopImage" component="div" className="invalid-feedback" />
-                                    <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                    <img src={campaignObj?.productDesktopImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-3 m-0">
                                     <label>USP (small)</label>
@@ -760,35 +792,7 @@ function AddEdit({ history, match }) {
                         </div>
                       
                         
-                        <div className="form-row">
-                            <div className="form-group col-12">
-                                <label>Winning Prize Title</label>
-                                <Field name="winningPrizeTitle" type="text" className={'form-control' + (errors.winningPrizeTitle && touched.winningPrizeTitle ? ' is-invalid' : '')} />
-                                <ErrorMessage name="winningPrizeTitle" component="div" className="invalid-feedback" />
-                            </div>
-                        </div>
-
-                        <div className="form-row">
-                            <div className="form-group col-12">
-                                <label>Youtube Live Video Embed URL</label>
-                                <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
-                                <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
-                            </div>
-                        </div>
                         
-                        <div className="form-row">
-                            <div className="form-group col-5">
-                                <label>Start Date</label>
-                                <Field name="startDate" type="datetime-local" className={'form-control' + (errors.startDate && touched.startDate ? ' is-invalid' : '')} />
-                                <ErrorMessage name="startDate" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group col-5">
-                                <label>Draw Date</label>
-                                <Field name="drawDate" type="datetime-local" className={'form-control' + (errors.drawDate && touched.drawDate ? ' is-invalid' : '')}  />
-                                <ErrorMessage name="drawDate" component="div" className="invalid-feedback" />
-                            </div>
-                        </div>
-
                         
                         <div className="form-group">
                             <button type="submit" disabled={isSubmitting} className="btn btn-primary">

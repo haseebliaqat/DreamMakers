@@ -150,12 +150,12 @@ export function FeaturedCampaign({props, videoSrc, item, keyValue }) {
 
                                     </div>
                                     :
-                                    <img src={renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} alt="" />
+                                    <img src={item?.prizeDesktopImage} alt="" />
                                 }
 
                                 {!isPlaying1 ?
                                     <div className="bottel-img">
-                                        <img src={renderMedia(constantSrv.EMediaCategory.productDesktop, 'img')} alt="" />
+                                        <img src={item?.productDesktopImage} alt="" />
                                     </div>
                                     :
                                     null
