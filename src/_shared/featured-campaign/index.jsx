@@ -173,7 +173,7 @@ export function FeaturedCampaign({props, videoSrc, item, keyValue }) {
                                 <div className="title-box">
                                     <h1 className="headingStyle3">{item.title}</h1>
                                     <p className="paraStyle1">
-                                        {item.description}
+                                        {item.shortTitleDescriptionDesktop}
                                     </p>
                                 </div>
 

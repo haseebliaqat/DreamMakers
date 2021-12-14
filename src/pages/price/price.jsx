@@ -27,11 +27,6 @@ import {stateToHTML} from 'draft-js-export-html';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
 // Editor section end ///
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
-import TabContainer from 'react-bootstrap/TabContainer';
-import TabContent from 'react-bootstrap/TabContent';
-import TabPane from 'react-bootstrap/TabPane';
 
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
@@ -168,48 +163,22 @@ function Price() {
                                         <small>{moment(!!PrizeDetail?PrizeDetail.startDate:"").format("MMM DD, HH:MM A")}</small>
                                     </span>
                                 </div>
-                                <p>What if we told you that you can travel to the Maldives for holidays with a cup of coffee worth of spend, would you be interested?</p>
-                                <p className="listText">You Will win:</p>
-                                <ul className="pointList">
-                                    <li>Point A</li>
-                                    <li>Point B</li>
-                                    <li>Point C</li>
-                                    <li>Point D</li>
-                                    <li>Point E</li>
-                                    <li>Point F</li>
-                                    <li>Point G</li>
-                                    <li>Point H</li>
-                                </ul>
-                                <div className="buySec">
-                                    <p>Buy a {PrizeDetail?.prizeTitleDesktop} and make it yours!</p>
-                                    <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
-                                    <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
-                                    {/* <Link to={{ pathname: `/dream-cart` }}>
-                                        <button className="btn btn-default buyBtn">Buy Now</button>
-                                    </Link> */}
-
-                                </div>
+                                {
+                                    PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
+                                }
                             </div>
                         </div>
                         <div className="priceDescription">
                         <div className="row">
-                            <div className='col-md-12'>
-                            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
-                                <Tab eventKey="home" title="Highlights">
-                                {
-                                    PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
-                                }
-                                </Tab>
-                                <Tab eventKey="profile" title="Description">
+                            <div className="col-md-12">
+                                <h1>Description</h1>
+                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
                                 {
                                     PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
                                 }
-                                </Tab>
-                            </Tabs>
-                            </div>
-                           
-                        </div>
 
+                            </div>
+                        </div>
                     </div>
                     </div>
                     {/* Description */}
@@ -465,9 +434,6 @@ function Price() {
                         </div>
 
                     </section>
-
-                    
-
                 </div>
                 {/*PricePage Mobile Version*/}
 
