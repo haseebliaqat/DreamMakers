@@ -687,7 +687,7 @@ function AddEdit({ history, match }) {
                                     <label>Product</label>
                                     <Field name="productMobileImage" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'productMobileImage')} className={'form-control' + (errors.productMobileImage && touched.productMobileImage ? ' is-invalid' : '')} />
                                     <ErrorMessage name="productMobileImage" component="div" className="invalid-feedback" />
-                                    <img src={campaignObj?.prizeMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                                    <img src={campaignObj?.productMobileImage} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Popup</label>
