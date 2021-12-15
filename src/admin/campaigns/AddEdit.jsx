@@ -90,8 +90,6 @@ function AddEdit({ history, match }) {
     ]);
     const [campaignId, setCampaignId] = useState(0);
     const [campaignObj, setCampaignObj] = useState(null);
-    const [bulkPictures, setBulkPictures] = useState([]);
-    const [newPictures, setNewPictures] = useState([]);
     const [previousPictures, setPreviousPictures] = useState([]);
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
@@ -209,7 +207,7 @@ function AddEdit({ history, match }) {
             alertService.success('Campaign added successfully', { keepAfterRouteChange: true });
             setCampaignId(resp.id);
             fields.id = resp.id;
-            createBulkPictures(fields);
+            updateOrCreateBulkPictures(fields);
 
             history.push('.');
         }).catch(error => {
@@ -224,7 +222,7 @@ function AddEdit({ history, match }) {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
                 setCampaignId(id);
                 fields.id = id;
-                createBulkPictures(bulkPictures);
+                updateOrCreateBulkPictures(fields);
 
                 history.push('.');
             })
@@ -236,9 +234,8 @@ function AddEdit({ history, match }) {
 
     
 
-    function createBulkPictures(fields) {
-        setBulkPictures(bulkPictures);
-        picturesService.createBulk(bulkPictures)
+    function updateOrCreateBulkPictures(fields) {
+        picturesService.createBulk(previousPictures)
             .then(() => {
                 alertService.success('Pictures added successfully', { keepAfterRouteChange: true });
                 history.push('.');
@@ -280,8 +277,7 @@ function AddEdit({ history, match }) {
                 format: fileFormat,
                 description: `${name}-${type}-${category}-${platform}-${status}-${fileFormat}-${campaignObj.id.toString().padStart(5, '0')}`,
                 campaignId: campaignObj.id,
-                createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-                updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
+                createdDate: moment().format("YYYY-MM-DD HH:mm:ss")
             }
 
             
@@ -290,13 +286,10 @@ function AddEdit({ history, match }) {
             } else {
                 let idx = previousPictures.findIndex(item => item.name === name);
                 imgObj.id = previousPictures[idx].id;
+                imgObj.updated = moment().format("YYYY-MM-DD HH:mm:ss");
                 previousPictures[idx] = imgObj;
-            }   
-            console.log(previousPictures);
-
-            let _arr = bulkPictures;
-            _arr.push(imgObj);
-            setBulkPictures(_arr);
+            }
+            setPreviousPictures(previousPictures);
             campaignObj[name] = data.location;
             setCampaignObj(campaignObj);
             forceUpdate();
