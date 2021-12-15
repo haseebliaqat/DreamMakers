@@ -73,7 +73,7 @@ module.exports = {
 			secretAccessKey:'8lSTaH/oNh7T/uojcngx2RLxN/fHy4DD/lfmleq9',
 
             // //---------------Local----------------------//,
-            // apiUrl: 'http://localhost:4080',
+             //apiUrl: 'http://localhost:4080',
             // graphqlUrlHttp: 'http://localhost:6000/graphql',
             // graphqlUrlWs: 'ws://localhost:6000/graphql',
 
