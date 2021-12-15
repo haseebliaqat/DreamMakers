@@ -131,6 +131,7 @@ function AddEdit({ history, match }) {
         startDate: '',
         drawDate: '',
         winningPrizeTitle:'',
+        embedHtmlYouTube:'',
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -248,26 +249,7 @@ function AddEdit({ history, match }) {
     }
 
     function createBulkPictures(fields) {
-
-        console.log("fields create pic", fields);
-        console.log("bulkPictures before", bulkPictures);
-
-
-        // let _updated = _.forEach(bulkPictures, (p) => {
-        // let _updated = bulkPictures;
-
-        // for (let i = 0; i <= _updated.length - 1; i++) {
-        //     _updated[i].title = fields.title;
-        //     _updated[i].name = fields.name;
-        //     _updated[i].description = fields.description;
-        //     _updated[i].campaignId = fields.id;
-        // }
-
         setBulkPictures(bulkPictures);
-        // });
-
-        console.log("updated bulkPictures", bulkPictures);
-
         picturesService.createBulk(bulkPictures)
             .then(() => {
                 alertService.success('Pictures added successfully', { keepAfterRouteChange: true });
@@ -280,24 +262,19 @@ function AddEdit({ history, match }) {
     }
 
     let uploadPicture = (e,name, category, type, platform) => {
-        // setIsSubmit(true);
-        //name = `${name}-${campaignObj.id.toString().padStart(5, '0')}`;
+        console.log(bulkPictures);
         type = type ? type: 'full-size';
         category = category ? category : 'campaign-image';
         platform = platform ? platform : 'desktop';
         let status = 'active';
         let alt = 'DreamMakers';
-        
         e.persist();
+        
         const reactS3Client = new S3(configObj);
-        console.log("event uplaod==>", e);
         reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
-            // setIsSubmit(false);
-            // setImageURL(data.location);
-            // let _pictures = [];
             let fileFormat =  data.location.split('.').pop().toUpperCase();
             let imgObj = {
-                name: name,//e.target.files[0].name,
+                name: name,
                 alt: alt,
                 url: data.location,
                 type: type,
@@ -311,25 +288,15 @@ function AddEdit({ history, match }) {
                 updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
             }
 
-            // _pictures.push(imgObj);
-            console.log("-------------------------");
-            console.log(imgObj);
-            console.log(data);
             let _arr = bulkPictures;
             _arr.push(imgObj);
             setBulkPictures(_arr);
-            // console.log("_pictures", _pictures);
-            console.log("bulk pictures push=>", bulkPictures);
-            console.log("-------------------------");
-            var picture = e.target.files[0];
-            var src= URL.createObjectURL(picture);
             campaignObj[name] = data.location;
-            console.log(campaignObj);
             setCampaignObj(campaignObj);
             forceUpdate();
         }).catch(error => {
             // setIsSubmit(false);
-            console.log("------------err-------------");
+            console.log("------------error-------------");
             console.error(error);
         });
     }
@@ -340,11 +307,6 @@ function AddEdit({ history, match }) {
             {
                
             ({ errors, touched, isSubmitting, setFieldValue }) => {
-                if(campaignObj!=null){
-                   // console.log(campaignObj);
-                  
-                }
-                
                 useEffect(() => {
                     if (!isAddMode) {
                         campaignsService.getById(id).then(campaign => {
@@ -360,6 +322,7 @@ function AddEdit({ history, match }) {
                             if(campaign?.description)
                             setEditorStateDescription(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.description))));
 
+                            //setBulkPictures(campaign.pictures);
 
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
@@ -371,14 +334,15 @@ function AddEdit({ history, match }) {
                                     let tempValue = moment(campaign[field]).format("YYYY-MM-DD[T]HH:mm:ss");
                                     setFieldValue(field, tempValue, false)
                                     setCampaignObj(campaignObj);
+                                }
+                                else if(field == 'embedHtmlYouTube'){
+                                    let tempValue = campaign[field] ? campaign[field] : ''; 
                                 } 
                                 else{
                                     setFieldValue(field, campaign[field], false)
                                     setCampaignObj(campaign);
                                 }
                             });
-                            console.log("fields")
-                            console.log(fields)
                         });
                     }
                 }, []);
