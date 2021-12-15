@@ -248,7 +248,7 @@ function AddEdit({ history, match }) {
                 alertService.error(error);
             });
     }
-    
+
     // For Images
     const configObjS3 = {
         bucketName: config.bucketName,
@@ -259,7 +259,6 @@ function AddEdit({ history, match }) {
     }
 
     let uploadPicture = (e,name, category, type, platform) => {
-        console.log(bulkPictures);
         type = type ? type: 'full-size';
         category = category ? category : 'campaign-image';
         platform = platform ? platform : 'desktop';
@@ -284,6 +283,16 @@ function AddEdit({ history, match }) {
                 createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
                 updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
             }
+
+            
+            if(!previousPictures.some(pic => pic.name === name)){
+                previousPictures.push(imgObj);
+            } else {
+                let idx = previousPictures.findIndex(item => item.name === name);
+                imgObj.id = previousPictures[idx].id;
+                previousPictures[idx] = imgObj;
+            }   
+            console.log(previousPictures);
 
             let _arr = bulkPictures;
             _arr.push(imgObj);
@@ -319,7 +328,7 @@ function AddEdit({ history, match }) {
                             if(campaign?.description)
                             setEditorStateDescription(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.description))));
 
-                            //setBulkPictures(campaign.pictures);
+                            setPreviousPictures(campaign.pictures);
 
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
