@@ -226,4 +226,3 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
     );
 }
 export const MemoizedCampaignCard = React.memo(CampaignCard);
-// export { CampaignCard };
