@@ -90,7 +90,9 @@ function AddEdit({ history, match }) {
     ]);
     const [campaignId, setCampaignId] = useState(0);
     const [campaignObj, setCampaignObj] = useState(null);
-    const [bulkPictures, setBulkPictures] = useState([])
+    const [bulkPictures, setBulkPictures] = useState([]);
+    const [newPictures, setNewPictures] = useState([]);
+    const [previousPictures, setPreviousPictures] = useState([]);
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
 
@@ -202,10 +204,6 @@ function AddEdit({ history, match }) {
     }
 
     function createCampaign(fields, setSubmitting) {
-        console.log("fields", fields);
-        console.log("setSubmitting", setSubmitting);
-        //fields.whereToShow = (fields.whereToShow).toString();
-
         campaignsService.create(fields).then((resp) => {
             console.log("adding campaign", resp);
             alertService.success('Campaign added successfully', { keepAfterRouteChange: true });
@@ -221,8 +219,6 @@ function AddEdit({ history, match }) {
     }
 
     function updateCampaign(id, fields, setSubmitting) {
-        //fields.whereToShow = (fields.whereToShow).toString();
-
         campaignsService.update(id, fields)
             .then(() => {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
@@ -238,15 +234,7 @@ function AddEdit({ history, match }) {
             });
     }
 
-    // For Images
-
-    const configObj = {
-        bucketName: config.bucketName,
-        dirName: config.dirName,
-        region: config.region,
-        accessKeyId: config.accessKeyId,
-        secretAccessKey: config.secretAccessKey
-    }
+    
 
     function createBulkPictures(fields) {
         setBulkPictures(bulkPictures);
@@ -260,6 +248,15 @@ function AddEdit({ history, match }) {
                 alertService.error(error);
             });
     }
+    
+    // For Images
+    const configObjS3 = {
+        bucketName: config.bucketName,
+        dirName: config.dirName,
+        region: config.region,
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
+    }
 
     let uploadPicture = (e,name, category, type, platform) => {
         console.log(bulkPictures);
@@ -270,7 +267,7 @@ function AddEdit({ history, match }) {
         let alt = 'DreamMakers';
         e.persist();
         
-        const reactS3Client = new S3(configObj);
+        const reactS3Client = new S3(configObjS3);
         reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
             let fileFormat =  data.location.split('.').pop().toUpperCase();
             let imgObj = {
