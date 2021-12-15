@@ -150,7 +150,7 @@ export function Home() {
                 let campaign = myson[i];
                 if(campaign.pictures!=null)
                     for(let i=0; i<campaign.pictures.length; i++){
-                        campaign[campaign.pictures[i].type] = campaign.pictures[i].url;
+                        campaign[campaign.pictures[i].name] = campaign.pictures[i].url;
                     }
             }
             console.log(myson);

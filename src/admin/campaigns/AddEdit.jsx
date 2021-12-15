@@ -227,7 +227,7 @@ function AddEdit({ history, match }) {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
                 setCampaignId(id);
                 fields.id = id;
-                createBulkPictures(fields);
+                createBulkPictures(bulkPictures);
 
                 history.push('.');
             })
@@ -254,22 +254,21 @@ function AddEdit({ history, match }) {
 
 
         // let _updated = _.forEach(bulkPictures, (p) => {
-        let _updated = bulkPictures;
+        // let _updated = bulkPictures;
 
-        for (let i = 0; i <= _updated.length - 1; i++) {
-            _updated[i].title = fields.title;
-            _updated[i].name = fields.name;
-            _updated[i].description = fields.description;
-            _updated[i].campaignId = fields.id;
-        }
+        // for (let i = 0; i <= _updated.length - 1; i++) {
+        //     _updated[i].title = fields.title;
+        //     _updated[i].name = fields.name;
+        //     _updated[i].description = fields.description;
+        //     _updated[i].campaignId = fields.id;
+        // }
 
-        setBulkPictures(_updated);
+        setBulkPictures(bulkPictures);
         // });
 
-        console.log("updated", _updated);
         console.log("updated bulkPictures", bulkPictures);
 
-        picturesService.createBulk(_updated)
+        picturesService.createBulk(bulkPictures)
             .then(() => {
                 alertService.success('Pictures added successfully', { keepAfterRouteChange: true });
                 history.push('.');
@@ -280,9 +279,15 @@ function AddEdit({ history, match }) {
             });
     }
 
-    let uploadPicture = (e, type) => {
+    let uploadPicture = (e,name, category, type, platform) => {
         // setIsSubmit(true);
-        console.log(type);
+        //name = `${name}-${campaignObj.id.toString().padStart(5, '0')}`;
+        type = type ? type: 'full-size';
+        category = category ? category : 'campaign-image';
+        platform = platform ? platform : 'desktop';
+        let status = 'active';
+        let alt = 'DreamMakers';
+        
         e.persist();
         const reactS3Client = new S3(configObj);
         console.log("event uplaod==>", e);
@@ -290,21 +295,25 @@ function AddEdit({ history, match }) {
             // setIsSubmit(false);
             // setImageURL(data.location);
             // let _pictures = [];
+            let fileFormat =  data.location.split('.').pop().toUpperCase();
             let imgObj = {
-                name: e.target.files[0].name,
-                title: '',
-                description: '',
-                alt: '',
+                name: name,//e.target.files[0].name,
+                alt: alt,
                 url: data.location,
                 type: type,
-                status: 'active',
-                campaignId: campaignId,
+                status: status,
+                category: category,
+                platform: platform,
+                format: fileFormat,
+                description: `${name}-${type}-${category}-${platform}-${status}-${fileFormat}-${campaignObj.id.toString().padStart(5, '0')}`,
+                campaignId: campaignObj.id,
                 createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
                 updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
             }
 
             // _pictures.push(imgObj);
             console.log("-------------------------");
+            console.log(imgObj);
             console.log(data);
             let _arr = bulkPictures;
             _arr.push(imgObj);
@@ -314,7 +323,7 @@ function AddEdit({ history, match }) {
             console.log("-------------------------");
             var picture = e.target.files[0];
             var src= URL.createObjectURL(picture);
-            campaignObj[type] = data.location;
+            campaignObj[name] = data.location;
             console.log(campaignObj);
             setCampaignObj(campaignObj);
             forceUpdate();
@@ -341,7 +350,7 @@ function AddEdit({ history, match }) {
                         campaignsService.getById(id).then(campaign => {
                             if(campaign.pictures!=null)
                             for(let i=0; i<campaign.pictures.length; i++){
-                                campaign[campaign.pictures[i].type] = campaign.pictures[i].url;
+                                campaign[campaign.pictures[i].name] = campaign.pictures[i].url;
                             }
                             setCampaignObj(campaign);
                            
@@ -698,55 +707,55 @@ function AddEdit({ history, match }) {
                             <div className="form-row">
                                 <div className="form-group col-4">
                                     <label>Frist</label>
-                                    <Field name="imageGalleryFirst" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFirst')} className={'form-control' + (errors.imageGalleryFirst && touched.imageGalleryFirst ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryFirst" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFirst', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryFirst && touched.imageGalleryFirst ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryFirst" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryFirst} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Second</label>
-                                    <Field name="imageGallerySecond" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySecond')} className={'form-control' + (errors.imageGallerySecond && touched.imageGallerySecond ? ' is-invalid' : '')} />
+                                    <Field name="imageGallerySecond" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySecond', 'campaign-image-gallery')} className={'form-control' + (errors.imageGallerySecond && touched.imageGallerySecond ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGallerySecond" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGallerySecond} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Third</label>
-                                    <Field name="imageGalleryThird" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryThird')} className={'form-control' + (errors.imageGalleryThird && touched.imageGalleryThird ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryThird" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryThird', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryThird && touched.imageGalleryThird ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryThird" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryThird} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Fourth</label>
-                                    <Field name="imageGalleryFourth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFourth')} className={'form-control' + (errors.imageGalleryFourth && touched.imageGalleryFourth ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryFourth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFourth', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryFourth && touched.imageGalleryFourth ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryFourth" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryFourth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Fifth</label>
-                                    <Field name="imageGalleryFifth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFifth')} className={'form-control' + (errors.imageGalleryFifth && touched.imageGalleryFifth ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryFifth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryFifth', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryFifth && touched.imageGalleryFifth ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryFifth" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryFifth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>     
                                 <div className="form-group col-4">
                                     <label>Sixth</label>
-                                    <Field name="imageGallerySixth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySixth')} className={'form-control' + (errors.imageGallerySixth && touched.imageGallerySixth ? ' is-invalid' : '')} />
+                                    <Field name="imageGallerySixth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySixth', 'campaign-image-gallery')} className={'form-control' + (errors.imageGallerySixth && touched.imageGallerySixth ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGallerySixth" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGallerySixth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Seventh</label>
-                                    <Field name="imageGallerySeventh" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySeventh')} className={'form-control' + (errors.imageGallerySeventh && touched.imageGallerySeventh ? ' is-invalid' : '')} />
+                                    <Field name="imageGallerySeventh" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGallerySeventh', 'campaign-image-gallery')} className={'form-control' + (errors.imageGallerySeventh && touched.imageGallerySeventh ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGallerySeventh" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGallerySeventh} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>
                                 <div className="form-group col-4">
                                     <label>Eighth</label>
-                                    <Field name="imageGalleryEighth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryEighth')} className={'form-control' + (errors.imageGalleryEighth && touched.imageGalleryEighth ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryEighth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryEighth', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryEighth && touched.imageGalleryEighth ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryEighth" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryEighth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div> 
                                 <div className="form-group col-4">
                                     <label>Ninth</label>
-                                    <Field name="imageGalleryNinth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryNinth')} className={'form-control' + (errors.imageGalleryNinth && touched.imageGalleryNinth ? ' is-invalid' : '')} />
+                                    <Field name="imageGalleryNinth" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'imageGalleryNinth', 'campaign-image-gallery')} className={'form-control' + (errors.imageGalleryNinth && touched.imageGalleryNinth ? ' is-invalid' : '')} />
                                     <ErrorMessage name="imageGalleryNinth" component="div" className="invalid-feedback" />
                                     <img src={campaignObj?.imageGalleryNinth} alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
                                 </div>

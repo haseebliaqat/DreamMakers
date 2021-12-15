@@ -119,7 +119,9 @@ function Price() {
                                     <Slider className="priceSlider" {...settings}>
                                         {!!PrizeDetail?
                                             PrizeDetail.pictures.map((c,index) => {
+                                                console.log(c);
                                                     return (
+                                                        c.category == 'campaign-image-gallery' ?
                                                         <div>
                                                             <div>
                                                             <div key={c.index}>
@@ -133,7 +135,7 @@ function Price() {
                                                             </div>
                                                                 <span className="m-block">Swipe for more</span>
                                                             </div>
-                                                        </div>
+                                                        </div>:null
                                                     )
                                             })
                                             :
