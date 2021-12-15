@@ -19,6 +19,7 @@ import { PriceSlider } from '../../_components/PriceSlider/PriceSlider';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useHistory } from "react-router-dom";
+
 // Editor section start ///
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw,convertFromRaw } from 'draft-js';
@@ -28,10 +29,12 @@ import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
 // Editor section end ///
 
+
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
     const [showModal, setShowModal] = useState(false);
     const [PrizeDetail, setPrizeDetail] = useState(null);
+
 
     // Editor section start ///
     //best line
@@ -40,20 +43,24 @@ function Price() {
     const [convertedContent, setConvertedContent] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onEditorStateChange = (editorState) => {
+
         setEditorState(editorState)
         convertContentToHTML();
     }
     const convertContentToHTML = () => {
+
         let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
         setConvertedContent(body);
         campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         setCampaignObj(campaignObj);
+
     }
     const createMarkup = (html) => {
         return  {
           __html: DOMPurify.sanitize(html)
         }
     }
+
 
     const jsonToHtml = (json) => {
         //let tempHtml = stateToHTML(convertFromRaw(json));
@@ -169,6 +176,8 @@ function Price() {
                                     PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
                                 }
                                 <div className="buySec">
+
+
                                     <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
                                     <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
                                     {/* <Link to={{ pathname: `/dream-cart` }}>
@@ -182,11 +191,13 @@ function Price() {
                         <div className="row">
                             <div className="col-md-12">
                                 <h1>Description</h1>
+
                                 {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
                                 {
                                     PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
                                 }
                                 
+
 
                             </div>
                         </div>

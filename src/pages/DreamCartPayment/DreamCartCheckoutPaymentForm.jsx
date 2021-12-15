@@ -315,7 +315,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:8080/dream-cart-payment",
+        return_url: "https://test.dreammakers.ae/dream-cart-payment",
       },
     });
     if (error.type === "card_error" || error.type === "validation_error") {

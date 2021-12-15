@@ -245,7 +245,8 @@ function Login({ location}) {
 
                                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                                                 {({ errors, touched, isSubmitting }) => (
-                                                    <Form className="loginform">    
+
+                                                    <Form className="loginform">
                                                         <div className="formCont LoginCont">
                                                             <div className="subscription-form">
                                                                 <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
@@ -264,7 +265,7 @@ function Login({ location}) {
                                                                 <label className="m-0" style={{fontSize:"14px"}}>Remember Me</label>
                                                                 </div>
                                                                 <div>
-                                                                    <a href="/" style={{fontSize:"14px"}}>Forgot Password</a>
+                                                                    <a href="/forgetPassword" style={{fontSize:"14px"}}>Forgot Password</a>
                                                                 </div>
                                                             </div>
                                                             <button type="submit" disabled={isSubmitting} className="btn btn-default signupBtn LoginBtn" style={{marginTop:"37px"}} >
@@ -386,7 +387,7 @@ function Login({ location}) {
                                                             <label>Remember Me</label>
                                                         </div>
                                                         <div>
-                                                            <a href="/">Forgot Password</a>
+                                                            <a href="/forgetPassword">Forgot Password</a>
                                                         </div>
                                                     </div>
                                                     <button type="submit" disabled={isSubmitting} className="btn btn-default signupBtn LoginBtn" >

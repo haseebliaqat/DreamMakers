@@ -39,6 +39,9 @@ import { CouponCodePage } from '../admin/ScanQRCodeList/CouponCodePage';
 import { CouponVerification } from '../admin/ScanQRCodeList/CouponVerification';
 import { LiveVideo } from '../admin/ScanQRCodeList/LiveVideo';
 import { WinnerCard } from '../admin/ScanQRCodeList/WinnerCard';
+import { ForgotPassword } from '../account/ForgotPassword';
+
+
 
 function App() {
     const { pathname } = useLocation();
@@ -122,6 +125,12 @@ function App() {
                 <Route exact path="/dream-cart" component={DreamCart}>
                     <Header />
                     <DreamCart />
+                    <Footer />
+                </Route>
+
+                <Route exact path="/forgetPassword" component={ForgotPassword}>
+                    <Header />
+                    <ForgotPassword />
                     <Footer />
                 </Route>
 
