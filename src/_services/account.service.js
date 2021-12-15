@@ -120,7 +120,13 @@ function verifyEmail(token) {
 }
 
 function forgotPassword(email) {
-    return fetchWrapper.post(`${baseUrl}/forgot-password`, { email });
+    return fetchWrapper.post(`${baseUrl}/forgot-password`, { email })
+    .then(message => {
+        // publish user to subscribers and start timer to refresh token
+        userSubject.next(message);
+        return message;
+    });
+    
 }
 
 function validateResetToken(token) {
@@ -166,7 +172,7 @@ function getAll(obj) {
 }
 
 function getById(id) {
-    return fetchWrapper.get(`${baseUrl}/${id}`);
+    return fetchWrapper.get(`${baseUrl}/${id}}`);
 }
 
 function create(params) {

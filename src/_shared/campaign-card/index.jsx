@@ -27,7 +27,8 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
         const { from } = { from: { pathname: "/dream-cart" } };
         history.push(from);
     }
-    function saveDataToLocalStorageByPrizeDetail(Campaign){
+    function saveDataToLocalStorageByPrizeDetail(Campaign,evt){
+        evt.preventDefault();
         console.log(JSON.stringify(Campaign));
         localStorage.setItem("SeletedCampaign",JSON.stringify(Campaign));
         const { from } = { from: { pathname: "/prize-details" } };
@@ -128,8 +129,9 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
             </div>
 
-            <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}>
-
+            {/* <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+            {/* </div><div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+            <div className="card-img" style={{ backgroundImage: `url(${item?.prizeDesktopImage})`}}>
                 {isVideo ?
                     <div className="feature-video">
 
@@ -162,7 +164,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                             <p>{item?.description}</p>
 
-                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item)}>
+                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item,e)}>
                             {/* to={{ pathname: `/prize-details` }} */}
                                 <Link >
                                     Prize Details
@@ -176,7 +178,7 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
                         <div className="btl-img">
 
-                            <img src={item ? renderMedia(constantSrv.EMediaCategory.productDesktop, 'img') : bottle} alt="" />
+                            <img src={item ? item.productImage : bottle} alt="" />
 
                         </div>
 
@@ -224,4 +226,3 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
     );
 }
 export const MemoizedCampaignCard = React.memo(CampaignCard);
-// export { CampaignCard };

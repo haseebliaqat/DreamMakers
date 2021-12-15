@@ -10,9 +10,10 @@ function List({ match }) {
 
     useEffect(() => {
         let obj = {
-            "limit": 5,
+            "limit": 50,
             "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
+            "order": [["id", "DESC"]],
+            //"order": [["id", "ASC"], ["name", "DESC"]],
             "where": {"id": { "$gt": 0 } }
         }
         campaignsService.getAll(obj).then((x) => {
@@ -43,8 +44,6 @@ function List({ match }) {
                         <th>#</th>
                         <th>Name</th>
                         <th>Title</th>
-                        <th>Description</th>
-                        <th>Hightlights</th>
                         <th>Code</th>
                         <th>Status</th>
                         <th>Type</th>
@@ -65,8 +64,6 @@ function List({ match }) {
                             <td>{campaign.id}</td>
                             <td>{campaign.name}</td>
                             <td>{campaign.title}</td>
-                            <td>{campaign.description}</td>
-                            <td>{campaign.highlights}</td>
                             <td>{campaign.code}</td>
                             <td>{campaign.status}</td>
                             <td>{campaign.type}</td>

@@ -19,10 +19,41 @@ import { PriceSlider } from '../../_components/PriceSlider/PriceSlider';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useHistory } from "react-router-dom";
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw  } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertToHTML } from 'draft-convert';
+import DOMPurify from 'dompurify';
+import draftToHtml from "draftjs-to-html";
+
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
     const [showModal, setShowModal] = useState(false);
     const [PrizeDetail, setPrizeDetail] = useState(null);
+
+    const [convertedContent, setConvertedContent] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const onEditorStateChange = (editorState) => {
+        console.log(editorState.getCurrentContent().getPlainText());
+        console.log(JSON.stringify(editorState).length);
+        editorState
+        setEditorState(editorState)
+        convertContentToHTML();
+    }
+    const convertContentToHTML = () => {
+        let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+        const body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        //setConvertedContent(currentContentAsHTML);
+        setConvertedContent(body);
+        console.log(convertedContent);
+    }
+    const createMarkup = (html) => {
+        return  {
+          __html: DOMPurify.sanitize(html)
+        }
+    }
+
+
     const history = useHistory();
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -134,7 +165,7 @@ function Price() {
                                     <li>Point H</li>
                                 </ul>
                                 <div className="buySec">
-                                    <p>Buy a water Bottle and make it yours!</p>
+                                    <p>Buy a {PrizeDetail?.prizeTitleDesktop} and make it yours!</p>
                                     <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
                                     <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
                                     {/* <Link to={{ pathname: `/dream-cart` }}>
@@ -149,6 +180,15 @@ function Price() {
                             <div className="col-md-12">
                                 <h1>Description</h1>
                                 <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p>
+                                <Editor
+                                    editorState={editorState}
+                                    toolbarClassName="toolbarClassName"
+                                    wrapperClassName="wrapperClassName"
+                                    editorClassName="editorClassName"
+                                    onEditorStateChange= {onEditorStateChange}
+                                    />;
+                                <div className="preview" dangerouslySetInnerHTML={createMarkup(convertedContent)}></div>
+
                             </div>
                         </div>
                     </div>
