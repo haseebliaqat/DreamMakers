@@ -266,7 +266,7 @@ function AvailabelBalance(obj) {
         });
 }
 function CharityFunds(obj) {
-    return fetchWrapper.post(`${tempBaseUrl}/charitypartners`)
+    return fetchWrapper.post(`${tempBaseUrl}/charitypartners`, obj)
         .then(res => {
             console.log(res);
             return res;
@@ -274,7 +274,7 @@ function CharityFunds(obj) {
 }
 
 function ActiveCoupons(obj) {
-    return fetchWrapper.post(`${tempBaseUrl}/coupons`)
+    return fetchWrapper.post(`${tempBaseUrl}/coupons`, obj)
         .then(res => {
             console.log(res);
             return res;
