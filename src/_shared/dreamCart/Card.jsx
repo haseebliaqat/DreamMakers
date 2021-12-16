@@ -97,6 +97,7 @@ const Card = ({count,setCount}) => {
          localStorage.setItem("selected_campaign_cash_paid",!!campaign?parseFloat(((campaign.couponPrice*count)+TotalTransactionFees)-localStorage.getItem("selected_campaign_discount_amount")):""),
          localStorage.setItem("dream_coins",!!campaign?parseFloat((campaign.couponPrice*count)):""),
          localStorage.setItem("item_count_value",count),
+         localStorage.setItem("TotalTransactionFees",TotalTransactionFees),
          ]
    };
    const decrementHandler = () => {
