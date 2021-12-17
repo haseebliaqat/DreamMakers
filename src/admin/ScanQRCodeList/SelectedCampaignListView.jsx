@@ -23,8 +23,16 @@ const divStyle2 = {
 
   const divStyle3 = {
     boxShadow:"0 4px 8px 0 rgba(0,0,0,0.2)",transition: "0.3s",width:"75%",
+    backgroundColor:"white",borderRadius:"20px",
+  };
+
+  const divStyle4 = {
+    boxShadow:"0 4px 8px 0 rgba(0,0,0,0.2)",transition: "0.3s",width:"75%",
     backgroundColor:"#aec8c9",borderRadius:"20px",
   };
+
+
+  
  function  SelectedCampaignListView() {
     const history = useHistory();
     const [CodeValue, setCodeValue] = useState('');
@@ -90,7 +98,7 @@ const divStyle2 = {
 					)): 
                     winners.map((item) => (
                         <div style={{display:"flex", justifyContent:"center", width:"100%", padding:"10px",marginTop:"25px" }}>
-                                <div style={divStyle3} >
+                                <div style={divStyle4} >
                                 <p style={{padding:"8px",fontSize:"10px",color:"black"}}>#{item.campaignId}</p>
                                 <div style={{display:"flex"}}>
                                 <p style={{padding:"px",fontSize:"20px",color:"#0e1a46",marginTop:"-20px",paddingLeft:"8px",fontWeight:"900",textTransform:"capitalize"}}>{item.winningPrizeTitle}  <span style={{marginLeft:'20px'}}>({item.country})</span></p>
