@@ -49,8 +49,8 @@ function login(email, password) {
         });
 }
 
-function loginUsingGoogle(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+function loginUsingGoogle(email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence,city,acceptTerms) {
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence ,city,acceptTerms})
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);
@@ -59,8 +59,8 @@ function loginUsingGoogle(email, firstName, lastName, imageUrl) {
         });
 }
 
-function loginUsingFacebook(email, firstName, lastName, imageUrl) {
-    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl })
+function loginUsingFacebook(email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence,city,acceptTerms) {
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence,city,acceptTerms })
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);

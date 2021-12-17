@@ -227,11 +227,6 @@ return (
                                      "stripe:version": "2018-10-31",
                                       "stripe:publishableKey": "pk_test_51J9sJcLWHAHcBPawYJoIvw6bio18W18BpYMKJTupgMkfb5UvZwHdD3YIdoR6moN5QVIX8xW3vRxItrFYpilVorqz00dObeqilS"
                                    },
-                                   // parameters: {
-                                   //   gateway: "stripe",
-                                   //   "stripe:version": "v3",
-                                   //   "stripe:publishableKey": "pk_test_51J9sJcLWHAHcBPawYJoIvw6bio18W18BpYMKJTupgMkfb5UvZwHdD3YIdoR6moN5QVIX8xW3vRxItrFYpilVorqz00dObeqilS"
-                                   // }
                                  },
                                },
                              ],

@@ -47,3 +47,6 @@ package-lock.json
 *.suo
 .vs/
 *.sqlite
+package-lock.json
+package.json
+yarn.lock
