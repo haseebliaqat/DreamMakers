@@ -8,7 +8,7 @@ import Logo from '../../_assets/images/Logo.png';
 import OtpInput from 'react-otp-input';
 import { useHistory } from "react-router-dom";
 const divStyle = {
-  height: '100%',
+  height: '750px',
   backgroundImage: `url(${LiveDraw})`,
   backgroundSize: 'cover',
 };
