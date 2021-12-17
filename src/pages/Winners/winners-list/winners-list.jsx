@@ -105,7 +105,7 @@ export const WinnersList = () => {
    return (
       console.log(winners),
       <div id="winners-list">
-         <SubHeader title="Winners" />
+         <SubHeader title="Winners" style={{fontSize:"24px"}} />
          {/* <div className="d-flex align-items-center justify-content-center py-4">
             <div className="winner-input-container">
                   <SearchBar

@@ -24,6 +24,7 @@ import countries from '@/_assets/js/countries.json';
 import cities from '@/_assets/js/cities.json';
 import { Typeahead } from 'react-bootstrap-typeahead'; 
 const DreamCartInformation = () => {
+   const [count, setCount] = useState(1);
    const [imageShow, setImageShow] = useState(false);
    const history = useHistory();
    const [TermAndCondition, setTermsandcondition] = useState(false);
@@ -31,7 +32,7 @@ const DreamCartInformation = () => {
    const [firstname, setfirstname] = useState(localStorage.getItem("f_name"));
    const [last_name, setlast_name] = useState(localStorage.getItem("l_name"));
    const [email, setemail] = useState(localStorage.getItem("user_email"));
-   const [paswword, setPassword] = useState(null);
+   const [paswword, setPassword] = useState("");
    const [nationality, setnationality] = useState("");
 
    const [phone_no, setphone_no] = useState("");
@@ -126,31 +127,68 @@ const DreamCartInformation = () => {
       console.log(event.target.value);
       setsetinvite_code(event.target.value)
    }
+
+   const changePassword = (event) => {
+      console.log(event.target.value);
+      setPassword(event.target.value)
+   }
     let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    const LoginGuest =() => {
       console.log(TermAndCondition)
+      var nationalityVar="";
+      var countryResidenceVar = "";
+      var cityVar ="";
+      if(!!nationality){
+         console.log("YOOO111");
+         nationalityVar= nationality[0].nationality;
+        
+        }
+        if(!!city_residence){
+         countryResidenceVar = city_residence[0].nationality;
+        }
+      
+        if(!!city){
+         cityVar =city[0].city;
+        }
+         
       if(firstname!=""){
          if(last_name!=""){
             if(email!=""){
                if(regEmail.test(email)){
-
-               if(paswword!=""){
+                  if(paswword!=""){
                   if(phone_no!=""){
-
-                     const userDetails = { email:email, firstName:firstname,lastName:last_name, imageUrl:""}
+                     const userDetails = { email:email, firstName:firstname,lastName:last_name, password:paswword,confirmPassword:paswword,nationality:countryResidenceVar,countryResidence:countryResidenceVar,city:cityVar,invite_code:invite_code,mobileNumber:phone_no,title:"Mr",acceptTerms:true}
                      alertService.clear();
-                     accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl).then((resp) => {
-                 console.log("resp", resp);
-                           if (resp.role == 'User') {
-                           localStorage.setItem("user",resp.role);
-                              localStorage.setItem("userDetails",JSON.stringify(resp));
-                                 const { from } = { from: { pathname: "/dream-cart-payment" } };
-                                    history.push(from);
-                                 }
-           
-                           }).catch(error => {
+                     accountService.loginAsGuest(userDetails).then((resp) => {
+                     console.log("resp11111=>>>>>>>>>>>>>>>>", resp);
+                     accountService.login(email,paswword).then((resp) => {
+                        console.log("resp", resp);
+                        console.log("haseeb");
+                        console.log(location.state);
+                        if (resp.role == 'User') {
+                            localStorage.setItem("user",resp.role);
+                            localStorage.setItem("userDetails",JSON.stringify(resp));
+                           
+                           const { from } =  { from: { pathname: "dream-cart-payment" } };
+                            history.push(from);
+                        }
+            
+                    }).catch(error => {
+                        setSubmitting(false);
+                        alertService.error("Email or password is incorrect.");
+                    });
+
+                           // if (resp.role == 'User') {
+                           // localStorage.setItem("user",resp.role);
+                           //    localStorage.setItem("userDetails",JSON.stringify(resp));
+                           //       const { from } = { from: { pathname: "/dream-cart-payment" } };
+                           //          history.push(from);
+                           //       }
+                           }).catch(message => {
                               //setSubmitting(false);
-                              alertService.error("Email or password is incorrect.");
+                              alert(message);
+                              const { from } = { from: { pathname: "/account/login" } };
+                                    history.push(from);
                            });
                   }else{
                      alert("Please enter phone");
@@ -215,6 +253,7 @@ const onSuccess = (res) => {
    alertService.clear();
    accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl).then((resp) => {
      console.log("resp", resp);
+     alert(resp);
      if (resp.role == 'User') {
       localStorage.setItem("user",resp.role);
          localStorage.setItem("userDetails",JSON.stringify(resp));
@@ -254,7 +293,6 @@ const responseFacebook = (res) => {
      if (resp.role == 'User') {
       localStorage.setItem("user",resp.role);
          localStorage.setItem("userDetails",JSON.stringify(resp));
-      
          const { from } = { from: { pathname: "/dream-cart-payment" } };
          history.push(from);
             }
@@ -299,9 +337,9 @@ const responseFacebook = (res) => {
          <DreamCartSteper value={stepNo} />
          <div className="container-fluid">
             <div className="row">
-               <div className="col-12 p-0">
+               {/* <div className="col-12 p-0">
                   <OrderSummery />
-               </div>
+               </div> */}
 
                <div className="col-md-12 col-lg-5 py-md-5 py-3 px-md-3 px-1">
                   <div className="container px-md-5 px-4">
@@ -325,8 +363,9 @@ const responseFacebook = (res) => {
                            value={email}/>
                         </div>
                         <div className="col-md-12">
-                           <TextField label="Password*"                            
-                           onChange={setPassword}
+                           <TextField label="Password*"  
+                           type="password"                          
+                           onChange={changePassword}
                            value={paswword}/>
                         </div>
                         <div className="col-md-6">
@@ -351,6 +390,7 @@ const responseFacebook = (res) => {
                                  />
                         </div>
                         <div className="col-md-6">
+                        <div className="subscription-form" >
                            {/* <SelectField label="City"                            
                            onChange={City}
                            value={city}/> */}
@@ -369,10 +409,11 @@ const responseFacebook = (res) => {
                                           'height': "calc(1.5em + 1.75rem + 2px)",
                                        }
                                      }}
-                           />
+                           /> 
+                           </div>
                         </div>
                         <div className="col-6 col-md-6">
-                           <div className="d-flex align-items-center mb-2">
+                           <div className="d-flex align-items-center mb-2" style={{marginTop:"1rem"}}>
                               <div className="">
                                  <input
                                     type="radio"
@@ -390,7 +431,7 @@ const responseFacebook = (res) => {
                            </div>
                         </div>
                         <div className="col-6 col-md-6">
-                           <div className="d-flex align-items-center mb-2">
+                           <div className="d-flex align-items-center mb-2" style={{marginTop:"1rem"}}>
                               <div className="">
                                  <input
                                     type="radio"
@@ -550,7 +591,7 @@ const responseFacebook = (res) => {
                </div>
                
                <div className="col-md-12 col-lg-7 cardNoShowLess768">
-                  <Card />
+                  <Card count={count} setCount={setCount} />
                </div>
                <div className="col-12">
                   <NewsLetter />

@@ -13,12 +13,12 @@ function LoginGoogle({mblStyle, history, location }) {
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
     // refreshTokenSetup(res);
-    const userDetails = { email:res.profileObj.email, firstName:res.profileObj.givenName, lastName:res.profileObj.familyName, imageUrl:res.profileObj.imageUrl }
+    const userDetails = { email:res.profileObj.email, firstName:res.profileObj.givenName, lastName:res.profileObj.familyName, imageUrl:res.profileObj.imageUrl,mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true" }
     alertService.clear();
-    accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl).then((resp) => {
+    accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl,userDetails.mobileNumber,userDetails.nationality,userDetails.countryResidence,userDetails.city,userDetails.acceptTerms).then((resp) => {
       console.log("resp", resp);
       if (resp.role == 'Admin') {
-          const { from } = location.state || { from: { pathname: "/admin" } };
+          const { from } = { from: { pathname: "/admin" } };
           history.push(from);
       }
       else if (resp.role == 'User') {
@@ -26,7 +26,7 @@ function LoginGoogle({mblStyle, history, location }) {
         console.log("aqib");
           localStorage.setItem("userDetails",JSON.stringify(resp));
          
-         const { from } = location.state || { from: { pathname: "/" } };
+         const { from } =  { from: { pathname: "/" } };
           history.push(from);
       }
 

@@ -11,6 +11,7 @@ export const winnersService = {
     create,
     update,
     delete: _delete,
+    scanWinner,
     winner: winnerSubject.asObservable(),
     get winnerValue() { return winnerSubject.value }
 };
@@ -54,4 +55,8 @@ function _delete(id) {
             }
             return x;
         });
+}
+
+function scanWinner(obj) {
+    return fetchWrapper.post(`${baseUrl}/scan-winner`, obj);
 }

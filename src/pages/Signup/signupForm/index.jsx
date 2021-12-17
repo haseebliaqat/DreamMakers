@@ -11,12 +11,13 @@ import { Link } from 'react-router-dom';
 import { CountryCodeField } from '@/_shared/CountryCodeField/CountryCodeField';
 import { accountService, alertService } from '@/_services';
 import { useHistory } from "react-router-dom";
-import cities from '@/_assets/js/cities.json';
+ import cities from '@/_assets/js/cities.json';
 import { Typeahead } from 'react-bootstrap-typeahead'; 
-
+import CityJson from 'cities.json';
 function SignUpForm({ callback, location }) {
     const history = useHistory();
     const nationalites=countries;
+    // const cities = CityJson;
     const citiess=cities;
     const [showPassword, setShowPassword] = useState(false);
     const [countryCode, setCountrycode] = useState('');
@@ -55,25 +56,76 @@ function SignUpForm({ callback, location }) {
     });
 
     function onSubmit(fields, { setSubmitting }) {
+        var nationalityVar="";
+        var countryResidenceVar = "";
+        var cityVar ="";
+        console.log("YOOO222");
+       if(!!city_residence){
+        countryResidenceVar = city_residence[0].nationality;
+       }
+       if(!!city_residence){
+        nationalityVar = city_residence[0].nationality;
+       }
+     
+       if(!!city){
+        cityVar =city[0].city;
+       }
         alertService.clear();
-        fields.title = "dear"
         console.log("fields", fields);
         console.log("setSubmitting", setSubmitting);
-        accountService.create(fields).then((resp) => {
-            console.log("resp"+resp);
-            var email=fields.email;
-            var password=fields.password;
-            console.log(email);
-            console.log(password);
-            console.log("user")
-            const { from } = { from: { pathname: "/" } };
-            history.push(from);
-            // onLogin(email,password);
-        })
-        .catch(error => {
+        if(city_residence!=""){
+            if(city!=""){
+                if(countryCode!=""){
+                    if(fields.password.length>=6){
+                        if(fields.password==fields.confirmPassword){
+                            if(fields.acceptTerms=="true"){
+                                fields.title = "dear"
+                                fields.mobileNumber  = countryCode
+                                fields.nationality  =nationalityVar
+                                fields.countryResidence  = countryResidenceVar
+                                fields.city   = cityVar
+                                accountService.create(fields).then((resp) => {
+                                    console.log("resp"+resp);
+                                    var email=fields.email;
+                                    var password=fields.password;
+                                    console.log(email);
+                                    console.log(password);
+                                    console.log("user")
+                                    const { from } = { from: { pathname: "/" } };
+                                    history.push(from);
+                                    // onLogin(email,password);
+                                })
+                                .catch(error => {
+                                    setSubmitting(false);
+                                    alertService.error(error);
+                                });
+                            }else{
+                                setSubmitting(false);
+                                alert("Pease accept the Terms & Conditions")
+                            }
+                            
+                        }else{
+                            setSubmitting(false);
+                            alert("These passwords don't match")
+                        }
+                    }else{
+                        setSubmitting(false);
+                        alert("You have to enter at least 6 digit")
+                    }
+                }else{
+                    setSubmitting(false);
+                    alert("Please enter mobile no")  
+                }
+            }else{
+                setSubmitting(false);
+                alert("Please select country of residence")
+            }
+        }else{
             setSubmitting(false);
-            alertService.error(error);
-        });
+            alert("Please select nationality")
+
+        }
+        
     }
 
     const onLogin=( email,password )=> {
@@ -165,7 +217,7 @@ function SignUpForm({ callback, location }) {
                                                 onChange={(selected) => {
                                                 setcity(selected);
                                                 }}
-                                                options={citiess}
+                                                options={cities}
                                                 selected={city}
                                                 placeholder="City"
                                                 inputProps={{

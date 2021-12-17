@@ -40,7 +40,7 @@ function AddEdit({ history, match }) {
         if (isAddMode) {
             createCharityPartner(fields, setSubmitting);
         } else {
-            updateCoupon(id, fields, setSubmitting);
+            updateCharityPartner(id, fields, setSubmitting);
         }
     }
 
@@ -58,7 +58,7 @@ function AddEdit({ history, match }) {
             });
     }
 
-    function updateCoupon(id, fields, setSubmitting) {
+    function updateCharityPartner(id, fields, setSubmitting) {
         charityPartnersService.update(id, fields)
             .then(() => {
                 alertService.success('Charity Partner Updated successfully', { keepAfterRouteChange: true });

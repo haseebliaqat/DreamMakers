@@ -89,7 +89,7 @@ const Accordion = ({ items, isWinners }) => {
                                                 <div className="col-md-8 col-sm-12 m-none">
                                                    <div className="feature-video">
 
-                                                      {!isPlaying ?
+                                                      {!isPlaying && item.videoUrl!=""?
                                                          <button className="play-btn" onClick={() => playVideo(`trip-video-${item.id}`)} data-play-video={`#trip-video-${item.id}`}>
                                                             <img src={playIcon} alt="video play button icon" className="play" />
                                                          </button>

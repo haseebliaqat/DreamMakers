@@ -19,10 +19,59 @@ import { PriceSlider } from '../../_components/PriceSlider/PriceSlider';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { useHistory } from "react-router-dom";
+
+// Editor section start ///
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw,convertFromRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import {stateToHTML} from 'draft-js-export-html'; 
+import DOMPurify from 'dompurify';
+import draftToHtml from "draftjs-to-html";
+// Editor section end ///
+
+
 function Price() {
     const [slideCounter, setSlideCounter] = useState('01');
     const [showModal, setShowModal] = useState(false);
     const [PrizeDetail, setPrizeDetail] = useState(null);
+
+
+    // Editor section start ///
+    //best line
+    ///EditorState.createWithContent(convertFromHTML(currentPost.body));
+
+    const [convertedContent, setConvertedContent] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const onEditorStateChange = (editorState) => {
+
+        setEditorState(editorState)
+        convertContentToHTML();
+    }
+    const convertContentToHTML = () => {
+
+        let body = draftToHtml(convertToRaw(editorState.getCurrentContent()))
+        setConvertedContent(body);
+        campaignObj.highlights = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+        setCampaignObj(campaignObj);
+
+    }
+    const createMarkup = (html) => {
+        return  {
+          __html: DOMPurify.sanitize(html)
+        }
+    }
+
+
+    const jsonToHtml = (json) => {
+        //let tempHtml = stateToHTML(convertFromRaw(json));
+        let body = draftToHtml(json)
+        return  {
+          __html: body
+        }
+    }
+    // Editor section end ///
+
+
     const history = useHistory();
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -77,7 +126,9 @@ function Price() {
                                     <Slider className="priceSlider" {...settings}>
                                         {!!PrizeDetail?
                                             PrizeDetail.pictures.map((c,index) => {
+                                                console.log(c);
                                                     return (
+                                                        c.category == 'campaign-image-gallery' ?
                                                         <div>
                                                             <div>
                                                             <div key={c.index}>
@@ -91,7 +142,7 @@ function Price() {
                                                             </div>
                                                                 <span className="m-block">Swipe for more</span>
                                                             </div>
-                                                        </div>
+                                                        </div>:null
                                                     )
                                             })
                                             :
@@ -121,20 +172,12 @@ function Price() {
                                         <small>{moment(!!PrizeDetail?PrizeDetail.startDate:"").format("MMM DD, HH:MM A")}</small>
                                     </span>
                                 </div>
-                                <p>What if we told you that you can travel to the Maldives for holidays with a cup of coffee worth of spend, would you be interested?</p>
-                                <p className="listText">You Will win:</p>
-                                <ul className="pointList">
-                                    <li>Point A</li>
-                                    <li>Point B</li>
-                                    <li>Point C</li>
-                                    <li>Point D</li>
-                                    <li>Point E</li>
-                                    <li>Point F</li>
-                                    <li>Point G</li>
-                                    <li>Point H</li>
-                                </ul>
+                                {
+                                    PrizeDetail?.highlights ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.highlights))}></div> : null
+                                }
                                 <div className="buySec">
-                                    <p>Buy a water Bottle and make it yours!</p>
+
+
                                     <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
                                     <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
                                     {/* <Link to={{ pathname: `/dream-cart` }}>
@@ -148,19 +191,26 @@ function Price() {
                         <div className="row">
                             <div className="col-md-12">
                                 <h1>Description</h1>
-                                <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p>
+
+                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                                {
+                                    PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
+                                }
+                                
+
+
                             </div>
                         </div>
                     </div>
                     </div>
                     {/* Description */}
-                    <div className="priceSlide">
+                    {/* <div className="priceSlide">
                         <h1 className="headingStyle1">You may be interested in</h1>
                         <SilderComponent />
                         <div className="load-btn">
                             <a href="#"><strong>+</strong> Load more</a>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* ADS Section */}
 
@@ -406,9 +456,6 @@ function Price() {
                         </div>
 
                     </section>
-
-
-
                 </div>
                 {/*PricePage Mobile Version*/}
 

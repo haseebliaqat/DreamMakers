@@ -7,7 +7,7 @@ import paymentOpt from '../../_assets/images/payment-opts.png';
 
 const DreamCartBanners = () => {
    return (
-      <div>
+      <div style={{marginTop:"-31px"}}>
          <div className="d-flex justify-content-between align-items-center dreamBanner px-4 py-2">
             <div className="bannerCart-text">Regulated by dubai economy</div>
             <div className="bannerLogo">

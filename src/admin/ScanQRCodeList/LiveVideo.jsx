@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import QrReader from 'react-qr-scanner'
 import { Link } from 'react-router-dom';
 import { campaignsService } from '@/_services/campaigns.service';
+import { ActiveCouponsCardAdmin } from '@/pages/ActiveCoupons/ActiveCouponsCardAdmin';
 import OtpInput from 'react-otp-input';
 import { useHistory } from "react-router-dom";
 import ReactPlayer from 'react-player/youtube'
@@ -18,6 +19,7 @@ import ReactPlayer from 'react-player/youtube'
         if(data && data.text && Result== ''){
             console.log("data");
             console.log(data);
+            localStorage.setItem("currentWinnerCode",data.text);
             history.push('/WinnerResult');
             // setResult(data.text),[
             //     console.log(Result) 
@@ -48,6 +50,7 @@ import ReactPlayer from 'react-player/youtube'
                         </div>
                         </div>
                 </div>
+                <ActiveCouponsCardAdmin></ActiveCouponsCardAdmin>
         </div>
     );
 }

@@ -127,6 +127,8 @@ export function Home() {
         localStorage.setItem("selected_campaign_cash_paid","");
         localStorage.setItem("discount_percentage","");
         localStorage.setItem("discount_percentage_dream_coin","");
+        localStorage.setItem("discount_code","");
+        
 
 
         let obj1 = {
@@ -145,23 +147,33 @@ export function Home() {
             var trip = [];
             var soldout = [];
             for(var i=0;i<myson.length;i++){
-                if ((myson[i].type=='Explore' || myson[i]=='Featured') && myson[i].status=="Active") {
+                let campaign = myson[i];
+                if(campaign.pictures!=null)
+                    for(let i=0; i<campaign.pictures.length; i++){
+
+                        campaign[campaign.pictures[i].name] = campaign.pictures[i].url;
+
+                    }
+            }
+            console.log(myson);
+            for(var i=0;i<myson.length;i++){
+                if ((myson[i].type=='explore' || myson[i]=='Featured') && myson[i].status=="active") {
                     explore.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='Other' && myson[i].status=="Active") {
+                if (myson[i].type=='other' && myson[i].status=="active") {
                     other.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='lifestyle' && myson[i].status=="Active") {
+                if (myson[i].type=='lifestyle' && myson[i].status=="active") {
                     lifestyle.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='Trip' && myson[i].status=="Active") {
+                if (myson[i].type=='trip' && myson[i].status=="active") {
                     trip.push(myson[i]);
                     SetLoader(false)
                 }
-                if (myson[i].type=='sold out' && myson[i].status=="sold out") {
+                if (myson[i].status=="sold-out") {
                     soldout.push(myson[i]);
                     SetLoader(false)
                 }  
@@ -632,9 +644,7 @@ export function Home() {
 
                             </div>
                                 {/* <div className="left-ad-1">
-
                                     <img src={topBanner} alt="" style={{marginTop:"5px",height:"169px"}} />
-
                                 </div> */}
 
                             </div>
@@ -644,7 +654,7 @@ export function Home() {
                     </div>
 
                 </section>
-
+                {campaigns?.length < 1 ? '' :                 
                 <section className="explore">
 
                     <div className="container-fluid">
@@ -689,7 +699,10 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+
+                {othercampaigns?.length < 1 ? '' : 
                 <section className="other sliderStyle1">
 
                     <div className="container-fluid">
@@ -703,7 +716,7 @@ export function Home() {
 
                                     let settings = {
                                     infinite: false,
-                                    slidesToShow: 1,
+                                    slidesToShow: 3,
                                     slidesToScroll: 1,
                                     autoplay: true,
                                     // arrows: false,
@@ -796,27 +809,18 @@ export function Home() {
                         </div>
 
                         {/* <div className="card-footer static-card-footer" key={randomPrice}>
-
                             <div>
-
                                 <div>
-
                                     <p>Buy a water Bottle</p>
-
                                     <FadeOutUpDiv>
                                         <h3>AED3 {randomPrice}</h3>
                                     </FadeOutUpDiv>
-
                                 </div>
-
                                 <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
                                     Buy now
                                 </Link>
-
                             </div>
-
                             <p>Max draw date: December 02, 2021 or when the campaign <br />is sold out.Which ever is earlier.</p>
-
                         </div> */}
                         
                         <div className="load-btn" onClick={event=>OtherLoadCount(loadCountOther+3)}  style={{ display: loadCountOther >= othercampaigns.length  ? 'none' : 'block' }}>
@@ -828,7 +832,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+                {lifestylecampaigns?.length < 1 ? '' : 
                 <section className="lifestyle sliderStyle1">
 
                     <div className="container-fluid">
@@ -945,27 +951,18 @@ export function Home() {
 
 
                         {/* <div className="card-footer static-card-footer" key={randomPrice}>
-
                             <div>
-
                                 <div>
-
                                     <p>Buy a water Bottle</p>
-
                                     <FadeOutUpDiv>
                                         <h3>AED {randomPrice}</h3>
                                     </FadeOutUpDiv>
-
                                 </div>
-
                                 <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
                                     Buy now
                                 </Link>
-
                             </div>
-
                             <p>Max draw date: December 02, 2021 or when the campaign <br />is sold out.Which ever is earlier.</p>
-
                         </div> */}
 
                         
@@ -978,7 +975,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
 
+                {tripcampaigns?.length < 1 ? '' : 
                 <section className="trip sliderStyle1">
                     <div className="container-fluid">
                         <h1 className="headingStyle1" style={{marginLeft:"16px"}}>Trip Campaigns</h1>
@@ -1079,27 +1078,18 @@ export function Home() {
 
 
                         {/* <div className="card-footer static-card-footer" key={randomPrice}>
-
                             <div>
-
                                 <div>
-
                                     <p>Buy a water Bottle</p>
-
                                     <FadeOutUpDiv>
                                         <h3>AED {randomPrice}</h3>
                                     </FadeOutUpDiv>
-
                                 </div>
-
                                 <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
                                     Buy now
                                 </Link>
-
                             </div>
-
                             <p>Max draw date: December 02, 2021 or when the campaign <br />is sold out.Which ever is earlier.</p>
-
                         </div> */}
                         
                         
@@ -1113,6 +1103,9 @@ export function Home() {
                     </div>
 
                 </section>
+                }
+                
+                {soldoutcampaigns?.length < 1 ? '' : 
 
                 <section className="sold-out sliderStyle1">
 
@@ -1212,11 +1205,11 @@ export function Home() {
                     </div>
 
                 </section>
-
+                }
 
 
                 {/* <!-- Winner Testimonails --> */}
-
+                {TestTimonial?.length < 1 ? '' : 
                 <section className="testimonials-winners">
                     <div className="container-fluid">
                         <h1 className="headingStyle1 m-none" style={{marginLeft:"16px"}}>Testimonials & Winners</h1>
@@ -1340,7 +1333,6 @@ export function Home() {
                                                         </button>
                                                         :
                                                         null}
-
                                                     <video id="testimonial-video-4" className="testimony-vid-tag">
                                                         <source src={dummyVideo} type="video/mp4" />
                                                     </video>
@@ -1365,31 +1357,19 @@ export function Home() {
                                                         </button>
                                                         :
                                                         null}
-
                                                     <video id="testimonial-video-5" className="testimony-vid-tag">
                                                         <source src={dummyVideo} type="video/mp4" />
                                                     </video>
-
                                                 </div>
-
                                                 <div className="testimonial-cnt">
-
                                                     <div className="quote">
-
                                                         <img src={qouteIcon} alt="" />
-
                                                     </div>
-
                                                     <p>DREAM MAKERS<br/> you guys are the<br/> best  You guys changed my life.</p>
-
                                                     <p>Peter Madison</p>
-
                                                     <p>PRO Driver in Dubai</p>
-
                                                 </div>
-
                                             </div>
-
                                         </div> */}
 
                                     </Slider>
@@ -1409,6 +1389,7 @@ export function Home() {
                         </div>
 
                 </section>
+                }
 
                 {/* Charity Partners */}
 
@@ -1509,15 +1490,10 @@ export function Home() {
                         </div>
 
                         {/* <div className="prev-arrow">
-
                             <i className="fas fa-chevron-left"></i>
-
                         </div>
-
                         <div className="next-arrow">
-
                             <i className="fas fa-chevron-right"></i>
-
                         </div> */}
 
                     </div>
@@ -1647,4 +1623,3 @@ export function Home() {
 }
 
 export const MemoizedHome = React.memo(Home);
-// export { Home };

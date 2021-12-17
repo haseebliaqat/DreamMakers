@@ -37,9 +37,9 @@ function LoginFacebook({mblStyle}) {
       const responseFacebook = (res) => {
         console.log('Login Success: currentUser:', res);
         console.log('Login Success: currentUser:', res.picture.data.url);
-        const userDetails = { email:res.email, firstName:res.first_name,lastName:res.last_name, imageUrl:res.picture.data.url}
+        const userDetails = { email:res.email, firstName:res.first_name,lastName:res.last_name, imageUrl:res.picture.data.url,mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true"}
         alertService.clear();
-        accountService.loginUsingFacebook(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl).then((resp) => {
+        accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl,userDetails.mobileNumber,userDetails.nationality,userDetails.countryResidence,userDetails.city,userDetails.acceptTerms).then((resp) => {
           console.log("resp", resp);
           if (resp.role == 'Admin') {
               const { from } =  { from: { pathname: "/admin" } };

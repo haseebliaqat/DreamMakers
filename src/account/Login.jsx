@@ -31,7 +31,8 @@ import {LoginGoogle} from '@/account/LoginGoogle';
 import {LoginFacebook} from '@/account/LoginFacebook';
 import {LoginApple} from '@/account/LoginApple';
 import { useHistory } from "react-router-dom";
-
+import AppleSignin from 'react-apple-signin-auth';
+import AppleLogin from 'react-apple-login'
 function Login({ location}) {
     const history = useHistory();
     const [isWelcomeScreen, setIsWelcomeScreen] = useState(true);
@@ -245,7 +246,8 @@ function Login({ location}) {
 
                                             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                                                 {({ errors, touched, isSubmitting }) => (
-                                                    <Form class="loginform">
+
+                                                    <Form className="loginform">
                                                         <div className="formCont LoginCont">
                                                             <div className="subscription-form">
                                                                 <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
@@ -264,7 +266,7 @@ function Login({ location}) {
                                                                 <label className="m-0" style={{fontSize:"14px"}}>Remember Me</label>
                                                                 </div>
                                                                 <div>
-                                                                    <a href="/" style={{fontSize:"14px"}}>Forgot Password</a>
+                                                                    <a href="/forgetPassword" style={{fontSize:"14px"}}>Forgot Password</a>
                                                                 </div>
                                                             </div>
                                                             <button type="submit" disabled={isSubmitting} className="btn btn-default signupBtn LoginBtn" style={{marginTop:"37px"}} >
@@ -274,7 +276,11 @@ function Login({ location}) {
                                                         </div>
 
                                                         <div className="LoginWith">
-                                                        {showsafaributton?<LoginApple mblStyle='' history={history} location={location} />:<LoginGoogle mblStyle='' history={history} location={location} />}
+                                                        <LoginGoogle mblStyle='mbl-btn' history={history} location={location} />
+                                                        {/* <AppleLogin clientId="ae.dreammakers.test" redirectURI="https://test.dreammakers.ae" usePopup={true} /> */}
+                                                        <LoginApple mblStyle='' history={history} location={location} />
+                                                        <br/>
+                                                        {/* {showsafaributton?<LoginApple mblStyle='' history={history} location={location} />:<LoginGoogle mblStyle='' history={history} location={location} />} */}
                                                         <LoginFacebook mblStyle='' history={history} location={location} />
                                                         </div>
                                                     </Form>
@@ -311,7 +317,9 @@ function Login({ location}) {
                         </div>
 
                         <div className="login-options">
-                            {showsafaributton?<LoginApple mblStyle='mbl-btn' history={history} location={location} />:<LoginGoogle mblStyle='mbl-btn' history={history} location={location} />}
+                            <LoginGoogle mblStyle='mbl-btn' history={history} location={location} />
+                            <AppleLogin clientId="ae.dreammakers.test" redirectURI="https://test.dreammakers.ae" usePopup={true} />
+                            {/* <LoginApple mblStyle='mbl-btn' history={history} location={location} /> */}
                             <FacebookLoginButton mblStyle='mbl-btn' history={history} location={location} />
                             <button className="btn custom-signup" onClick={() => toggleScreen('signup')}>I'll use email or phone</button>
                         </div>
@@ -386,7 +394,7 @@ function Login({ location}) {
                                                             <label>Remember Me</label>
                                                         </div>
                                                         <div>
-                                                            <a href="/">Forgot Password</a>
+                                                            <a href="/forgetPassword">Forgot Password</a>
                                                         </div>
                                                     </div>
                                                     <button type="submit" disabled={isSubmitting} className="btn btn-default signupBtn LoginBtn" >
@@ -396,7 +404,9 @@ function Login({ location}) {
                                                 </div>
 
                                                 <div className="LoginWith">
-                                                    {showsafaributton?<AppleLoginButton mblStyle='' history={history} location={location} />:<GoogleLoginButton mblStyle='' history={history} location={location} />}
+                                                    {/* {showsafaributton?<AppleLoginButton mblStyle='' history={history} location={location} />:<GoogleLoginButton mblStyle='' history={history} location={location} />} */}
+                                                    <LoginGoogle mblStyle='mbl-btn' history={history} location={location} />
+                                                    <AppleLogin clientId="ae.dreammakers.test" redirectURI="https://test.dreammakers.ae" usePopup={true} />
                                                     <FacebookLoginButton mblStyle='' history={history} location={location} />
                                                     
                                                 {/* {showsafaributton?<LoginApple mblStyle='' history={history} location={location} />:<LoginGoogle mblStyle='mbl-btn' history={history} location={location} />}

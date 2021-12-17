@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { campaignsService } from '@/_services/campaigns.service';
+import { winnersService } from '@/_services/winners.service';
 import LiveDraw from '../../_assets/images/Winner_bg.jpeg';
 import Logo from '../../_assets/images/Logo.png';
 import OtpInput from 'react-otp-input';
@@ -31,20 +32,20 @@ const divStyle2 = {
  
  function  WinnerCard() {
     const history = useHistory();
-    const [CodeValue, setCodeValue] = useState('');
-    const [totalCount, setTotalCount] = useState(0);
-    const [campaigns, setCampaigns] = useState([]);
+    const [Winners,setWinners] = useState([]);
+    const [WinnersCode,setWinnersQrCode] = useState([]);
     useEffect(() => {
+        let code = localStorage.getItem("currentWinnerCode");
+        console.log(code);
         let obj = {
-            "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
-            "where": {"id": 7 }
+            "code": code
         }
-        campaignsService.getAll(obj).then((x) => {
-            console.log(x);
-            setTotalCount(x.count)
-            setCampaigns(x.rows)
+        winnersService.scanWinner(obj).then((winner) => {
+            console.log(winner);
+            setWinners(winner)
         });
+
+
     }, []);
     const LetsGo=()=>{
         history.push('/SeletedCampaignListView');
@@ -58,51 +59,54 @@ const divStyle2 = {
             <img src={Congrates} style={{height:"144px"}}/>
             </div>
 
+            {Winners!=""?
             <div className="Winner-Card">
-                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-54px"}}>
-                     <img src={winner_title} className="Winner-title" />
-                   
-                </div>
-                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"50px"}}>
-                         <img src="http://i.stack.imgur.com/Dj7eP.jpg" className="Winner-Profile" />
-                </div>
-                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"13px"}}>
-                    <p className="heading">Aqib Ali</p>
-                </div>
-                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-7px"}}>
-                    <p className="heading">Dubai</p>
-                </div>
-                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-4px"}}>
-                    <p className="heading">2 Months MALDIVES TRIP</p>
-                </div>
-                    <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-6px",marginLeft:"43px"}}>
-                            <div className="coupons-card2">
-                            <img src={CouponsCardBg} alt="" width="80%" />
-                                <div className="header2">
-                                    <img src={Logo} alt="" />
-                                </div>
-                                <div className="EL-number2">EL-0094-4444</div>
-                                <div className="EL-coupon2">coupons No.</div>
-                                <div className="price2">Prize</div>
-                                <div className="Trip-country2" style={{fontSize:"14px",marginTop:"3px"}}>Trip to Maldive</div>
-                                            {/* {!CouponQRcode ?
-                                                <div className="Qr">
-                                                    <img src={qrCode} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
-                                                </div>
-                                                :
-                                                null
-                                            } */}
-                                <div className="Qr2">
-                                    <img src={qrCode} alt="QR2" style={{ width: '83%',backgroundColor:"white" }} />
-                                </div>
-                                <div className="dottedLine2"></div>
-                                <div className="purchase-date2">Purchase On:</div>
-                                <div className="date2" >6 September 2021</div>
-                                <div className="coupon-name2">Name:</div>
-                                <div className="name2" style={{textTransform:"capitalize"}}>Aqib Ali</div>
-                        </div>
-                    </div>
+            <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-54px"}}>
+                 <img src={winner_title} className="Winner-title" />
+               
             </div>
+            <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"50px"}}>
+                     <img src={Winners.picUrl} className="Winner-Profile" />
+            </div>
+            <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"13px"}}>
+                <p className="heading">{Winners.fullName}</p>
+            </div>
+            <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-7px"}}>
+                <p className="heading">{Winners.country}</p>
+            </div>
+            <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-4px"}}>
+                <p className="heading">{Winners.winningPrizeTitle}</p>
+            </div>
+                <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-6px",marginLeft:"43px"}}>
+                        <div className="coupons-card2">
+                        <img src={CouponsCardBg} alt="" width="80%" />
+                            <div className="header2">
+                                <img src={Logo} alt="" />
+                            </div>
+                            <div className="EL-number2">{Winners.couponNumber}</div>
+                            <div className="EL-coupon2">coupons No.</div>
+                            <div className="price2">Prize</div>
+                            <div className="Trip-country2" style={{fontSize:"14px",marginTop:"3px"}}>{Winners.winningPrizeTitle}</div>
+                                        {/* {!CouponQRcode ?
+                                            <div className="Qr">
+                                                <img src={qrCode} alt="QR" style={{ width: '51%',backgroundColor:"white" }} />
+                                            </div>
+                                            :
+                                            null
+                                        } */}
+                            <div className="Qr2">
+                                <img src={Winners.qrCodeUrl} alt="QR2" style={{ width: '83%',backgroundColor:"white" }} />
+                            </div>
+                            <div className="dottedLine2"></div>
+                            <div className="purchase-date2">Purchase On:</div>
+                            <div className="date2" >{Winners.couponPurchaseDate}</div>
+                            <div className="coupon-name2">Name:</div>
+                            <div className="name2" style={{textTransform:"capitalize"}}>{Winners.fullName}</div>
+                    </div>
+                </div>
+        </div>:null
+            }
+            
             <div style={{display:"flex", justifyContent:"flex-end", width:"100%", padding:"0",marginLeft:"-13px"}}>
                 <div style={divStyle3}>
                 <p><Link><button  className="next-Draw" onClick={LetsGo}>Next Draw</button></Link></p>

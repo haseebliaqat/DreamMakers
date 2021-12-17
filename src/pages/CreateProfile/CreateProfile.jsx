@@ -99,8 +99,8 @@ export const CreateProfile = () => {
       alertService.clear();
       accountService.AvailabelBalance(obj1).then((resp) => {
          var myJson= resp.rows;
-         setAvalaibleBalance(myJson[0].balance);
-         setAvalaibleDreamCoins(myJson[0].currencyValue);
+         setAvalaibleBalance(myJson[0].currencyValue);
+         setAvalaibleDreamCoins(myJson[0].balance);
          
          
 
@@ -129,7 +129,7 @@ export const CreateProfile = () => {
    nationalityVar= nationality[0].nationality;
   
   }
-  if(!!countryResidenceVar){
+  if(!!city_residence){
    countryResidenceVar = city_residence[0].nationality;
   }
 
