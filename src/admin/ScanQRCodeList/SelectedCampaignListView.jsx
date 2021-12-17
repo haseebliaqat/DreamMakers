@@ -8,7 +8,7 @@ import Logo from '../../_assets/images/Logo.png';
 import OtpInput from 'react-otp-input';
 import { useHistory } from "react-router-dom";
 const divStyle = {
-  height: '667px',
+  height: '100%',
   backgroundImage: `url(${LiveDraw})`,
   backgroundSize: 'cover',
 };
@@ -23,7 +23,7 @@ const divStyle2 = {
 
   const divStyle3 = {
     boxShadow:"0 4px 8px 0 rgba(0,0,0,0.2)",transition: "0.3s",width:"75%",
-    backgroundColor:"white",borderRadius:"10px",
+    backgroundColor:"#aec8c9",borderRadius:"20px",
   };
  function  SelectedCampaignListView() {
     const history = useHistory();
@@ -51,6 +51,7 @@ const divStyle2 = {
                     "order": [["id", "ASC"]],
                     "where": {"campaignId": {'$in' : localStorage.getItem('Selected_go_live_campaigns')} }
                 }
+                console.log( localStorage.getItem('Selected_go_live_campaigns'));
                 winnersService.getAll(obj).then((x) => {
                     setWinners(x.rows);
                 });
@@ -88,13 +89,14 @@ const divStyle2 = {
                                 </div>
 					)): 
                     winners.map((item) => (
-                        <div style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"25px"}}>
+                        <div style={{display:"flex", justifyContent:"center", width:"100%", padding:"10px",marginTop:"25px" }}>
                                 <div style={divStyle3} >
                                 <p style={{padding:"8px",fontSize:"10px",color:"black"}}>#{item.campaignId}</p>
                                 <div style={{display:"flex"}}>
-                                <p style={{padding:"px",fontSize:"20px",color:"#0e1a46",marginTop:"-20px",paddingLeft:"8px",fontWeight:"900",textTransform:"capitalize"}}>{item.campaignTitle}</p>
+                                <p style={{padding:"px",fontSize:"20px",color:"#0e1a46",marginTop:"-20px",paddingLeft:"8px",fontWeight:"900",textTransform:"capitalize"}}>{item.winningPrizeTitle}  <span style={{marginLeft:'20px'}}>({item.country})</span></p>
                                     <div style={{display:"block",marginLeft:"auto",marginRight:"14px",marginTop:"-26px"}}>   <button  className='let-go'>{item.fullName}</button></div>
-                                    <div style={{display:"block",marginLeft:"auto",marginRight:"14px",marginTop:"-26px"}}>   <button style={{backgroundColor:"f3c10c"}}>* Winner *</button></div>
+                                    <div style={{display:"block",marginLeft:"auto",marginRight:"14px",marginTop:"-26px"}}>   <button  className={`${item.status == 'expired' ? "let-go-expired" : "let-go"}` } style={{ color:'black', backgroundColor:'yellow', fontWeight:'1000', fontSize:'22px', marginTop:'-2px'}} disabled={item.status == 'expired'}>* Winner *</button></div>
+
                                 </div>
                                 </div> 
 
