@@ -64,7 +64,7 @@ function Header() {
                 <div className="login-btn navbar-nav">
                     {!!showCloseIcon ?
                         <>
-                        <div><img src={closeIcon} className="notif-icon"  onClick={() => closeMenu()}/></div>
+                        <div style={{cursor:"pointer"}}><img src={closeIcon} className="notif-icon"  onClick={() => closeMenu()}/></div>
                         </> :
                         <>
                             {!!user ?
