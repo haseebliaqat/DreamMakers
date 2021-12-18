@@ -134,6 +134,7 @@ function AddEdit({ history, match }) {
         winningPrizeTitle:'',
         embedHtmlYouTube:'',
         prizePartner:'',
+        prizePartner: false,
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -582,10 +583,15 @@ function AddEdit({ history, match }) {
                                 <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
                                 <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
                             </div>
-                            <div className="form-group col-12">
+                            <div className="form-group col-10">
                                 <label>Prize Partner</label>
                                 <Field name="prizePartner" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.prizePartner && touched.prizePartner ? ' is-invalid' : '')} />
                                 <ErrorMessage name="prizePartner" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-2">
+                                <label>Prize Alternative</label>
+                                <Field type="checkbox" name="prizePartner"  className="form-control ml-2 radioButttonFont font-26" style={{WebkitAppearance:"radio"}}/>
+                                <ErrorMessage name="shortDescriptionMobile" component="div" className="invalid-feedback" />
                             </div>
                         </div>
                         
