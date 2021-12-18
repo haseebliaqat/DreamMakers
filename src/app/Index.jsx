@@ -14,6 +14,7 @@ import { Profile } from '../pages/profile/profile';
 import { Header } from '../_shared/header';
 // import { getCookie } from '../_services/cookies.service';
 import { Footer } from '../_components/Footer/Footer';
+import { FooterMobile } from '../_components/Footer/FooterMobile';
 import { Earncoins } from '../pages/EarnCoins/EarnCoins';
 import { ChangePassword } from '../pages/ChangePassword/ChangePassword';
 import { ActiveCoupons } from '../pages/ActiveCoupons/ActiveCoupons';
@@ -41,6 +42,7 @@ import { LiveVideo } from '../admin/ScanQRCodeList/LiveVideo';
 import { WinnerCard } from '../admin/ScanQRCodeList/WinnerCard';
 import { ForgotPassword } from '../account/ForgotPassword';
 import { Donations } from '../pages/Donations/Donations';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 
 
@@ -99,7 +101,9 @@ function App() {
                 <Route exact path="/profile" component={Profile}>
                     <Header />
                     <Profile />
-                    <Footer />
+                    <BrowserView> <Footer  /> </BrowserView>
+                    <MobileView> <FooterMobile /> </MobileView>
+                   
                 </Route>
 
                 <Route exact path="/donations" component={Profile}>
