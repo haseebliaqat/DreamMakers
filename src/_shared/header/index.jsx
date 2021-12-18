@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './index.less';
 import logo from '@/_assets/images/dream-maker-logo.svg';
 import aboutIcon from '@/_assets/images/about-dream-makers.svg';
@@ -22,6 +23,17 @@ function Header() {
     const [user, setUser] = useState(null);
     const [showNavModal, setShowNavModal] = useState(false);
     const [showCloseIcon, setShowCloseIcon] = useState(false);
+    const [currentUrl, setCurrentUrl] = useState('');
+    const { pathname } = useLocation();
+    const closeMenu = () => {
+        history.push(currentUrl);
+        setShowCloseIcon(false);
+    }
+    const showMenu = () => {
+        setCurrentUrl(pathname);
+        setShowCloseIcon(true);
+    }
+
     useEffect(() => {
         if (!!localStorage.userDetails) {
             setUser(JSON.parse(localStorage.userDetails));
@@ -52,13 +64,13 @@ function Header() {
                 <div className="login-btn navbar-nav">
                     {!!showCloseIcon ?
                         <>
-                        <div><img src={closeIcon} className="notif-icon"  onClick={() => {setShowCloseIcon(false); history.goBack();}}/></div>
+                        <div><img src={closeIcon} className="notif-icon"  onClick={() => closeMenu()}/></div>
                         </> :
                         <>
                             {!!user ?
                                 <>
                                     <p>Hi {user.firstName}</p>
-                                    <Link className="login-link" to={{ pathname: `/profile` }} onClick={() => setShowCloseIcon(true)}>
+                                    <Link className="login-link" to={{ pathname: `/profile` }} onClick={() => showMenu()}>
 
                                         <img src={!!user ? user.picUrl : profilePic} className="profile-pic" /> </Link>
                                     <div><img src={bellIcon} className="notif-icon" /></div>
