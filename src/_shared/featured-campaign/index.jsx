@@ -212,10 +212,12 @@ export function FeaturedCampaign({props, videoSrc, item, keyValue }) {
                                                 <img src={couponIcon} alt="" />
                                                 <small>{item.perEntryCoupons} tickets<br />per entry</small>
                                             </span>
-                                            <span>
+                                            {
+                                            item.cashAlternative ? <span>
                                                 <img src={cashAlt} alt="" />
                                                 <small>cash alternative<br />available</small>
-                                            </span>
+                                            </span>: null
+                                            }
                                             <span>
                                                 <img src={calendar} alt="" />
                                                 <small>{moment(item.startDate).format("MMM DD, HH:MM A")}</small>
