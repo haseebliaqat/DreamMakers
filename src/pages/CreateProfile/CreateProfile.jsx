@@ -38,7 +38,7 @@ export const CreateProfile = () => {
     const [firstname, setfirstname] = useState(localStorage.getItem("f_name"));
     const [last_name, setlast_name] = useState(localStorage.getItem("l_name"));
     const [email, setemail] = useState(localStorage.getItem("user_email"));
-    const [nationality, setnationality] = useState("");
+    const [nationality, setnationality] = useState([]);
     const [city_residence, setcityResidence] = useState("");
     const [city, setcity] = useState("");
     const [phone, setPhone] = useState("");
@@ -49,12 +49,16 @@ export const CreateProfile = () => {
     useEffect(() => {
       if (!!localStorage.userDetails) {            
          setUser(JSON.parse(localStorage.userDetails));
+         let usr = JSON.parse(localStorage.userDetails);
+         setnationality([usr.nationality]);
+         setPhone(usr.mobileNumber);
+         setcity([usr.city]);
+         setcityResidence([usr.countryResidence]);
       }
    }, [
    ]);
-   const Phoneno = (event) => {
-      console.log(event);
-      setPhone(event.target.value)
+   const Phoneno = (val) => {
+      setPhone(val)
       setResShow(false)
    }
    const Fname = (event) => {
@@ -116,76 +120,79 @@ export const CreateProfile = () => {
    
    
 
-   var firstName= firstname;
-   var lastName = last_name;
-   var email = email;
-   var mobileNumber = phone;
-   var nationalityVar="";
-   var countryResidenceVar = "";
-   var cityVar ="";
-   console.log("YOOO222");
-  if(!!nationality){
-   console.log("YOOO111");
-   nationalityVar= nationality[0].nationality;
-  
-  }
-  if(!!city_residence){
-   countryResidenceVar = city_residence[0].nationality;
-  }
-
-  if(!!city){
-   cityVar =city[0].city;
-  }
+      var firstName= firstname;
+      var lastName = last_name;
+      var email = email;
+      var mobileNumber = phone;
+      var nationalityVar="";
+      var countryResidenceVar = "";
+      var cityVar ="";
+   if(!!nationality){
+      nationalityVar= nationality[0].nationality;
    
-   
-   
-
-   if(firstName ==""){
-      setResShow(true);
-      setResMessage("Please enter first name.");
-      return false;
    }
-  
-   if(lastName===""){
-      setResShow(true);
-      setResMessage("Please enter last name.");
-     
-      return false;
+   if(!!city_residence){
+      countryResidenceVar = city_residence[0].nationality;
+      console.log(city_residence);
+      console.log("YOOO112");
+
    }
 
-   if(email===""){
-      setResShow(true);
-      setResMessage("Please enter email.");
-      return false;
+   if(!!city){
+      cityVar =city[0].city;
+      console.log(city);
+      console.log("YOOO113");
    }
-  
-   // if(mobileNumber===""){
-   //    setResShow(true);
-   //    setResMessage("Please enter phone.");
-     
-   //    return false;
-   // }
+      
+      
+      
 
-   // if(nationalityVar===""){
-   //    setResShow(true);
-   //    setResMessage("Please select a nationality.");
-     
-   //    return false;
-   // }
+      if(firstName ==""){
+         setResShow(true);
+         setResMessage("Please enter first name.");
+         return false;
+      }
+   
+      if(lastName===""){
+         setResShow(true);
+         setResMessage("Please enter last name.");
+      
+         return false;
+      }
 
-   // if(countryResidenceVar===""){
-   //    setResShow(true);
-   //    setResMessage("Please select a country residence.");
-     
-   //    return false;
-   // }
+      if(email===""){
+         setResShow(true);
+         setResMessage("Please enter email.");
+         return false;
+      }
+   
+      // if(mobileNumber===""){
+      //    setResShow(true);
+      //    setResMessage("Please enter phone.");
+      
+      //    return false;
+      // }
 
-   // if(cityVar===""){
-   //    setResShow(true);
-   //    setResMessage("Please select a city.");
-     
-   //    return false;
-   // }
+      // if(nationalityVar===""){
+      //    setResShow(true);
+      //    setResMessage("Please select a nationality.");
+      
+      //    return false;
+      // }
+
+      // if(countryResidenceVar===""){
+      //    setResShow(true);
+      //    setResMessage("Please select a country residence.");
+      
+      //    return false;
+      // }
+
+      // if(cityVar===""){
+      //    setResShow(true);
+      //    setResMessage("Please select a city.");
+      
+      //    return false;
+      // }
  
    var token=!!user?user.jwtToken:"";
   
@@ -215,7 +222,7 @@ export const CreateProfile = () => {
          <div className="create-profile-page">
          {resSuccessShow?  
                                                 
-         <Alert color="success" onClick={() => setResSuccessShow(false)} dismissible >
+         <Alert color="success" onClick={() => setResSuccessShow(false)} true >
                {resSuccessMessage}
          </Alert>
          :''}
@@ -277,7 +284,7 @@ export const CreateProfile = () => {
                               value={email}/>
                            <CountryCodeField label="Country Code" 
                            
-                                                      onChange={Phoneno}
+                                                      callback={(e) => Phoneno(e)}
                                                       value={phone}
                            />
                         </div>
@@ -288,11 +295,12 @@ export const CreateProfile = () => {
                                     labelKey="nationality"
                                     onChange={(selected) => {
                                        setnationality(selected);
-                                       console.log("VALUE");
+                                       console.log(selected);
                                     }}
                                     options={nationalites}
                                     placeholder="Nationality"
                                     style={{}}
+                                    selected={nationality}
                                     inputProps={{
                                        className: 'my-custom-classname',
                                        style: {
@@ -307,6 +315,7 @@ export const CreateProfile = () => {
                                     placeHolders="Country of Residence"
                                     onChange={(selected) => {
                                        setcityResidence(selected);
+                                       console.log(selected);
                                     }}
                                     options={nationalites}
                                     selected={city_residence}
