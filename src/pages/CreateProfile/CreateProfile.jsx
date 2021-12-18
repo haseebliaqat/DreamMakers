@@ -220,7 +220,7 @@ export const CreateProfile = () => {
          </Alert>
          :''}
             <div className="row">
-               <div className="col-md-4 d-md-block">
+               <div className="col-md-4 d-md-block d-none">
                   <ProfileCard />
                </div>
                <div className="col-md-8 col-12">

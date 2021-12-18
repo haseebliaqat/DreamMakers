@@ -40,6 +40,7 @@ import { CouponVerification } from '../admin/ScanQRCodeList/CouponVerification';
 import { LiveVideo } from '../admin/ScanQRCodeList/LiveVideo';
 import { WinnerCard } from '../admin/ScanQRCodeList/WinnerCard';
 import { ForgotPassword } from '../account/ForgotPassword';
+import { Donations } from '../pages/Donations/Donations';
 
 
 
@@ -98,6 +99,12 @@ function App() {
                 <Route exact path="/profile" component={Profile}>
                     <Header />
                     <Profile />
+                    <Footer />
+                </Route>
+
+                <Route exact path="/donations" component={Profile}>
+                    <Header />
+                    <Donations />
                     <Footer />
                 </Route>
 

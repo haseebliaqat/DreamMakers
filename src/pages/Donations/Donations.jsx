@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import './profile.less';
+import './Donations.less';
 
 import { Card } from '@/_shared/card/card';
 import { ProfileCard } from '@/_shared/profile-card/profile-card';
@@ -15,7 +15,7 @@ import {
 import { NewsLetter } from '../../_shared/newsletter/newsletter';
 import { DonationCard } from '../../_shared/DonationCard/DonationCard';
 
-export const Profile = () => {
+export const Donations = () => {
    const [avalaibel_dream_coin, setAvalaibleDreamCoins] = useState(null);
    const [avalaibel_balance, setAvalaibleBalance] = useState(null);
    const [funds, setFunds] = useState(null);
@@ -57,7 +57,7 @@ export const Profile = () => {
       <div className="container-fluid overflow-x-hidden">
          <div className="profile-page">
             <div className="row">
-               <div className="col-md-4 d-md-block">
+               <div className="col-md-4 d-md-block d-none">
                   <ProfileCard />
                </div>
                <div className="col-md-8 col-sm-12 p-md-2 p-0">
@@ -77,7 +77,7 @@ export const Profile = () => {
                         />
                      </div>
                   </Card>
-                  <section className="donation-section container-fluid d-none">
+                  <section className="donation-section container-fluid">
                      <div className="row">
                         <div className="col-md-8">
                            <div className="d-md-none d-block">
