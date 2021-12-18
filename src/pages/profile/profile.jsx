@@ -54,7 +54,7 @@ export const Profile = () => {
 
   }, []);
    return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={{overflowX:"hidden"}}>
          <div className="profile-page">
             <div className="row">
                <div className="col-md-4 d-md-block d-none">
