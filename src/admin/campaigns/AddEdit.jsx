@@ -134,7 +134,7 @@ function AddEdit({ history, match }) {
         winningPrizeTitle:'',
         embedHtmlYouTube:'',
         prizePartner:'',
-        prizePartner: false,
+        cashAlternative: false,
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -337,7 +337,7 @@ function AddEdit({ history, match }) {
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
                              'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
-                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube','prizePartner'];
+                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube','prizePartner','cashAlternative'];
 
                             fields.forEach(field =>{
                                 if(field == 'drawDate' || field == 'startDate'){
@@ -589,9 +589,9 @@ function AddEdit({ history, match }) {
                                 <ErrorMessage name="prizePartner" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group col-2">
-                                <label>Prize Alternative</label>
-                                <Field type="checkbox" name="prizePartner"  className="form-control ml-2 radioButttonFont font-26" style={{WebkitAppearance:"radio"}}/>
-                                <ErrorMessage name="shortDescriptionMobile" component="div" className="invalid-feedback" />
+                                <label>Cash Alternative</label>
+                                <Field type="checkbox" name="cashAlternative"  className="form-control ml-2 radioButttonFont font-26" style={{WebkitAppearance:"radio"}}/>
+                                <ErrorMessage name="cashAlternative" component="div" className="invalid-feedback" />
                             </div>
                         </div>
                         
