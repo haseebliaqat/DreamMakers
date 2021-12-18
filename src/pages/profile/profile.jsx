@@ -57,7 +57,7 @@ export const Profile = () => {
       <div className="container-fluid overflow-x-hidden">
          <div className="profile-page">
             <div className="row">
-               <div className="col-md-4 d-md-block d-none">
+               <div className="col-md-4 d-md-block">
                   <ProfileCard />
                </div>
                <div className="col-md-8 col-sm-12 p-md-2 p-0">

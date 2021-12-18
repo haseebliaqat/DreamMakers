@@ -134,7 +134,7 @@ const GetAllWinners =()=> {
             </Alert>
           :''}
          <div className="row">
-            <div className="col-md-4 d-md-block d-none">
+            <div className="col-md-4 d-md-block">
                <ProfileCard />
             </div>
             <div className="col-md-8">
