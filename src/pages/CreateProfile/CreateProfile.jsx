@@ -128,20 +128,17 @@ export const CreateProfile = () => {
       var countryResidenceVar = "";
       var cityVar ="";
    if(!!nationality){
-      nationalityVar= nationality[0].nationality;
+      nationalityVar = nationality ? nationality?.nationality: nationality[0].nationality;
    
    }
    if(!!city_residence){
-      countryResidenceVar = city_residence[0].nationality;
-      console.log(city_residence);
-      console.log("YOOO112");
+      countryResidenceVar = city_residence ? city_residence?.nationality: city_residence[0].nationality;
 
    }
 
    if(!!city){
-      cityVar =city[0].city;
       console.log(city);
-      console.log("YOOO113");
+      cityVar = city ? city[0]:  city[0].city;
    }
       
       
@@ -329,7 +326,9 @@ export const CreateProfile = () => {
                                  />
                                  </div>
                                  <div>
-                                 <Typeahead label="City" 
+                                 <Typeahead 
+                                    id="noid"
+                                    label="City" 
                                     labelKey="city"
                                     placeHolders="City"
                                     onChange={(selected) => {
