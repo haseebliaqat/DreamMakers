@@ -38,7 +38,10 @@ function Header() {
         if (!!localStorage.userDetails) {
             setUser(JSON.parse(localStorage.userDetails));
         }
-    }, []);
+        if(pathname.includes('winners')){
+            setShowCloseIcon(false);
+        }
+    }, [pathname]);
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light bg-gradient customNavbar">
