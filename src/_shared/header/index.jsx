@@ -9,6 +9,7 @@ import crossIcon from '@/_assets/images/cross-icon.svg';
 import chevronBlue from '@/_assets/images/chevron-right-blue.svg';
 import profilePic from '@/_assets/images/blocked-profile.jpg';
 import bellIcon from '@/_assets/images/Bell.svg';
+import closeIcon from '@/_assets/images/close.svg';
 import appstoreIcon from '@/_assets/images/appstore-icons.png';
 import playStoreIcon from '@/_assets/images/playstore-icons.png';
 import dubaiEco from '@/_assets/images/dubai_eco.png';
@@ -20,9 +21,10 @@ function Header() {
     // const user = accountService.userValue;
     const [user, setUser] = useState(null);
     const [showNavModal, setShowNavModal] = useState(false);
+    const [showCloseIcon, setShowCloseIcon] = useState(false);
     useEffect(() => {
-        if (!!localStorage.userDetails) {            
-           setUser(JSON.parse(localStorage.userDetails));
+        if (!!localStorage.userDetails) {
+            setUser(JSON.parse(localStorage.userDetails));
         }
     }, []);
     return (
@@ -46,31 +48,39 @@ function Header() {
                         </Link>
                     </div>
                 </div>
-                
+
                 <div className="login-btn navbar-nav">
-                    {!!user ?
+                    {!!showCloseIcon ?
                         <>
-                            <p>Hi {user.firstName}</p>
-                            <Link className="login-link" to={{ pathname: `/profile` }}>
-                             
-                            <img src={!!user?user.picUrl:profilePic} className="profile-pic" /> </Link>
-                            <div><img src={bellIcon} className="notif-icon" /></div>
-                        </>
-                        :
+                        <div><img src={closeIcon} className="notif-icon"  onClick={() => {setShowCloseIcon(false); history.goBack();}}/></div>
+                        </> :
                         <>
-                            <div id="nav-icon4" className={showNavModal ? "navbar-toggler open" : "navbar-toggler"} onClick={() => setShowNavModal(!showNavModal)}>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            {/* <button className="navbar-toggler" type="button" onClick={() => setShowNavModal(true)} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button> */}
-                            <Link className="login-link" to={{ pathname: `/account/login` }}>
-                                <span className="nav-link active login-link" aria-current="page" href="#">Login/Sign-up</span>
-                            </Link>
-                        </>
-                    }
+                            {!!user ?
+                                <>
+                                    <p>Hi {user.firstName}</p>
+                                    <Link className="login-link" to={{ pathname: `/profile` }} onClick={() => setShowCloseIcon(true)}>
+
+                                        <img src={!!user ? user.picUrl : profilePic} className="profile-pic" /> </Link>
+                                    <div><img src={bellIcon} className="notif-icon" /></div>
+                                </>
+                                :
+                                <>
+                                    <div id="nav-icon4" className={showNavModal ? "navbar-toggler open" : "navbar-toggler"} onClick={() => setShowNavModal(!showNavModal)}>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    {/* <button className="navbar-toggler" type="button" onClick={() => setShowNavModal(true)} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span className="navbar-toggler-icon"></span>
+                                </button> */}
+                                    <Link className="login-link" to={{ pathname: `/account/login` }}>
+                                        <span className="nav-link active login-link" aria-current="page" href="#">Login/Sign-up</span>
+                                    </Link>
+                                </>
+                            }
+                        </>}
+
+
 
 
 
