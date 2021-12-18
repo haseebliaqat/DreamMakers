@@ -133,6 +133,7 @@ function AddEdit({ history, match }) {
         drawDate: '',
         winningPrizeTitle:'',
         embedHtmlYouTube:'',
+        prizePartner:'',
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -335,7 +336,7 @@ function AddEdit({ history, match }) {
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
                              'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
-                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube'];
+                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube','prizePartner'];
 
                             fields.forEach(field =>{
                                 if(field == 'drawDate' || field == 'startDate'){
@@ -580,6 +581,11 @@ function AddEdit({ history, match }) {
                                 <label>Youtube Live Video Embed URL</label>
                                 <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
                                 <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-12">
+                                <label>Prize Partner</label>
+                                <Field name="prizePartner" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.prizePartner && touched.prizePartner ? ' is-invalid' : '')} />
+                                <ErrorMessage name="prizePartner" component="div" className="invalid-feedback" />
                             </div>
                         </div>
                         

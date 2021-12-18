@@ -222,7 +222,7 @@ export function FeaturedCampaign({props, videoSrc, item, keyValue }) {
                                             </span>
                                         </div>
 
-                                        <p className="paraStyle3">In partnership with {item.charityPartnerId}</p>
+                                        <p className="paraStyle3">{item.prizePartner}</p>
 
                                     </div>
                                 </div>
