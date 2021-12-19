@@ -39,8 +39,6 @@
             canvas.width = img.width;
             ctx.drawImage(img,0,0);
             var dataURL = canvas.toDataURL(outputFormat || 'image/png');
-            console.log(dataURL);
-            console.log(document.getElementById(eleId));
             document.getElementById(eleId).src=dataURL;
             // Clean up
             canvas = null; 
@@ -99,7 +97,7 @@
          <>
             <img src={imgSrc}></img>
             <button onClick={downloadPdfDocument}>Download Pdf</button>
-            <div id="divToDownload" >
+            <div id="divToDownload" style={{width:'80%', position:'fixed',bottom:'100%',overflow:'scroll', maxHeight:'150px'}}>
                {coupon_detail.map((c) => {
                   return (
                      <div className="coupons-card5">
