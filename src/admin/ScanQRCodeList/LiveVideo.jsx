@@ -24,6 +24,7 @@ import ReactPlayer from 'react-player/youtube'
             // setResult(data.text),[
             //     console.log(Result) 
             // ]
+            
         }
       }
       const handleError=(err)=>{
@@ -50,7 +51,7 @@ import ReactPlayer from 'react-player/youtube'
                         </div>
                         </div>
                 </div>
-                <ActiveCouponsCardAdmin></ActiveCouponsCardAdmin>
+                <ActiveCouponsCardAdmin campaignId={localStorage.getItem('Selected_go_live_campaigns_current_campaignId')}></ActiveCouponsCardAdmin>
         </div>
     );
 }

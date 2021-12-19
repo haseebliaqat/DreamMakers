@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { campaignsService } from '@/_services/campaigns.service';
 import moment from 'moment';
+import { ActiveCouponsCardAdmin } from '@/pages/ActiveCoupons/ActiveCouponsCardAdmin';
+
 
 function List({ match }) {
     const { path } = match;
     const [campaigns, setCampaigns] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
+    const [showCoupons, setShowCoupons] = useState(false);
+    const [selectedCampaignId, setSelectedCampaignId] = useState(0);
 
     useEffect(() => {
         let obj = {
@@ -33,9 +37,15 @@ function List({ match }) {
         });
     }
 
+    const downloadCoupons = (campaignId) => {
+        setSelectedCampaignId(campaignId);
+        setShowCoupons(true);
+    }
+
     return (
         <div>
             <h1>Campaigns</h1>
+            {showCoupons ? <ActiveCouponsCardAdmin campaignId={selectedCampaignId}></ActiveCouponsCardAdmin> : null }
             <p>All Campaigns from secure (admin only) api end point:</p>
             <Link to={`${path}/add`} className="btn btn-sm btn-success mb-2">Add Campaign</Link>
             <table className="table table-responsive table-striped">
@@ -55,6 +65,7 @@ function List({ match }) {
                         <th>Draw</th>
                         <th>Created</th>
                         <th>Updated</th>
+                        <th>Download Coupons</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -83,6 +94,7 @@ function List({ match }) {
                                         : <span>Delete</span>
                                     }
                                 </button>
+                                <button className="btn btn-sm btn-success mr-1" onClick={ () => downloadCoupons(campaign.id)}>Download Coupons</button>
                             </td>
                         </tr>
                     )}
