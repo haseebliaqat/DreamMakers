@@ -28,27 +28,7 @@
             alertService.error("Internal Server Error");
          });
       }
-
-      const downloadPdfDocument = () => {
-         const input = document.getElementById('divToDownload');
-         html2canvas(input, {
-            //allowTaint: true,
-            //foreignObjectRendering: true,
       
-            // your configurations
-            //scale: 2
-      }).then((canvas) => {
-               canvas.getContext("webgl", {preserveDrawingBuffer: true});
-               //const imgData = canvas.toDataURL('image/png');
-               const imgData = canvas.toDataURL();
-               setImgSrc(imgData);
-               const pdf = new jsPDF();
-               pdf.addImage(imgData, 'JPEG', 0, 0);
-               let downloadFileName = `coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
-               pdf.save(`${downloadFileName}.pdf`);
-            })
-      }
-
       function convertImgToBase64(url, eleId, outputFormat){
          var canvas = document.createElement('CANVAS');
          var ctx = canvas.getContext('2d');
@@ -68,40 +48,58 @@
          img.src = url;
       }
 
-      // const onImgLoad = (e) => {
-      //    //getDataUrl(e.target);
-      //    //e.target.src = getBase64Image(e.target.src);
-      //    let img = new Image();//e.target;
-      //    img.crossOrigin = 'Anonymous';
-      //    var canvas = document.createElement("canvas");
-      //    canvas.foreignObjectRendering = true;
-      //    canvas.allowTaint = true;
-
-      //    canvas.width = img.width;
-      //    canvas.height = img.height;
-
-      //    // Copy the image contents to the canvas
-      //    var ctx = canvas.getContext("2d");
-      //    ctx.drawImage(img, 0, 0);
-
-      //    // Get the data-URL formatted image
-      //    // Firefox supports PNG and JPEG. You could check img.src to
-      //    // guess the original format, but be aware the using "image/jpg"
-      //    // will re-encode the image.
-      //    var dataURL = canvas.toDataURL("image/png");
-      //    e.target.src = 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAIDSURBVO3BQa7kMAxDwUch978yZ62NAcNO40fDKiIiIiIiIiIiIiIiIiIihhLnzG+JM2ZNdOa3xIEiRililCJGebhP3GXWzB5xRtxlLipilCJGKWKUh/eZPWKP6MyaWRN7zB7xoiJGKWKUIkZ5mEd0Zk0MUsQoRYxSxCgP32c60YnOdKYTH1bEKEWMUsQoD+8T7xKd2SPOiD+kiFGKGKWIUR7uM79lOtGZTnSmE2vmDytilCJGKSIiIiICcc50ojOd6EwnOtOJu0wn9phOrJlOXFTEKEWMUsQo4pw5I/aYPaIznejMmlgznVgznThQxChFjFLEKA/nxJrpxB6zJu4Sa+aMeVERoxQxShGjiPeZM6Iza6Ize8Sa6cQe04mLihiliFGKGOXhPtOJM+ZdYs10Ys10ohMvKmKUIkYpYhTxfaYT/7EiRililCJGEefMb4k104k104k9phNrphMXFTFKEaMUMcrDfeIu8y6xZu4SLypilCJGKWKUh/eZPWKP6cQe04k10ZnOdKIza+JAEaMUMUoRozx8n+jMHtGZTqyJNbMmLipilCJGKWKUh+8za6Iza6Iza6IznVgznThQxChFjFLEKOKc6cRdphN7zBnRmU6smU68qIhRihiliFEe7jO/Zc6INdOJzpwxnThQxChFjFJERERERERERERERERERER8wD/s6E64JkA9ggAAAABJRU5ErkJggg=='//dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-         
-      //    console.log(img.src);
-      //    e.preventDefault(); 
-         
-      //    //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-      // }
+      const downloadPdfDocument =()  =>{
+         var data = document.getElementById("divToDownload");
+         //$("pdfOpenHide").attr("hidden", true);
+         // To disable the scroll
+         data.style.overflow = "inherit";
+         data.style.maxHeight = "inherit";
+   
+          html2canvas(data, {
+            scrollY: -window.scrollY,
+            scale: 1
+         }).then(
+            canvas => {
+               const contentDataURL = canvas.toDataURL("image/png", 1.0);
+               // enabling the scroll
+               data.style.overflow = "scroll";
+               data.style.maxHeight = "150px";
+   
+               let pdf = new jsPDF("l", "mm", "a4"); // A4 size page of PDF
+   
+               let imgWidth = 300;
+               let pageHeight = pdf.internal.pageSize.height;
+               let imgHeight = (canvas.height * imgWidth) / canvas.width;
+               let heightLeft = imgHeight;
+               let position = 0;
+   
+               pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+               heightLeft -= pageHeight;
+   
+               while (heightLeft >= 0) {
+                  position = heightLeft - imgHeight;
+                  pdf.addPage();
+                  pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+                  heightLeft -= pageHeight;
+               }
+               let downloadFileName = `coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
+               pdf.save(`${downloadFileName}.pdf`);
+               window.open(
+                  pdf.output("bloburl", {
+                     filename: downloadFileName + '.pdf'
+                  }),
+                  "_blank"
+               );
+               
+            }
+         );
+      }
 
       return (
          <>
             <img src={imgSrc}></img>
             <button onClick={downloadPdfDocument}>Download Pdf</button>
-            <div id="divToDownload">
+            <div id="divToDownload" >
                {coupon_detail.map((c) => {
                   return (
                      <div className="coupons-card5">
