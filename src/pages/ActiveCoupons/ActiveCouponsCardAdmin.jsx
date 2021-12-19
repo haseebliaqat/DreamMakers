@@ -45,13 +45,11 @@
                const pdf = new jsPDF();
                pdf.addImage(imgData, 'JPEG', 0, 0);
                let downloadFileName = `coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
-               //pdf.save(`${downloadFileName}.pdf`);
+               pdf.save(`${downloadFileName}.pdf`);
             })
       }
 
-      function convertImgToBase64(url, evt, outputFormat){
-         //url = `https://cors-anywhere.herokuapp.com/${url}`;
-         //url = 'https://dreammakersbucket.s3.ap-southeast-1.amazonaws.com/pictures/908313912216398352895345829691480.png';
+      function convertImgToBase64(url, eleId, outputFormat){
          var canvas = document.createElement('CANVAS');
          var ctx = canvas.getContext('2d');
          var img = new Image;
@@ -61,14 +59,13 @@
             canvas.width = img.width;
             ctx.drawImage(img,0,0);
             var dataURL = canvas.toDataURL(outputFormat || 'image/png');
-            //callback.call(this, dataURL);
             console.log(dataURL);
-            evt.target.src = dataURL;
+            console.log(document.getElementById(eleId));
+            document.getElementById(eleId).src=dataURL;
             // Clean up
             canvas = null; 
          };
          img.src = url;
-         console.log(img);
       }
 
       // const onImgLoad = (e) => {
@@ -119,7 +116,7 @@
                         {!props.isWinners ?
                            <div className="Qr5">
                               {
-                                 c.qrCodes[1].type == 'admin' ? <img  src={convertImgToBase64(c.qrCodes[1].url)} alt="QR" style={{ width: '51%', backgroundColor: "white" }} /> : <div></div>
+                                 c.qrCodes[1].type == 'admin' ? <img id={c.qrCodes[1].id} src={convertImgToBase64(c.qrCodes[1].url, c.qrCodes[1].id)} alt="QR" style={{ width: '51%', backgroundColor: "white" }} /> : <div></div>
                               }
 
                            </div>
