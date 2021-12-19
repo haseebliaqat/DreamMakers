@@ -9,7 +9,6 @@
 
    export const ActiveCouponsCardAdmin = (props) => {
       const [coupon_detail, setCouponsDetail] = useState([]);
-      const [imgSrc, setImgSrc] = useState('');
       useEffect(() => {
          GetCoupons();
       }, [props.campaignId]);
@@ -95,7 +94,6 @@
 
       return (
          <>
-            <img src={imgSrc}></img>
             <button onClick={downloadPdfDocument}>Download Pdf</button>
             <div id="divToDownload" style={{width:'80%', position:'fixed',bottom:'100%',overflow:'scroll', maxHeight:'150px'}}>
                {coupon_detail.map((c) => {
