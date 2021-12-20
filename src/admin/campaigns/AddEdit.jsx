@@ -133,6 +133,7 @@ function AddEdit({ history, match }) {
         drawDate: '',
         winningPrizeTitle:'',
         embedHtmlYouTube:'',
+        adminVideoUrl:'',
         prizePartner:'',
         cashAlternative: false,
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -336,7 +337,7 @@ function AddEdit({ history, match }) {
 
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
-                             'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
+                             'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','adminVideoUrl',
                              'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube','prizePartner','cashAlternative'];
 
                             fields.forEach(field =>{
@@ -579,7 +580,12 @@ function AddEdit({ history, match }) {
 
                         <div className="form-row">
                             <div className="form-group col-12">
-                                <label>Youtube Live Video Embed URL</label>
+                                <label>Video URL (Admin)</label>
+                                <Field name="adminVideoUrl" type="text" className={'form-control' + (errors.adminVideoUrl && touched.adminVideoUrl ? ' is-invalid' : '')} />
+                                <ErrorMessage name="adminVideoUrl" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-12">
+                                <label>Youtube Live Video Embed URL(For Client)</label>
                                 <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
                                 <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
                             </div>
