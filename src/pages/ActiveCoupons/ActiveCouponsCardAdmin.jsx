@@ -23,6 +23,11 @@
          alertService.clear();
          accountService.ActiveCoupons(obj1).then((resp) => {
             setCouponsDetail(resp.rows)
+            setTimeout(()=>{
+               let filename = `coupons-${resp.rows[0].campaignId.toString().padStart(5, '0')}`
+               downloadPdfDocument(filename);
+            },5000);
+
          }).catch(error => {
             alertService.error("Internal Server Error");
          });
@@ -45,7 +50,7 @@
          img.src = url;
       }
 
-      const downloadPdfDocument =()  =>{
+      const downloadPdfDocument =(downloadFileName)  =>{
          var data = document.getElementById("divToDownload");
          //$("pdfOpenHide").attr("hidden", true);
          // To disable the scroll
@@ -79,7 +84,8 @@
                   pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
                   heightLeft -= pageHeight;
                }
-               let downloadFileName = `coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
+               //let downloadFileName = `coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
+               //let downloadFileName = 'ss'//`coupons-${coupon_detail[0].campaignId.toString().padStart(5, '0')}`;
                pdf.save(`${downloadFileName}.pdf`);
                window.open(
                   pdf.output("bloburl", {
@@ -94,7 +100,7 @@
 
       return (
          <>
-            <button onClick={downloadPdfDocument}>Download Pdf</button>
+            <button onClick={downloadPdfDocument} style={{display:'none'}}>Download Pdf</button>
             <div id="divToDownload" style={{width:'80%', position:'fixed',bottom:'100%',overflow:'scroll', maxHeight:'150px'}}>
                {coupon_detail.map((c) => {
                   return (

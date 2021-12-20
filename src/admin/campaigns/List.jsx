@@ -94,7 +94,7 @@ function List({ match }) {
                                         : <span>Delete</span>
                                     }
                                 </button>
-                                <button className="btn btn-sm btn-success mr-1" onClick={ () => downloadCoupons(campaign.id)}>Download Coupons</button>
+                                <button className="btn btn-sm btn-success ml-1" onClick={ () => downloadCoupons(campaign.id)}>Download Coupons</button>
                             </td>
                         </tr>
                     )}
