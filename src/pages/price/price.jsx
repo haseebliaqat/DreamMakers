@@ -22,9 +22,9 @@ import { useHistory } from "react-router-dom";
 
 // Editor section start ///
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw,convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import {stateToHTML} from 'draft-js-export-html'; 
+import { stateToHTML } from 'draft-js-export-html';
 import DOMPurify from 'dompurify';
 import draftToHtml from "draftjs-to-html";
 // Editor section end ///
@@ -56,8 +56,8 @@ function Price() {
 
     }
     const createMarkup = (html) => {
-        return  {
-          __html: DOMPurify.sanitize(html)
+        return {
+            __html: DOMPurify.sanitize(html)
         }
     }
 
@@ -65,8 +65,8 @@ function Price() {
     const jsonToHtml = (json) => {
         //let tempHtml = stateToHTML(convertFromRaw(json));
         let body = draftToHtml(json)
-        return  {
-          __html: body
+        return {
+            __html: body
         }
     }
     // Editor section end ///
@@ -75,10 +75,10 @@ function Price() {
     const history = useHistory();
     useEffect(() => {
         window.scrollTo(0, 0)
-        if (!!localStorage.SeletedCampaign) {            
+        if (!!localStorage.SeletedCampaign) {
             setPrizeDetail(JSON.parse(localStorage.SeletedCampaign));
-         }
-      }, []);
+        }
+    }, []);
     const settings = {
         dots: true,
         infinite: true,
@@ -86,9 +86,9 @@ function Price() {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    function saveDataToLocalStorage(PrizeDetail){
+    function saveDataToLocalStorage(PrizeDetail) {
         console.log(JSON.stringify(PrizeDetail));
-        localStorage.setItem("SeletedCampaign",JSON.stringify(PrizeDetail));
+        localStorage.setItem("SeletedCampaign", JSON.stringify(PrizeDetail));
         const { from } = { from: { pathname: "/dream-cart" } };
         history.push(from);
     }
@@ -98,10 +98,10 @@ function Price() {
                 <div className="priceSec">
                     <div className="priceCont">
                         <p>Price</p>
-                        <h3>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h3>
+                        <h3>AED {!!PrizeDetail ? PrizeDetail.couponPrice : ""}</h3>
                     </div>
                     <div className="priceSecbtn">
-                    <button  className="btn btn-default" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
+                        <button className="btn btn-default" onClick={(e) => saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
                         {/* <Link to={{ pathname: `/dream-cart` }}>
                             <button className="btn btn-default">Buy Now</button>
                         </Link> */}
@@ -116,40 +116,40 @@ function Price() {
                         <div className="col-md-8">
                             <div className="price-slider">
                                 <div className="progressMain">
-                                    <p>{!!PrizeDetail?PrizeDetail.soldCoupons:""} ENTRIES SOLD OUT OF {!!PrizeDetail?PrizeDetail.totalCoupons:""}</p>
+                                    <p>{!!PrizeDetail ? PrizeDetail.soldCoupons : ""} ENTRIES SOLD OUT OF {!!PrizeDetail ? PrizeDetail.totalCoupons : ""}</p>
                                     <div className="progress customProgress">
-                                        <div className="progress-bar" role="progressbar" style={{ width: (!!PrizeDetail?PrizeDetail.soldCoupons:"" / !!PrizeDetail?PrizeDetail.totalCoupons:"") * 100 + "%" }}></div>
+                                        <div className="progress-bar" role="progressbar" style={{ width: (!!PrizeDetail ? PrizeDetail.soldCoupons : "" / !!PrizeDetail ? PrizeDetail.totalCoupons : "") * 100 + "%" }}></div>
                                     </div>
                                 </div>
                                 {/* Slider */}
                                 <div>
                                     <Slider className="priceSlider" {...settings}>
-                                        {!!PrizeDetail?
-                                            PrizeDetail.pictures.map((c,index) => {
+                                        {!!PrizeDetail ?
+                                            PrizeDetail.pictures.map((c, index) => {
                                                 console.log(c);
-                                                    return (
-                                                        c.category == 'campaign-image-gallery' ?
+                                                return (
+                                                    c.category == 'campaign-image-gallery' ?
                                                         <div>
                                                             <div>
-                                                            <div key={c.index}>
-                                                                <img className="img-fluid" src={c.url} />
-                                                            </div>
-                                                            <div className="h-prev">
-                                                                <img src={angleLeft} />
-                                                            </div>
-                                                            <div className="h-next">
-                                                                <img src={angleRight} />
-                                                            </div>
+                                                                <div key={c.index}>
+                                                                    <img className="img-fluid" src={c.url} />
+                                                                </div>
+                                                                <div className="h-prev">
+                                                                    <img src={angleLeft} />
+                                                                </div>
+                                                                <div className="h-next">
+                                                                    <img src={angleRight} />
+                                                                </div>
                                                                 <span className="m-block">Swipe for more</span>
                                                             </div>
-                                                        </div>:null
-                                                    )
+                                                        </div> : null
+                                                )
                                             })
                                             :
                                             null
                                         }
                                     </Slider>
-                                    
+
                                 </div>
 
                                 {/* Slider */}
@@ -157,19 +157,22 @@ function Price() {
                         </div>
                         <div className="col-md-4">
                             <div className="priceCont">
-                                <h1>{!!PrizeDetail?PrizeDetail.prizeTitleDesktop:""}</h1>
+                                <h1>{!!PrizeDetail ? PrizeDetail.prizeTitleDesktop : ""}</h1>
                                 <div className="misc-box">
                                     <span>
                                         <img src={couponIcon} alt="" />
-                                        <small>{!!PrizeDetail?PrizeDetail.perEntryCoupons:""} tickets<br />per entry</small>
+                                        <small>{!!PrizeDetail ? PrizeDetail.perEntryCoupons : ""} tickets<br />per entry</small>
                                     </span>
-                                    <span>
-                                        <img src={cashAlt} alt="" />
-                                        <small>cash alternative<br />available</small>
-                                    </span>
+                                    {
+                                        PrizeDetail?.cashAlternative ? <span>
+                                            <img src={cashAlt} alt="" />
+                                            <small>cash alternative<br />available</small>
+                                        </span> : null
+                                    }
+
                                     <span>
                                         <img src={calendar} alt="" />
-                                        <small>{moment(!!PrizeDetail?PrizeDetail.startDate:"").format("MMM DD, HH:MM A")}</small>
+                                        <small>{moment(!!PrizeDetail ? PrizeDetail.startDate : "").format("MMM DD, HH:MM A")}</small>
                                     </span>
                                 </div>
                                 {
@@ -178,8 +181,8 @@ function Price() {
                                 <div className="buySec">
 
 
-                                    <h1>AED {!!PrizeDetail?PrizeDetail.couponPrice:""}</h1>
-                                    <button  className="btn btn-default buyBtn" onClick={(e) =>saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
+                                    <h1>AED {!!PrizeDetail ? PrizeDetail.couponPrice : ""}</h1>
+                                    <button className="btn btn-default buyBtn" onClick={(e) => saveDataToLocalStorage(PrizeDetail)}>Buy now</button>
                                     {/* <Link to={{ pathname: `/dream-cart` }}>
                                         <button className="btn btn-default buyBtn">Buy Now</button>
                                     </Link> */}
@@ -188,20 +191,20 @@ function Price() {
                             </div>
                         </div>
                         <div className="priceDescription">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <h1>Description</h1>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h1>Description</h1>
 
-                                {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
-                                {
-                                    PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
-                                }
-                                
+                                    {/* <p>{!!PrizeDetail?PrizeDetail.shortDescriptionDesktop:""}</p> */}
+                                    {
+                                        PrizeDetail?.description ? <div className="preview" dangerouslySetInnerHTML={jsonToHtml(JSON.parse(PrizeDetail?.description))}></div> : null
+                                    }
 
 
+
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                     {/* Description */}
                     {/* <div className="priceSlide">
@@ -301,10 +304,10 @@ function Price() {
                             <div className="price-slider">
                                 <div className="sliderProgress">
                                     <div className="progressMain">
-                                        <h2>{!!PrizeDetail?PrizeDetail.prizeTitleMobile:""}</h2>
-                                        <p>{!!PrizeDetail?PrizeDetail.soldCoupons:""} ENTRIES SOLD OUT OF {!!PrizeDetail?PrizeDetail.totalCoupons:""}</p>
+                                        <h2>{!!PrizeDetail ? PrizeDetail.prizeTitleMobile : ""}</h2>
+                                        <p>{!!PrizeDetail ? PrizeDetail.soldCoupons : ""} ENTRIES SOLD OUT OF {!!PrizeDetail ? PrizeDetail.totalCoupons : ""}</p>
                                         <div className="progress customProgress">
-                                            <div className="progress-bar" role="progressbar" style={{ width: (!!PrizeDetail?PrizeDetail.soldCoupons:"" / !!PrizeDetail?PrizeDetail.totalCoupons:"") * 100 + "%" }}></div>
+                                            <div className="progress-bar" role="progressbar" style={{ width: (!!PrizeDetail ? PrizeDetail.soldCoupons : "" / !!PrizeDetail ? PrizeDetail.totalCoupons : "") * 100 + "%" }}></div>
                                         </div>
                                     </div>
                                 </div>
@@ -316,10 +319,10 @@ function Price() {
                         <div className="col-md-4">
                             <div className="priceCont">
                                 <div className="misc-box">
-                                
+
                                     <span>
                                         <img src={couponIcon} alt="" />
-                                        <small>{!!PrizeDetail?PrizeDetail.perEntryCoupons:""} tickets<br />per entry</small>
+                                        <small>{!!PrizeDetail ? PrizeDetail.perEntryCoupons : ""} tickets<br />per entry</small>
                                     </span>
                                     <span>
                                         <img src={cashAlt} alt="" />
@@ -327,11 +330,11 @@ function Price() {
                                     </span>
                                     <span>
                                         <img src={calendar} alt="" />
-                                        <small>{moment(!!PrizeDetail?PrizeDetail.startDate:"").format("MMM DD, HH:MM A")}</small>
+                                        <small>{moment(!!PrizeDetail ? PrizeDetail.startDate : "").format("MMM DD, HH:MM A")}</small>
                                     </span>
                                 </div>
-                                <h1>{!!PrizeDetail?PrizeDetail.prizeTitleMobile:""}</h1>
-                                <p>{!!PrizeDetail?PrizeDetail.shortDescriptionMobile:""}</p>
+                                <h1>{!!PrizeDetail ? PrizeDetail.prizeTitleMobile : ""}</h1>
+                                <p>{!!PrizeDetail ? PrizeDetail.shortDescriptionMobile : ""}</p>
                             </div>
                         </div>
                     </div>

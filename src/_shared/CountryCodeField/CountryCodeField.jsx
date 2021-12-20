@@ -3,7 +3,7 @@ import './CountryCodeField.less';
 import { COUNTRY_CODES } from './CountryCodes';
 import countries from '@/_assets/js/countries.json';
 
-export const CountryCodeField = ({ label, callback }) => {
+export const CountryCodeField = ({ label, callback, value }) => {
 
    return (
       <div className="country-input__container">
@@ -19,7 +19,7 @@ export const CountryCodeField = ({ label, callback }) => {
          </div>
          <div className="country-input__number">
             <div className="number-label-content">
-               <input className="number-input" type="number" onChange={(e)=> callback(e.target.value, 'number')}/>
+               <input className="number-input" type="number" onChange={(e)=> callback(e.target.value, 'number') }  value={value} />
                <label className="number-label">Phone Number</label>
             </div>
          </div>

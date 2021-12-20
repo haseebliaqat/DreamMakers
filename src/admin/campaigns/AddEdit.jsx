@@ -90,8 +90,6 @@ function AddEdit({ history, match }) {
     ]);
     const [campaignId, setCampaignId] = useState(0);
     const [campaignObj, setCampaignObj] = useState(null);
-    const [bulkPictures, setBulkPictures] = useState([]);
-    const [newPictures, setNewPictures] = useState([]);
     const [previousPictures, setPreviousPictures] = useState([]);
 
     const [, updateState] = useState();
@@ -135,6 +133,9 @@ function AddEdit({ history, match }) {
         drawDate: '',
         winningPrizeTitle:'',
         embedHtmlYouTube:'',
+        adminVideoUrl:'',
+        prizePartner:'',
+        cashAlternative: false,
         createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
         updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
     };
@@ -213,7 +214,7 @@ function AddEdit({ history, match }) {
             alertService.success('Campaign added successfully', { keepAfterRouteChange: true });
             setCampaignId(resp.id);
             fields.id = resp.id;
-            createBulkPictures(fields);
+            updateOrCreateBulkPictures(fields);
 
             history.push('.');
         }).catch(error => {
@@ -228,7 +229,7 @@ function AddEdit({ history, match }) {
                 alertService.success('Update successful', { keepAfterRouteChange: true });
                 setCampaignId(id);
                 fields.id = id;
-                createBulkPictures(bulkPictures);
+                updateOrCreateBulkPictures(fields);
 
                 history.push('.');
             })
@@ -240,9 +241,8 @@ function AddEdit({ history, match }) {
 
     
 
-    function createBulkPictures(fields) {
-        setBulkPictures(bulkPictures);
-        picturesService.createBulk(bulkPictures)
+    function updateOrCreateBulkPictures(fields) {
+        picturesService.createBulk(previousPictures)
             .then(() => {
                 alertService.success('Pictures added successfully', { keepAfterRouteChange: true });
                 history.push('.');
@@ -252,7 +252,7 @@ function AddEdit({ history, match }) {
                 alertService.error(error);
             });
     }
-    
+
     // For Images
     const configObjS3 = {
         bucketName: config.bucketName,
@@ -264,7 +264,6 @@ function AddEdit({ history, match }) {
 
 
     let uploadPicture = (e,name, category, type, platform) => {
-        console.log(bulkPictures);
         type = type ? type: 'full-size';
         category = category ? category : 'campaign-image';
         platform = platform ? platform : 'desktop';
@@ -286,12 +285,19 @@ function AddEdit({ history, match }) {
                 format: fileFormat,
                 description: `${name}-${type}-${category}-${platform}-${status}-${fileFormat}-${campaignObj.id.toString().padStart(5, '0')}`,
                 campaignId: campaignObj.id,
-                createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
-                updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
+                createdDate: moment().format("YYYY-MM-DD HH:mm:ss")
             }
-            let _arr = bulkPictures;
-            _arr.push(imgObj);
-            setBulkPictures(_arr);
+
+            
+            if(!previousPictures.some(pic => pic.name === name)){
+                previousPictures.push(imgObj);
+            } else {
+                let idx = previousPictures.findIndex(item => item.name === name);
+                imgObj.id = previousPictures[idx].id;
+                imgObj.updated = moment().format("YYYY-MM-DD HH:mm:ss");
+                previousPictures[idx] = imgObj;
+            }
+            setPreviousPictures(previousPictures);
             campaignObj[name] = data.location;
             setCampaignObj(campaignObj);
             forceUpdate();
@@ -326,14 +332,13 @@ function AddEdit({ history, match }) {
                             if(campaign?.description)
                             setEditorStateDescription(EditorState.createWithContent(convertFromRaw(JSON.parse(campaign?.description))));
 
-
-                            //setBulkPictures(campaign.pictures);
+                            setPreviousPictures(campaign.pictures);
 
 
                             const fields = ['name', 'title', 'shortTitleDescriptionDesktop', 'shortTitleDescriptionMobile', 
                             'shortDescriptionDesktop', 'shortDescriptionMobile', 'prizeTitleDesktop', 'prizeTitleMobile', 'whereToShow',
-                             'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons',
-                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube'];
+                             'sort', 'active', 'charityPartnerId', 'code', 'type', 'status', 'totalCoupons', 'soldCoupons','adminVideoUrl',
+                             'perEntryCoupons','couponPrice','startDate','drawDate', 'winningPrizeTitle', 'embedHtmlYouTube','prizePartner','cashAlternative'];
 
                             fields.forEach(field =>{
                                 if(field == 'drawDate' || field == 'startDate'){
@@ -575,9 +580,24 @@ function AddEdit({ history, match }) {
 
                         <div className="form-row">
                             <div className="form-group col-12">
-                                <label>Youtube Live Video Embed URL</label>
+                                <label>Video URL (Admin)</label>
+                                <Field name="adminVideoUrl" type="text" className={'form-control' + (errors.adminVideoUrl && touched.adminVideoUrl ? ' is-invalid' : '')} />
+                                <ErrorMessage name="adminVideoUrl" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-12">
+                                <label>Youtube Live Video Embed URL(For Client)</label>
                                 <Field name="embedHtmlYouTube" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.embedHtmlYouTube && touched.embedHtmlYouTube ? ' is-invalid' : '')} />
                                 <ErrorMessage name="embedHtmlYouTube" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-10">
+                                <label>Prize Partner</label>
+                                <Field name="prizePartner" rows="4" cols="40"  as="textarea" className={'form-control' + (errors.prizePartner && touched.prizePartner ? ' is-invalid' : '')} />
+                                <ErrorMessage name="prizePartner" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group col-2">
+                                <label>Cash Alternative</label>
+                                <Field type="checkbox" name="cashAlternative"  className="form-control ml-2 radioButttonFont font-26" style={{WebkitAppearance:"radio"}}/>
+                                <ErrorMessage name="cashAlternative" component="div" className="invalid-feedback" />
                             </div>
                         </div>
                         

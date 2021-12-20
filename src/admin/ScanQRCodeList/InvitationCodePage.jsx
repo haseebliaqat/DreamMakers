@@ -29,6 +29,13 @@ import { useHistory } from "react-router-dom";
     const OPTCodeChange=(value)=>{
         console.log(value)
         setCodeValue(value)
+        
+        let temp = '';
+        for(let i=0; i< value.length; i++) temp+='*'
+        setCodeValue(temp);
+
+
+
     }
     return (
         <div>

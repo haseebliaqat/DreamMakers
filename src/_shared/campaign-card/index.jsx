@@ -11,6 +11,8 @@ import { sharedService } from '@/_services/shared.service';
 import { constantSrv } from '@/_services/constant.service';
 import _ from 'lodash';
 import { useHistory } from "react-router-dom";
+import { BrowserView, MobileView } from 'react-device-detect';
+
 export function CampaignCard({ props, videoSrc, item, keyValue }) {
 
     // const [animateCounter, setAnimateCounter] = useState(true);
@@ -21,16 +23,16 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
     const [isVideo, setIsVideo] = useState(false);
     const [WinningDate, setWinningDate] = useState(false);
     const history = useHistory();
-    function saveDataToLocalStorage(Campaign){
+    function saveDataToLocalStorage(Campaign) {
         console.log(JSON.stringify(Campaign));
-        localStorage.setItem("SeletedCampaign",JSON.stringify(Campaign));
+        localStorage.setItem("SeletedCampaign", JSON.stringify(Campaign));
         const { from } = { from: { pathname: "/dream-cart" } };
         history.push(from);
     }
-    function saveDataToLocalStorageByPrizeDetail(Campaign,evt){
+    function saveDataToLocalStorageByPrizeDetail(Campaign, evt) {
         evt.preventDefault();
         console.log(JSON.stringify(Campaign));
-        localStorage.setItem("SeletedCampaign",JSON.stringify(Campaign));
+        localStorage.setItem("SeletedCampaign", JSON.stringify(Campaign));
         const { from } = { from: { pathname: "/prize-details" } };
         history.push(from);
     }
@@ -117,112 +119,228 @@ export function CampaignCard({ props, videoSrc, item, keyValue }) {
     }
 
     return (
-        <div className="card" id="card-4" key={keyValue}>
 
-            <div className="card-head" >
-                {/* onClick={() => startCount("card-4", false)} */}
+        <>
+            <BrowserView>
+                <div className="card" id="card-4" key={keyValue}>
 
-                <p class="CardHeadingWin1" >win</p>
+                    <div className="card-head" >
+                        {/* onClick={() => startCount("card-4", false)} */}
 
-                <CounterMobile soldCount={!!item?item.soldCoupons:0} totalCount={!!item?item.totalCoupons:0} keyValue={!!item?item.soldCoupons:0} />
-                
+                        <p class="CardHeadingWin1" >win</p>
 
-            </div>
+                        <CounterMobile soldCount={!!item ? item.soldCoupons : 0} totalCount={!!item ? item.totalCoupons : 0} keyValue={!!item ? item.soldCoupons : 0} />
 
-            {/* <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
-            {/* </div><div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
-            <div className="card-img" style={{ backgroundImage: `url(${item?.prizeDesktopImage})`}}>
-                {isVideo ?
-                    <div className="feature-video">
 
-                        {!isPlaying1 ?
-                            <button className="testimonialVideoPlayBtn custom-video-play-btn" onClick={() => playVideo(`feature-mvideo-${item.id}`)} data-play-video={`#feature-mvideo-${item.id}`}>
-                                <img src={playIcon} alt="video play button icon" className="play" />
-                            </button>
+                    </div>
+
+                    {/* <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+                    {/* </div><div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+                    <div className="card-img" style={{ backgroundImage: `url(${item?.prizeDesktopImage})` }}>
+                        {isVideo ?
+                            <div className="feature-video">
+
+                                {!isPlaying1 ?
+                                    <button className="testimonialVideoPlayBtn custom-video-play-btn" onClick={() => playVideo(`feature-mvideo-${item.id}`)} data-play-video={`#feature-mvideo-${item.id}`}>
+                                        <img src={playIcon} alt="video play button icon" className="play" />
+                                    </button>
+                                    :
+                                    null
+                                }
+
+                                <video id={`feature-mvideo-${item.id}`} className="testimony-vid-tag mbl-video">
+                                    <source src={renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'video')} type="video/mp4" />
+                                </video>
+
+                            </div>
                             :
                             null
                         }
 
-                        <video id={`feature-mvideo-${item.id}`} className="testimony-vid-tag mbl-video">
-                            <source src={renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'video')} type="video/mp4" />
-                        </video>
+                        {!isPlaying1 ?
+
+                            <>
+
+                                <div className="campaigns-card-overlay"></div>
+
+                                <div className="card-cnt">
+
+                                    <h1>{item?.title}</h1>
+
+                                    <p>{item?.shortTitleDescriptionDesktop}</p>
+
+                                    <div className="btnStyle3" onClick={(e) => saveDataToLocalStorageByPrizeDetail(item, e)}>
+                                        {/* to={{ pathname: `/prize-details` }} */}
+                                        <Link >
+                                            Prize Details
+                                        </Link>
+
+                                        <a href="#">Product Details</a>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="btl-img">
+
+                                    <img src={item ? item.productDesktopImage : bottle} alt="" />
+
+                                </div>
+
+                                <div className="card-icon" onClick={shareCampaign}>
+                                    {!isLoader ?
+                                        <img src={shareIcon} />
+                                        :
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                    }
+                                </div>
+
+                            </>
+
+                            :
+
+                            null
+                        }
 
                     </div>
-                    :
-                    null
-                }
 
-                {!isPlaying1 ?
+                    <div className="card-footer">
 
-                    <>
+                        <div>
 
-                        <div className="campaigns-card-overlay"></div>
+                            <div>
 
-                        <div className="card-cnt">
+                                <p style={{ fontSize: "9px", marginLeft: "1px", fontWeight: "900" }}>{item?.shortTitleDescriptionDesktop}</p>
 
-                            <h1>{item?.title}</h1>
-
-                            <p>{item?.shortTitleDescriptionDesktop}</p>
-
-                            <div className="btnStyle3" onClick={(e) =>saveDataToLocalStorageByPrizeDetail(item,e)}>
-                            {/* to={{ pathname: `/prize-details` }} */}
-                                <Link >
-                                    Prize Details
-                                </Link>
-
-                                <a href="#">Product Details</a>
+                                <h3>AED {item?.couponPrice ? (item?.couponPrice).toFixed(2) : 0.00}</h3>
 
                             </div>
+                            <button className="Buynow" onClick={(e) => saveDataToLocalStorage(item)}>Buy now</button>
+                            {/* <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
+        <span  onClick={(e) => saveDataToLocalStorage(item)}>Buy now</span>
+        </Link> */}
 
                         </div>
 
-                        <div className="btl-img">
-
-                            <img src={item ? item.productImage : bottle} alt="" />
-
-                        </div>
-
-                        <div className="card-icon" onClick={shareCampaign}>
-                            {!isLoader ?
-                                <img src={shareIcon} />
-                                :
-                                <span className="spinner-border spinner-border-sm"></span>
-                            }
-                        </div>
-
-                    </>
-
-                    :
-
-                    null
-                }
-
-            </div>
-
-            <div className="card-footer">
-
-                <div>
-
-                    <div>
-
-                        <p style={{fontSize:"9px",marginLeft:"1px",fontWeight:"900"}}>{item?.shortTitleDescriptionDesktop}</p>
-
-                        <h3>AED {item?.couponPrice ? (item?.couponPrice).toFixed(2) : 0.00}</h3>
+                        <p className="small-text">Max draw date: {moment(item?.drawDate).format("MMMM DD, YYYY")} or when the campaign
+                            is sold out. Which ever is earlier.</p>
 
                     </div>
-                    <button className="Buynow" onClick={(e) =>saveDataToLocalStorage(item)}>Buy now</button>
-                    {/* <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
-                    <span  onClick={(e) => saveDataToLocalStorage(item)}>Buy now</span>
-                    </Link> */}
 
                 </div>
+            </BrowserView>
+            <MobileView>
+                <div className="card" id="card-4" key={keyValue}>
 
-                <p className="small-text">Max draw date: {moment(item?.drawDate).format("MMMM DD, YYYY")} or when the campaign
-                    is sold out. Which ever is earlier.</p>
+                    <div className="card-head" >
+                        {/* onClick={() => startCount("card-4", false)} */}
 
-            </div>
+                        <p class="CardHeadingWin1" >win</p>
 
-        </div>
+                        <CounterMobile soldCount={!!item ? item.soldCoupons : 0} totalCount={!!item ? item.totalCoupons : 0} keyValue={!!item ? item.soldCoupons : 0} />
+
+
+                    </div>
+
+                    {/* <div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+                    {/* </div><div className="card-img" style={isVideo ? { backgroundImage: 'none' } : { backgroundImage: `${renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'img')} !important` }}> */}
+                    <div className="card-img" style={{ backgroundImage: `url(${item?.prizeMobileImage})` }}>
+                        {isVideo ?
+                            <div className="feature-video">
+
+                                {!isPlaying1 ?
+                                    <button className="testimonialVideoPlayBtn custom-video-play-btn" onClick={() => playVideo(`feature-mvideo-${item.id}`)} data-play-video={`#feature-mvideo-${item.id}`}>
+                                        <img src={playIcon} alt="video play button icon" className="play" />
+                                    </button>
+                                    :
+                                    null
+                                }
+
+                                <video id={`feature-mvideo-${item.id}`} className="testimony-vid-tag mbl-video">
+                                    <source src={renderMedia(constantSrv.EMediaCategory.prizeDesktop, 'video')} type="video/mp4" />
+                                </video>
+
+                            </div>
+                            :
+                            null
+                        }
+
+                        {!isPlaying1 ?
+
+                            <>
+
+                                <div className="campaigns-card-overlay"></div>
+
+                                <div className="card-cnt">
+
+                                    <h1>{item?.title}</h1>
+
+                                    <p>{item?.shortTitleDescriptionDesktop}</p>
+
+                                    <div className="btnStyle3" onClick={(e) => saveDataToLocalStorageByPrizeDetail(item, e)}>
+                                        {/* to={{ pathname: `/prize-details` }} */}
+                                        <Link >
+                                            Prize Details
+                                        </Link>
+
+                                        <a href="#">Product Details</a>
+
+                                    </div>
+
+                                </div>
+
+                                <div className="btl-img">
+
+                                    <img src={ item ? item?.productMobileImage : bottle} alt="" />
+
+                                </div>
+
+                                <div className="card-icon" onClick={shareCampaign}>
+                                    {!isLoader ?
+                                        <img src={shareIcon} />
+                                        :
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                    }
+                                </div>
+
+                            </>
+
+                            :
+
+                            null
+                        }
+
+                    </div>
+
+                    <div className="card-footer">
+
+                        <div>
+
+                            <div>
+
+                                <p style={{ fontSize: "9px", marginLeft: "1px", fontWeight: "900" }}>{item?.shortTitleDescriptionDesktop}</p>
+
+                                <h3>AED {item?.couponPrice ? (item?.couponPrice).toFixed(2) : 0.00}</h3>
+
+                            </div>
+                            <button className="Buynow" onClick={(e) => saveDataToLocalStorage(item)}>Buy now</button>
+                            {/* <Link className="buy-now" to={{ pathname: `/dream-cart` }}>
+        <span  onClick={(e) => saveDataToLocalStorage(item)}>Buy now</span>
+        </Link> */}
+
+                        </div>
+
+                        <p className="small-text">Max draw date: {moment(item?.drawDate).format("MMMM DD, YYYY")} or when the campaign
+                            is sold out. Which ever is earlier.</p>
+
+                    </div>
+
+                </div>
+            </MobileView>
+        </>
+
+
+
     );
 }
 export const MemoizedCampaignCard = React.memo(CampaignCard);
