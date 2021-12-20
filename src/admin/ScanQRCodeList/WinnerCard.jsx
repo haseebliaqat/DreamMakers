@@ -11,6 +11,8 @@ import './WinnerCard.css';
 import qrCode from '../../_assets/images/qrCode.png';
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import * as moment from "moment";
+
 const divStyle = {
   height: '667px',
   backgroundImage: `url(${LiveDraw})`,
@@ -42,7 +44,7 @@ const divStyle2 = {
         }
         winnersService.scanWinner(obj).then((winner) => {
             console.log(winner);
-            setWinners(winner)
+            setWinners(winner.winner)
         });
 
 
@@ -59,7 +61,7 @@ const divStyle2 = {
             <img src={Congrates} style={{height:"144px"}}/>
             </div>
 
-            {Winners!=""?
+            { Winners ?
             <div className="Winner-Card">
             <div  style={{display:"flex", justifyContent:"center", width:"100%", padding:"0",marginTop:"-54px"}}>
                  <img src={winner_title} className="Winner-title" />
@@ -84,7 +86,7 @@ const divStyle2 = {
                                 <img src={Logo} alt="" />
                             </div>
                             <div className="EL-number2">{Winners.couponNumber}</div>
-                            <div className="EL-coupon2">coupons No.</div>
+                            <div className="EL-coupon2">Coupon No.</div>
                             <div className="price2">Prize</div>
                             <div className="Trip-country2" style={{fontSize:"14px",marginTop:"3px"}}>{Winners.winningPrizeTitle}</div>
                                         {/* {!CouponQRcode ?
@@ -95,11 +97,11 @@ const divStyle2 = {
                                             null
                                         } */}
                             <div className="Qr2">
-                                <img src={Winners.qrCodeUrl} alt="QR2" style={{ width: '83%',backgroundColor:"white" }} />
+                                <img src={Winners.qrCodeUrl} alt="QR2" style={{ width: '50%',backgroundColor:"white" }} />
                             </div>
                             <div className="dottedLine2"></div>
                             <div className="purchase-date2">Purchase On:</div>
-                            <div className="date2" >{Winners.couponPurchaseDate}</div>
+                            <div className="date2" >{moment(Winners.couponPurchaseDate).format("MMM DD, YYYY  HH:MM")}</div>
                             <div className="coupon-name2">Name:</div>
                             <div className="name2" style={{textTransform:"capitalize"}}>{Winners.fullName}</div>
                     </div>

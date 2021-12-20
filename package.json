@@ -80,6 +80,7 @@
         "react-to-pdf": "^0.0.14",
         "react-wavify": "^1.5.4",
         "reactjs-popup": "^2.0.5",
+        "react-device-detect": "^2.1.2",
         "reactstrap": "^9.0.1",
         "rsuite": "^5.2.4",
         "rxjs": "^6.3.3",
@@ -95,6 +96,7 @@
         "start-client": "webpack-dev-server",
         "build": "webpack --mode production",
         "upload": "webpack --mode production && winscp /command \"open ftp://root:Pakistan.1&@test.dreammakers.ae\" \"put C:\\Users\\Admin\\Documents\\haseeb\\DreamMakers\\dist\\* /\" \"exit\"",
+        
         "start-server": "node server.js",
         "eject": "react-scripts eject",
         "start": "concurrently \"yarn start-client\" \"yarn start-server\""

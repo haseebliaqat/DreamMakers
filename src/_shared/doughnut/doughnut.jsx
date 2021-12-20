@@ -48,7 +48,7 @@ const Footer = styled.p`
    }
 `;
 
-export const Doughnut = ({ color, value, title, footerTitle }) => {
+export const Doughnut = ({ color, value = 0, title, footerTitle }) => {
    return (
       <Container>
          <DoughnutContainer color={color}>

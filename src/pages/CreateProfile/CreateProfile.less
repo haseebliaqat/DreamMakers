@@ -2,7 +2,7 @@
    padding: 1rem 0;
 
    @media only screen and (max-width: 767px) {
-      padding: 0rem 0.1rem;
+      padding: 4rem 1.5rem 8rem 1.5rem;
    }
 }
 
@@ -15,7 +15,22 @@
    }
 }
 
-.typeheadfield{
+.doughnut-createprofile {
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   padding: 1rem 0;
+
+   box-shadow: 0px 8px 6px #00000029;
+   border-radius: 27px;
+   background-color: #fff;
+
+   @media screen and (max-width: 767px) {
+      display: none;
+   }
+}
+
+.typeheadfield {
    font-size: 1rem;
    display: block;
    width: 100%;
@@ -30,21 +45,4 @@
    margin-bottom: 30px;
    display: flex;
    align-items: center;
-}
-
-.res1 {
-   height:58px;
-   margin-bottom: 24px;
-   @media only screen and (max-width: 767px) {
-
-      margin-top: -12px;
-   }
-}
-
-.res2 {
-   height:58px;
-   margin-bottom: 21px;
-   @media only screen and (max-width: 767px) {
-
-   }
 }

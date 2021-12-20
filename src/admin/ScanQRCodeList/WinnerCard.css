@@ -38,7 +38,7 @@
     padding: 0.1rem 0.5rem;
     color: #104a8e;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     border-radius: 0.3rem;
 }
 
@@ -54,8 +54,8 @@
 .EL-coupon2 {
     position: absolute;
     right: 0;
-    top: 14.5%;
-    left: 41%;
+    top: 5%;
+    left: 29%;
     color: #fff;
     padding: 0.4rem 1rem;
     font-size: 0.625rem;
@@ -148,7 +148,7 @@
     position: absolute;
     right: 0;
     top: 71%;
-    left: 56%;
+    left: 45%;
     transform: translateY(-50%);
     color: #fff;
     padding: 0.4rem 1rem;
@@ -160,7 +160,7 @@
     position: absolute;
     top: 80%;
     right: 0;
-    left: 56%;
+    left: 45%;
     transform: translateY(-50%);
     color: #fff;
     padding: 0.4rem 1rem;
