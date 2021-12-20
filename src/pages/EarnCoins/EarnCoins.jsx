@@ -10,75 +10,82 @@ import {
    H1Heading,
    Paragraph,
 } from '../../_shared/HeadingsOrParagraphs/HeadingsOrParagraphs';
+import { Footer } from '@/_components/Footer/Footer';
 import { SubHeader } from '../../_components/SubHeader/SubHeader';
 import { accountService, alertService } from '@/_services';
+
 export const Earncoins = () => {
    const [avalaibel_dream_coin, setAvalaibleDreamCoins] = useState(null);
    const [avalaibel_balance, setAvalaibleBalance] = useState(null);
-   const GetAllWinners =()=> {
+   const GetAllWinners = () => {
       let obj1 = {
-         "limit": 5,
-         "offset": 0,
-         "order": [["id", "DESC"]],
-         "where":{"id":{"$gt":0},"accountId":localStorage.getItem("user_id") }
-     }
+         limit: 5,
+         offset: 0,
+         order: [['id', 'DESC']],
+         where: { id: { $gt: 0 }, accountId: localStorage.getItem('user_id') },
+      };
       alertService.clear();
-      accountService.AvailabelBalance(obj1).then((resp) => {
-         var myJson= resp.rows;
-         setAvalaibleBalance(myJson[0].currencyValue);
-         setAvalaibleDreamCoins(myJson[0].balance);
-      }).catch(error => {
-          alertService.error("Internal Server Error");
-      });
-    }
-    useEffect(() => {
+      accountService
+         .AvailabelBalance(obj1)
+         .then((resp) => {
+            var myJson = resp.rows;
+            setAvalaibleBalance(myJson[0].currencyValue);
+            setAvalaibleDreamCoins(myJson[0].balance);
+         })
+         .catch((error) => {
+            alertService.error('Internal Server Error');
+         });
+   };
+   useEffect(() => {
       GetAllWinners();
-
-  }, []);
+   }, []);
    return (
-      <div className="container-fluid">
-         <div className="earncoins-page">
-            <div className="row">
-               <div className="col-md-4 d-md-block d-none">
-                  <ProfileCard />
-               </div>
-               <div className="col-md-8 p-md-2 p-0">
-                  <div className="d-md-none d-block">
-                     <SubHeader title="Dream Coins" />
+      <>
+         <div className="earnscoins-container">
+            <div className="earncoins-page">
+               <div className="row">
+                  <div className="col-md-4 d-md-block d-none">
+                     <ProfileCard />
+                  </div>
+                  <div className="col-md-8 p-md-2 p-0">
+                     <div className="d-md-none d-block">
+                        <SubHeader title="Dream Coins" />
 
-                     <div className="text-center">
-                        <img
-                           src={DreamMobileIcon}
-                           alt="coin-mobile"
-                           className="img-fluid"
-                        />
+                        <div className="text-center">
+                           <img
+                              src={DreamMobileIcon}
+                              alt="coin-mobile"
+                              className="img-fluid"
+                           />
+                        </div>
                      </div>
-                  </div>
-                  <div className="earncoins-heading-container">
-                     <H1Heading>Dream Coins</H1Heading>
-                     <img src={DreamIcon} alt="coin" />
-                  </div>
-                  <div className="doughnut-container">
+                     <div className="earncoins-heading-container">
+                        <H1Heading>Dream Coins</H1Heading>
+                        <img src={DreamIcon} alt="coin" />
+                     </div>
+                     <div className="earns-container">
                         <Doughnut
                            title="AED"
-                           value={avalaibel_balance}
+                           value={avalaibel_balance || 0}
                            footerTitle="Your available balance"
-                           style={{fontSize:"20px"}}
+                           style={{ fontSize: '20px' }}
                         />
                         <Doughnut
                            color="#03DAC5"
-                           value={avalaibel_dream_coin}
+                           value={avalaibel_dream_coin || 0}
                            footerTitle="Your available dream coins"
-                           style={{fontSize:"20px"}}
+                           style={{ fontSize: '20px' }}
                         />
                      </div>
-                  <div className="text-center mt-3">
-                     <Paragraph fontWeight="500" textAlign="center">
-                        You can redeem {avalaibel_dream_coin} Dream Coins worth AED {avalaibel_balance} at
-                     </Paragraph>
-                     <Paragraph fontWeight="500" textAlign="center">
-                        your next purchase
-                     </Paragraph>
+                     <div className="text-center mt-3 px-md-0 px-2">
+                        <Paragraph fontWeight="500" textAlign="center">
+                           You can redeem {avalaibel_dream_coin} Dream Coins
+                           worth AED {avalaibel_balance} at
+                        </Paragraph>
+                        <Paragraph fontWeight="500" textAlign="center">
+                           your next purchase
+                        </Paragraph>
+                     </div>
                      <H1Heading
                         fontWeight="600"
                         marginTop="60"
@@ -86,38 +93,54 @@ export const Earncoins = () => {
                      >
                         Earn Dream Coins
                      </H1Heading>
-                  </div>
-                  <div className="copy-container mt-4">
-                     <input className="copy-input" value="mar12" />
-                     <button className="btn copy-btn">copy</button>
-                  </div>
-                  <div className="text-center mt-5">
-                     <Paragraph
-                        fontSize="1"
-                        fontWeight="500"
-                        textAlign="center"
-                     >
-                        You can use the above reference code to invite your
-                     </Paragraph>
-                     <Paragraph
-                        fontSize="1"
-                        fontWeight="500"
-                        textAlign="center"
-                     >
-                        friends and earn 100 Dream Coins once they make a
-                     </Paragraph>
-                     <Paragraph
-                        fontSize="1"
-                        fontWeight="500"
-                        textAlign="center"
-                     >
-                        purchase.
-                     </Paragraph>
+                     <div className="copy-container mt-4">
+                        <input className="copy-input" value="mar12" />
+                        <button className="btn copy-btn">copy</button>
+                     </div>
+                     <div className="text-center d-md-block d-none mt-5">
+                        <Paragraph
+                           fontSize="1"
+                           fontWeight="500"
+                           textAlign="center"
+                        >
+                           You can use the above reference code to invite your
+                        </Paragraph>
+                        <Paragraph
+                           fontSize="1"
+                           fontWeight="500"
+                           textAlign="center"
+                        >
+                           friends and earn 100 Dream Coins once they make a
+                        </Paragraph>
+                        <Paragraph
+                           fontSize="1"
+                           fontWeight="500"
+                           textAlign="center"
+                        >
+                           purchase.
+                        </Paragraph>
+                     </div>
+                     <div className="text-center px-md-0 px-2 d-md-none d-block my-5">
+                        <Paragraph
+                           fontSize="1"
+                           fontWeight="500"
+                           textAlign="center"
+                        >
+                           You can use the above reference code to invite your
+                           friends and earn 100 Dream Coins once they make a
+                           purchase.
+                        </Paragraph>
+                     </div>
                   </div>
                </div>
+               <div className="d-md-block d-none">
+                  <NewsLetter />
+               </div>
             </div>
-            <NewsLetter />
          </div>
-      </div>
+         <div className="d-md-block d-none">
+            <Footer />
+         </div>
+      </>
    );
 };

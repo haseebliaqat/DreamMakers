@@ -1,5 +1,17 @@
+.earnscoins-container {
+   width: 100%;
+   max-width: 100%;
+
+   @media screen and (max-width: 767px) {
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+   }
+}
+
 .earncoins-page {
-   padding: 1rem 0;
+   padding: 1.5rem 2rem;
 
    @media only screen and (max-width: 767px) {
       padding: 0;
@@ -28,7 +40,7 @@
 
    padding: 0.6rem 1.5rem 0.6rem 3.5rem;
 
-   @media only screen and (max-width: 1024px) {
+   @media only screen and (max-width: 1366px) {
       width: 60%;
    }
 
@@ -73,4 +85,12 @@
 .copy-btn:hover,
 .copy-btn:focus {
    color: #edb200;
+}
+
+.earns-container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 2rem;
+   padding: 1rem 0;
 }
