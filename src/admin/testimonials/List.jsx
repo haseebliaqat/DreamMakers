@@ -12,7 +12,7 @@ function List({ match }) {
         let obj = {
             "limit": 5,
             "offset": 0,
-            "order": [["id", "ASC"], ["name", "DESC"]],
+            "order": [["id", "ASC"]],
             "where": { "id": { "$gt": 0 } }
         }
         testimonialsService.getAll(obj).then((x) => {

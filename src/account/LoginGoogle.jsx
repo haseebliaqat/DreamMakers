@@ -13,9 +13,9 @@ function LoginGoogle({mblStyle, history, location }) {
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
     // refreshTokenSetup(res);
-    const userDetails = { email:res.profileObj.email, firstName:res.profileObj.givenName, lastName:res.profileObj.familyName, imageUrl:res.profileObj.imageUrl,mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true" }
+    const userDetails = { email:res.profileObj.email, firstName:res.profileObj.givenName, lastName:res.profileObj.familyName, imageUrl:res.profileObj.imageUrl,mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true",externalToken:"google_"+res.googleId }
     alertService.clear();
-    accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl,userDetails.mobileNumber,userDetails.nationality,userDetails.countryResidence,userDetails.city,userDetails.acceptTerms).then((resp) => {
+    accountService.loginUsingGoogle(userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl,userDetails.mobileNumber,userDetails.nationality,userDetails.countryResidence,userDetails.city,userDetails.acceptTerms,userDetails.externalToken).then((resp) => {
       console.log("resp", resp);
       if (resp.role == 'Admin') {
           const { from } = { from: { pathname: "/admin" } };

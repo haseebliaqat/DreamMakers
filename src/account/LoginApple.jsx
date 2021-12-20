@@ -13,17 +13,17 @@ function LoginApple({mblStyle, history, location }) {
       useEffect(() => {
       }, []);
   const onSuccess = (res) => {
-    console.log('Login Success: code:', res.authorization[0].code);
-    console.log('Login Success: code:', res.authorization.code);
-    console.log('Login Success: email', res.user[0].email);
-    console.log('Login Success: email:', res.user.email);
-    const userDetails;
-    if(!!res.user){
-      userDetails = { code:res.authorization[0].code,email:res.user[0].email, firstName:res.user[0].name.firstName,lastName:res.user[0].name.lastName, imageUrl:"",mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true"}
-    }else{
-      userDetails = { code:res.authorization[0].code, firstName:"NA",lastName:"NA", imageUrl:"NA",mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true"}
-    }
-    console.log('Login Success: email:', userDetails);
+    // console.log('Login Success: code:', res.authorization[0].code);
+    // console.log('Login Success: code:', res.authorization.code);
+    // console.log('Login Success: email', res.user[0].email);
+    // console.log('Login Success: email:', res.user.email);
+    // const userDetails;
+    // if(!!res.user){
+    //   userDetails = { code:res.authorization[0].code,email:res.user[0].email, firstName:res.user[0].name.firstName,lastName:res.user[0].name.lastName, imageUrl:"",mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true"}
+    // }else{
+    //   userDetails = { code:res.authorization[0].code, firstName:"NA",lastName:"NA", imageUrl:"NA",mobileNumber:"NA",nationality :"NA",countryResidence :"NA",city :"NA",acceptTerms:"true"}
+    // }
+    // console.log('Login Success: email:', userDetails);
     // alertService.clear();
     // accountService.loginUsingGoogle(userDetails.code,userDetails.email, userDetails.firstName, userDetails.lastName, userDetails.imageUrl,userDetails.mobileNumber,userDetails.nationality,userDetails.countryResidence,userDetails.city,userDetails.acceptTerms).then((resp) => {
     //   console.log("resp", resp);

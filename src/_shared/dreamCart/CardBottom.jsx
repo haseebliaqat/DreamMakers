@@ -97,14 +97,14 @@ const CardBottom = ({ checkoutAsGuest,props,stepNo,setstepNo,count}) => {
     };
 
     
-    
+
     async function processPayment(paymentData) {
       console.log("item_count")
       console.log(item_count)
-      
+      var amount=parseFloat(campain_cash_paid)*100;
+      const PaymentDetails = {amount:amount,currency:"AED"}
       const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-        fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(count),enabled:false }).then((resp) => {
-         
+        fetchWrapper.post(PaymentIntentURL, PaymentDetails).then((resp) => {
             const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
             fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,
             "paymentMethod":"pm_card_visa" }).then((resp1) => {
