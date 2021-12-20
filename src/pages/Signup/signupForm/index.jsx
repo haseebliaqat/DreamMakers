@@ -80,6 +80,7 @@ function SignUpForm({ callback, location }) {
                         if(fields.password==fields.confirmPassword){
                             if(fields.acceptTerms=="true"){
                                 fields.title = "dear"
+                                fields.externalToken  = "NA"
                                 fields.mobileNumber  = countryCode
                                 fields.nationality  =nationalityVar
                                 fields.countryResidence  = countryResidenceVar

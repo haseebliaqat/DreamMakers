@@ -59,9 +59,11 @@ const DreamCartPaymentMethod = () => {
    const [campain_discount, setCampainDiscount] = useState(localStorage.getItem("discount_code"));
    const [discount_amount, setDiscountAmount] = useState(localStorage.getItem("selected_campaign_discount_amount"));
    const [user, setUser] = useState(null);
+   const [tokenID, settokenID] = useState(null);
    const [card_number, setCardNumber] = useState([null]);
    const [expiry_date, setExpriyDate] = useState([null]);
    const [cvc_number, setCVCNumber] = useState([null]);
+   const [is_card_show, setCardShow] = useState(null);
    const now = new Date;
   const until = new Date(now.getFullYear() + 10, now.getMonth());
   var item_count=0;
@@ -75,26 +77,30 @@ const DreamCartPaymentMethod = () => {
       setCampainCashPaid(localStorage.getItem("selected_campaign_cash_paid"));
       setCampainDiscount(localStorage.getItem("discount_code"));
       setDiscountAmount(localStorage.getItem("selected_campaign_discount_amount"));
-
+      setCardShow(localStorage.getItem("is_card_show"))
       console.log("aqib")
       console.log(localStorage.getItem("selected_campaign_id"))
       console.log(localStorage.selected_campaign_id.toString())
       console.log(localStorage.userDetails)
       console.log("haseeb")
+
     }, 1000);
           if (!!localStorage.userDetails) {            
             setUser(JSON.parse(localStorage.userDetails));
             //console.log(user);
         }
-       const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-        fetchWrapper.post(PaymentIntentURL, { "campaignId": parseInt(campain_id),numberOfCouponsToPurchase:parseInt(campain_count),enabled:false }).then((resp) => {
-            console.log("payment-intent", resp);
-            setClientSecret(resp.client_secret);
 
-        })
-            .catch(error => {
-                alertService.error(error);
-            });
+          var amount=parseFloat(campain_cash_paid)*100;
+          const PaymentDetails = {amount:amount,currency:"AED",automatic_payment_methods:{enabled:false}}
+         const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
+          fetchWrapper.post(PaymentIntentURL, PaymentDetails).then((resp) => {
+              console.log("payment-intent", resp);
+              setClientSecret(resp.client_secret);
+              settokenID(resp.id);
+          })
+              .catch(error => {
+                  alertService.error(error);
+              });
           window.scrollTo(0, 0)
       if (window.innerWidth < 576) setImageShow(true);
       window.addEventListener('resize', () => {
@@ -103,17 +109,10 @@ const DreamCartPaymentMethod = () => {
       });
       return window.removeEventListener('resize', () => {});
    }, [
-      item_count=localStorage.getItem("item_count_value"),
+     // item_count=localStorage.getItem("item_count_value"),
    ]);
 
-   function GetClientScreat(email, password) {
-    return fetchWrapper.post(`${baseUrl}/coupons/create-payment-intent`, { email, password })
-        .then(user => {
-            userSubject.next(user);
-            startRefreshTokenTimer();
-            return user;
-        });
-}
+
 const ContinuesForCheckout = () => {
       
       
@@ -127,11 +126,12 @@ const ContinuesForCheckout = () => {
 async function processPayment(paymentData) {
   console.log("item_count")
   console.log(item_count)
+  var amount=parseFloat(campain_cash_paid)*100;
+  const PaymentDetails = {amount:amount,currency:"AED",automatic_payment_methods:{enabled:false}}
   const PaymentIntentURL=`${baseUrl}/coupons/create-payment-intent`;
-  fetchWrapper.post(PaymentIntentURL, { campaignId: parseInt(campain_id),numberOfCouponsToPurchase:parseInt(item_count),enabled:false }).then((resp) => {
-     
+   fetchWrapper.post(PaymentIntentURL,PaymentDetails ).then((resp) => {
         const PaymentConfirmURL=`${baseUrl}/coupons/confirm-payment-intent`;
-        fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":resp.id,
+        fetchWrapper.post(PaymentConfirmURL, { "paymentIntentId":tokenID,
         "paymentMethod":"pm_card_visa" }).then((resp1) => {
           console.log("confirm-payment-intent", resp1);
           onStripToken(resp1.id)

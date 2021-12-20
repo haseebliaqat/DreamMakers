@@ -5,10 +5,31 @@ import * as Yup from 'yup';
 import { alertService } from '@/_services';
 import moment from 'moment';
 import { winnersService } from '@/_services/winners.service';
+import config from 'config';
+import { useState } from 'react';
+import S3 from 'react-aws-s3';
+import { v4 as randomString } from 'uuid';
 
 function AddEdit({ history, match }) {
     const { id } = match.params;
+   const [winnersObj,setWinnersObj]= useState([]);
+    const [bulkPictures, setBulkPictures] = useState([]);
+    
     const isAddMode = !id;
+
+    
+    // function createBulkPictures(fields) {
+    //     setBulkPictures(bulkPictures);
+    //     picturesService.createBulk(bulkPictures)
+    //         .then(() => {
+    //             alertService.success('Pictures added successfully', { keepAfterRouteChange: true });
+    //             history.push('.');
+    //         })
+    //         .catch(error => {
+    //             setSubmitting(false);
+    //             alertService.error(error);
+    //         });
+    // }
 
     const initialValues = {
         name: '',
@@ -47,9 +68,10 @@ function AddEdit({ history, match }) {
     });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
-
+        console.log("BACCAAS");
         setStatus();
         if (isAddMode) {
+            console.log("BACCAAS",fields);
             createWinner(fields, setSubmitting);
         } else {
             updateWinner(id, fields, setSubmitting);
@@ -78,6 +100,57 @@ function AddEdit({ history, match }) {
                 setSubmitting(false);
                 alertService.error(error);
             });
+    }
+
+
+    // For Images
+    const configObjS3 = {
+        bucketName: config.bucketName,
+        dirName: config.dirName,
+        region: config.region,
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey
+    }
+
+
+    let uploadPicture = (e,name, category, type, platform) => {
+        console.log(bulkPictures);
+        type = type ? type: 'full-size';
+        category = category ? category : 'winners-image';
+        platform = platform ? platform : 'desktop';
+        let status = 'active';
+        let alt = 'DreamMakers';
+        e.persist();
+       console.log(e.target.files[0]);
+        const reactS3Client = new S3(configObjS3);
+        reactS3Client.uploadFile(e.target.files[0], randomString()).then((data) => {
+            let fileFormat =  data.location.split('.').pop().toUpperCase();
+            let imgObj = {
+                name: name,
+                alt: alt,
+                url: data.location,
+                type: type,
+                status: status,
+                category: category,
+                platform: platform,
+                format: fileFormat,
+                description: `${name}-${type}-${category}-${platform}-${status}-${fileFormat}`,
+                //campaignId: campaignObj.id,
+                createdDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+                updatedDate: moment().format("YYYY-MM-DD HH:mm:ss")
+            }
+            let _arr = bulkPictures;
+            _arr.push(imgObj);
+            setBulkPictures(_arr);
+            winnersObj[name] = data.location;
+            setWinnersObj(winnersObj);
+            // forceUpdate();
+        }).catch(error => {
+            // setIsSubmit(false);
+            console.log("------------err-------------");
+
+            console.error(error);
+        });
     }
 
     return (
@@ -146,14 +219,15 @@ function AddEdit({ history, match }) {
                                 <Field name="price" type="text" className={'form-control' + (errors.price && touched.price ? ' is-invalid' : '')} />
                                 <ErrorMessage name="price" component="div" className="invalid-feedback" />
                             </div>
-                            <div className="form-group col-3">
+                            {/* <div className="form-group col-9">
                                 <label>Picture</label>
-                                <Field name="pictureId" type="text" className={'form-control' + (errors.pictureId && touched.pictureId ? ' is-invalid' : '')} />
+                                <Field name="pictureId" type="file" accept=".jpeg,.png,.mp4,.flv" onChange={(e) => uploadPicture(e, 'pictureId')} className={'form-control'} />
                                 <ErrorMessage name="pictureId" component="div" className="invalid-feedback" />
-                            </div>
+                                <img src="" alt="icon" style={{height:"200px",marginTop:"10px", width:"100%"}}/>
+                            </div> */}
                         </div>
                         <div className="form-group">
-                            <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                        <button type="submit" disabled={isSubmitting} className="btn btn-primary">
                                 {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                 Save
                             </button>

@@ -58,6 +58,7 @@ const Card = ({count,setCount}) => {
    localStorage.setItem("selected_campaign_cash_paid",!!campaign?parseFloat(((campaign.couponPrice*count)+1)-localStorage.getItem("selected_campaign_discount_amount")):""),//
    localStorage.setItem("dream_coins",!!campaign?parseFloat((campaign.couponPrice*count)):""),
    localStorage.setItem("item_count_value",count),
+   localStorage.setItem("is_card_show",false),
 
 
 ]);

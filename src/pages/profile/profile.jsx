@@ -19,6 +19,7 @@ export const Profile = () => {
    const [avalaibel_dream_coin, setAvalaibleDreamCoins] = useState(null);
    const [avalaibel_balance, setAvalaibleBalance] = useState(null);
    const [funds, setFunds] = useState(null);
+
    // let helpedRaised=2000;
    // helpedRaised=helpedRaised+avalaibel_dream_coin;
    // helpedRaised= (helpedRaised).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
@@ -51,7 +52,6 @@ export const Profile = () => {
     }
     useEffect(() => {
       GetAllWinners();
-
   }, []);
    return (
       <div className="container-fluid">
