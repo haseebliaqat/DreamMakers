@@ -22,11 +22,23 @@
          }
          alertService.clear();
          accountService.ActiveCoupons(obj1).then((resp) => {
-            setCouponsDetail(resp.rows)
-            setTimeout(()=>{
-               let filename = `coupons-${resp.rows[0].campaignId.toString().padStart(5, '0')}`
-               downloadPdfDocument(filename);
-            },5000);
+            setCouponsDetail(resp.rows);
+
+            if(resp.rows.length > 0){
+
+               let downloadIntrval = setInterval(()=>{
+                  var lastimg = document.getElementById(resp.rows[resp.rows.length-1]?.qrCodes[1]?.id)?.src?.length > 20;
+                  if(lastimg){
+                     let filename = `coupons-${resp.rows[0].campaignId.toString().padStart(5, '0')}`
+                     downloadPdfDocument(filename);
+                     console.log(downloadIntrval);
+                     clearInterval(downloadIntrval);
+                  }
+               },100);
+            }else{
+               alert('No Coupons!');
+            }
+            
 
          }).catch(error => {
             alertService.error("Internal Server Error");
