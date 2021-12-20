@@ -49,8 +49,8 @@ function login(email, password) {
         });
 }
 
-function loginUsingGoogle(email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence,city,acceptTerms) {
-    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence ,city,acceptTerms})
+function loginUsingGoogle(email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence,city,acceptTerms,externalToken) {
+    return fetchWrapper.post(`${baseUrl}/authenticate-using-google`, { email, firstName, lastName, imageUrl,mobileNumber,nationality,countryResidence ,city,acceptTerms,externalToken})
         .then(user => {
             // publish user to subscribers and start timer to refresh token
             userSubject.next(user);

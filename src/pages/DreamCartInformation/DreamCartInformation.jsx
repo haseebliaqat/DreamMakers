@@ -34,7 +34,6 @@ const DreamCartInformation = () => {
    const [email, setemail] = useState(localStorage.getItem("user_email"));
    const [paswword, setPassword] = useState("");
    const [nationality, setnationality] = useState("");
-
    const [phone_no, setphone_no] = useState("");
    const [invite_code, setsetinvite_code] = useState("");
    const [gender_value_male, setGenderValueMale] = useState(false);
@@ -89,12 +88,12 @@ const DreamCartInformation = () => {
       setTermsandcondition(true)
     }
     const OnGenderChangeMale = (event) => {
-       console.log(event);
+       console.log(event.target.value);
        setGenderValueMale(true)
        setGenderValueFemale(false)
     }
     const OnGenderChangeFemale = (event) => {
-      console.log(event);
+      console.log(event.target.value);
       setGenderValueFemale(true)
       setGenderValueMale(false)
    }
@@ -150,6 +149,7 @@ const DreamCartInformation = () => {
         if(!!city){
          cityVar =city[0].city;
         }
+
          
       if(firstname!=""){
          if(last_name!=""){
@@ -157,39 +157,40 @@ const DreamCartInformation = () => {
                if(regEmail.test(email)){
                   if(paswword!=""){
                   if(phone_no!=""){
-                     const userDetails = { email:email, firstName:firstname,lastName:last_name, password:paswword,confirmPassword:paswword,nationality:countryResidenceVar,countryResidence:countryResidenceVar,city:cityVar,invite_code:invite_code,mobileNumber:phone_no,title:"Mr",acceptTerms:true}
-                     alertService.clear();
-                     accountService.loginAsGuest(userDetails).then((resp) => {
-                     console.log("resp11111=>>>>>>>>>>>>>>>>", resp);
-                     accountService.login(email,paswword).then((resp) => {
-                        console.log("resp", resp);
-                        console.log("haseeb");
-                        console.log(location.state);
-                        if (resp.role == 'User') {
-                            localStorage.setItem("user",resp.role);
-                            localStorage.setItem("userDetails",JSON.stringify(resp));
-                           
-                           const { from } =  { from: { pathname: "dream-cart-payment" } };
-                            history.push(from);
+                     if(city_residence!=""){
+                        if(city!=""){
+                           const userDetails = { email:email, firstName:firstname,lastName:last_name, password:paswword,confirmPassword:paswword,nationality:countryResidenceVar,countryResidence:countryResidenceVar,city:cityVar,invite_code:invite_code,mobileNumber:phone_no,title:"Mr",acceptTerms:true}
+                              alertService.clear();
+                              accountService.loginAsGuest(userDetails).then((resp) => {
+                              console.log("resp11111=>>>>>>>>>>>>>>>>", resp);
+                              accountService.login(email,paswword).then((resp) => {
+                                 console.log("resp", resp);
+                                 console.log("haseeb");
+                                 console.log(location.state);
+                                 if (resp.role == 'User') {
+                                     localStorage.setItem("user",resp.role);
+                                     localStorage.setItem("userDetails",JSON.stringify(resp));
+                                    
+                                    const { from } =  { from: { pathname: "dream-cart-payment" } };
+                                     history.push(from);
+                                 }
+                     
+                             }).catch(error => {
+                                 setSubmitting(false);
+                                 alertService.error("Email or password is incorrect.");
+                             });
+                                    }).catch(message => {
+                                       alert(message);
+                                       // const { from } = { from: { pathname: "/account/login" } };
+                                       //       history.push(from);
+                                    });
+                        }else{
+                           alert("Please select City");
                         }
-            
-                    }).catch(error => {
-                        setSubmitting(false);
-                        alertService.error("Email or password is incorrect.");
-                    });
-
-                           // if (resp.role == 'User') {
-                           // localStorage.setItem("user",resp.role);
-                           //    localStorage.setItem("userDetails",JSON.stringify(resp));
-                           //       const { from } = { from: { pathname: "/dream-cart-payment" } };
-                           //          history.push(from);
-                           //       }
-                           }).catch(message => {
-                              //setSubmitting(false);
-                              alert(message);
-                              const { from } = { from: { pathname: "/account/login" } };
-                                    history.push(from);
-                           });
+                     }else{
+                        alert("Please select Country of Residence");
+                     }
+                     
                   }else{
                      alert("Please enter phone");
                   }

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
 import { accountService, alertService } from '@/_services';
 import { useHistory } from "react-router-dom";
+import { fetchWrapper, history } from '@/_helpers';
 import {
   PaymentElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
-
+import config from 'config';
+const baseUrl = `${config.apiUrl}`;
 export default function CheckoutForm() {
   const [count, setCount] = useState(1);
     const history = useHistory();
@@ -55,11 +57,26 @@ export default function CheckoutForm() {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
-          console.log("paymentIntent status");
-          console.log(paymentIntent);
-          console.log(paymentIntent.status);
-          onStripToken(paymentIntent)
           setMessage("Payment succeeded!");
+            console.log("paymentIntent status");
+            console.log(paymentIntent);
+            console.log(paymentIntent.status);
+            onStripToken(paymentIntent)
+          // var amount=parseFloat(campain_cash_paid)*100;
+          // const PaymentDetails = {amount:amount,currency:"AED",
+          // customer: 'cus_AFGbOSiITuJVDs',
+          // source: 'src_18eYalAHEMiOZZp1l9ZTjSU0',}
+          // const PaymentIntentURL=`${baseUrl}/coupons/create-charge`;
+          // fetchWrapper.post(PaymentIntentURL,PaymentDetails ).then((resp) => {
+          //    console.log("paymentIntent status",resp);
+          //   // console.log("paymentIntent status");
+          //   // console.log(paymentIntent);
+          //   // console.log(paymentIntent.status);
+          //   // onStripToken(paymentIntent)
+          // })
+          //   .catch(message => {
+          //       console.error(message);
+          //   });
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -85,7 +102,8 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "https://test.dreammakers.ae/dream-cart-payment",
+        // return_url: "https://test.dreammakers.ae/dream-cart-payment",
+        return_url: "http://localhost:8080/dream-cart-payment",
       },
     });
     if (error.type === "card_error" || error.type === "validation_error") {
